@@ -2,14 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+// Russian browsers (or a remembered RU choice) go to /ru/; query and hash ride along so ad tags survive.
+try{var l=localStorage.getItem('lang')||(navigator.languages&&navigator.languages[0])||navigator.language||'';if(/^ru\b/i.test(l))location.replace('ru/'+location.search+location.hash)}catch(e){}
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Exit 168 — feel reborn: a wood-fired sauna, a river to plunge into, 168 acres of forest</title>
-<meta name="description" content="Come out of the wood-fired sauna and straight into your own pool on the South Yuba. A cabin, a sauna and 168 private acres off I-80 Exit 168, Placer County. The whole place for your group: $500 a day, $1,000 for 24 hours.">
+<title>Exit 168 — private sauna, river and cabin off I-80, sleeps 15</title>
+<meta name="description" content="A wood-fired sauna, a cabin that sleeps fifteen and your own pool on the South Yuba, on 168 private acres off I-80 Exit 168 in Placer County. The whole place for your group: $500 a day, $1,000 for 24 hours.">
+<link rel="canonical" href="https://clubexit168.com/">
+<link rel="alternate" hreflang="en" href="https://clubexit168.com/">
+<link rel="alternate" hreflang="ru" href="https://clubexit168.com/ru/">
+<link rel="alternate" hreflang="x-default" href="https://clubexit168.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clubexit168.com/">
+<meta property="og:title" content="Exit 168 — hot sauna, cold river, 168 acres of nobody else">
+<meta property="og:description" content="A wood-fired sauna, a cabin that sleeps fifteen and your own pool on the South Yuba. The whole place for your group: $500 a day, $1,000 for 24 hours.">
+<meta property="og:image" content="https://clubexit168.com/assets/img/og-1200.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0f2321">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230f2321'/%3E%3Cpath d='m20 5-10 14h6l-7 10h9v6h4v-6h9l-7-10h6Z' fill='none' stroke='%23efe7d2' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preload" as="font" href="assets/forum.ttf" type="font/ttf" crossorigin>
 <link rel="preload" as="font" href="assets/satoshi-light.woff2" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EYQ6W511HE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EYQ6W511HE');
+</script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function(m,e,t,r,i,k,a){
@@ -30,20 +55,19 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 <header class="navigation">
   <a class="wordmark" href="#top" aria-label="Exit 168 home">EXIT 168</a>
   <nav aria-label="Main navigation">
-    <a href="#day">Your day</a>
     <a href="#place">The place</a>
+    <a href="#winter">Winter</a>
     <a href="#where">Where</a>
-    <a href="#land">The land</a>
     <a href="#rates">Rates</a>
     <a href="#faq">FAQ</a>
   </nav>
+  <div class="lang" aria-label="Language"><a href="ru/" hreflang="ru" lang="ru">RU</a><span aria-current="page">EN</span></div>
   <a class="nav-action" href="#request">Check your dates <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button>
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
-    <a href="#day">Your day</a>
     <a href="#place">The place</a>
+    <a href="#winter">Winter</a>
     <a href="#where">Where</a>
-    <a href="#land">The land</a>
     <a href="#rates">Rates</a>
     <a href="#faq">FAQ</a>
     <a href="#request">Check your dates</a>
@@ -60,63 +84,63 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="hero-content">
     <p class="hero-location">Placer County, California · I-80, Exit 168</p>
     <h1><span>Feel reborn.</span><span>Hot sauna, cold river, 168 acres of nobody else.</span></h1>
-    <p class="hero-sub">Yours for a day or 24 hours. An hour and a half from Sacramento, fifty minutes from Reno.</p>
+    <p class="hero-sub">The whole place for your group: $500 a day, $1,000 for 24 hours. An hour and a half from Sacramento.</p>
     <div class="actions">
       <a class="button primary" href="#request">Check your dates</a>
-      <a class="button secondary" href="#gallery">See the river</a>
+      <a class="button secondary" href="#river">See the river</a>
     </div>
   </div>
 </section>
 
 <dl class="stats" id="facts">
-  <div><dt>168</dt><dd>Acres of private forest, four parcels</dd></div>
-  <div><dt>South Yuba</dt><dd>Steps from the deck into a quiet pool</dd></div>
-  <div><dt>Wood-fired</dt><dd>Sauna: stove, benches, changing lounge</dd></div>
-  <div><dt>Cabin</dt><dd>Table for six, two decks with grills</dd></div>
+  <div><dt>168</dt><dd>Acres of private forest</dd></div>
+  <div><dt>South Yuba</dt><dd>Steps from the deck into the river</dd></div>
+  <div><dt>Sauna</dt><dd>Wood-fired, yours all day</dd></div>
+  <div><dt>Sleeps 15</dt><dd>Cabin with a kitchen and a bathroom</dd></div>
   <div><dt>$500 · $1,000</dt><dd>A day · 24 hours · the whole place</dd></div>
 </dl>
 
 <section id="day">
   <header class="section-head">
     <p class="eyebrow"><span>Your day here</span></p>
-    <h2>Through the gate, <br>into the heat, down to the water</h2>
-    <p class="subtitle">What the day looks like once you have turned off at Exit 168.</p>
+    <h2>Into the heat, <br>down to the water</h2>
+    <p class="subtitle">How the day goes once you are through the gate at Exit 168.</p>
   </header>
   <div class="features four steps">
     <article class="feature">
       <p class="step-number">01</p>
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V9m18 12V9M3 9q9-7 18 0M7 21v-8m5 8v-9m5 9v-8M3 15h18"/></svg>
-      <h3>The gate</h3>
-      <p>Rainbow Road is a couple of minutes off I-80. A private gate, then paved road down to the cabin. No dirt track, no 4WD needed in summer and fall.</p>
-      <button class="photo" data-photo="gate" aria-label="View the private entrance gate">
-        <img src="assets/img/gate-800.webp" width="800" height="600" alt="Black iron gate with lamp posts and a paved road into the pines" loading="lazy">
-      </button>
-    </article>
-    <article class="feature">
-      <p class="step-number">02</p>
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2c2 7-3 7-3 12-2-1-3-3-3-5-7 10 0 15 5 13 8-2 8-10 4-14 0 3-2 5-3 5 2-5 2-8 0-11Z"/></svg>
-      <h3>The stove</h3>
-      <p>The sauna runs on wood. Light the stove and let the stones heat while you unpack. Two tiers of benches, and a changing room with a sofa to cool down in.</p>
+      <h3>The heat</h3>
+      <p>The sauna runs on wood. Light the stove and let the stones heat while you unpack. Two tiers of benches, and the heat is yours all day.</p>
       <button class="photo" data-photo="stove" aria-label="View the wood-fired sauna stove">
         <img src="assets/img/stove-800.webp" width="800" height="600" alt="Wood-fired sauna stove with stones and a chimney pipe beside the benches" loading="lazy">
       </button>
     </article>
-    <article class="feature">
-      <p class="step-number">03</p>
+    <article class="feature" id="river">
+      <p class="step-number">02</p>
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h6v5h5v5h5v6M2 21q3-3 6 0t6 0t6 0"/></svg>
-      <h3>The steps</h3>
-      <p>From the deck, wooden steps go straight into a quiet pool of the South Yuba. Clear snowmelt, granite boulders, nobody else in the water. Hot, cold, again.</p>
+      <h3>The cold</h3>
+      <p>Out of the heat and down the wooden steps into a quiet pool of the South Yuba. Clear snowmelt, granite boulders, nobody else in the water. Then back in.</p>
       <button class="photo" data-photo="river" aria-label="View the deck steps down to the river pool">
         <img src="assets/img/river-800.webp" width="800" height="600" alt="Wooden deck and steps leading down to a still, clear pool with granite boulders and pine reflections" loading="lazy">
       </button>
     </article>
     <article class="feature">
-      <p class="step-number">04</p>
+      <p class="step-number">03</p>
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18v3H3ZM6 12v9m12-9v9M8 3v3m4-3v3m4-3v3"/></svg>
       <h3>The table</h3>
-      <p>A cabin with a table for six, a foosball table, two decks with picnic benches and grills. Staying the night? You fall asleep to the river.</p>
+      <p>A big carved table in the cabin, a kitchen with a gas stove and a fridge, and two decks with picnic benches and grills.</p>
       <button class="photo" data-photo="dining" aria-label="View the cabin dining room">
-        <img src="assets/img/dining-800.webp" width="800" height="600" alt="Cabin dining room with a carved wooden table for six, a chandelier and a window to the forest" loading="lazy">
+        <img src="assets/img/dining-800.webp" width="800" height="600" alt="Cabin dining room with a carved wooden table, a chandelier and a window to the forest" loading="lazy">
+      </button>
+    </article>
+    <article class="feature">
+      <p class="step-number">04</p>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5v14M2 15h20v4M2 11h6v4M8 11h10a4 4 0 0 1 4 4"/></svg>
+      <h3>The night</h3>
+      <p>Stay the full 24 hours and the cabin sleeps fifteen, in bunks and a loft. You fall asleep to the river.</p>
+      <button class="photo" data-photo="bunks" aria-label="View the bunks in the cabin">
+        <img src="assets/img/bunks-800.webp" width="800" height="600" alt="A timber triple bunk with made-up beds in a wood-panelled room" loading="lazy">
       </button>
     </article>
   </div>
@@ -134,7 +158,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <div class="ledger-row"><p>Forty-five minutes down a canyon trail, granite too hot for bare feet.</p><p>Wooden steps from the deck into the water.</p></div>
     <div class="ledger-row"><p>A ninety-minute sauna slot shared with strangers.</p><p>The sauna is yours all day. As many rounds as you want.</p></div>
     <div class="ledger-row"><p>No fires anywhere from late June.</p><p>The wood stove in the sauna is your fire.</p></div>
-    <div class="ledger-row"><p>A house that sleeps sixteen, a shared lake beach, neighbours on the next deck.</p><p>One cabin, one sauna, one group. 168 acres around you.</p></div>
+    <div class="ledger-row"><p>A rental on a shared lake, a beach full of strangers, neighbours on the next deck.</p><p>One cabin, one sauna, one group. 168 acres around you.</p></div>
   </div>
 </section>
 
@@ -151,10 +175,10 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       </button>
       <h3>The cabin</h3>
       <ul>
-        <li>Living room with a big sofa and a foosball table</li>
-        <li>Dining table for six</li>
-        <li>TV and coffee maker</li>
-        <li>Two decks with picnic tables and grills</li>
+        <li>Sleeps fifteen, in bunks and a loft</li>
+        <li>Kitchen with a gas stove, a fridge and a microwave</li>
+        <li>Indoor bathroom</li>
+        <li>Living room with a wood stove, a big sofa and foosball</li>
         <li>Power from solar panels and a generator</li>
       </ul>
     </article>
@@ -166,8 +190,8 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <ul>
         <li>Wood-fired stove with stones</li>
         <li>Two tiers of benches</li>
-        <li>Changing lounge with a sofa and a long table</li>
-        <li>Door straight onto the deck</li>
+        <li>Yours all day, as many rounds as you want</li>
+        <li>The cold plunge is the river below the deck</li>
       </ul>
     </article>
     <article class="fact-card">
@@ -195,7 +219,29 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       </ul>
     </article>
   </div>
-  <p class="section-note">Sleeping arrangements, bathrooms, water and the maximum group size are confirmed by the host for your dates. Ask when you <a href="#request">check them</a>.</p>
+  <p class="section-note">Linens, firewood, drinking water, the dog: tell the host what you need when you <a href="#request">send your dates</a>.</p>
+</section>
+
+<section id="winter">
+  <header class="section-head">
+    <p class="eyebrow"><span>Winter</span></p>
+    <h2>The same river, <br>under deep snow</h2>
+    <p class="subtitle">The owner's own winter photographs: snow up to the eaves, the river running between the drifts, a snowmobile track to the cabin door. Winter dates are by arrangement; the host confirms the road and what is open for your dates.</p>
+  </header>
+  <div class="winter-grid">
+    <button class="photo" data-photo="winter-night" aria-label="View the cabin under snow at night">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-night-800.webp"><img src="assets/img/winter-night-800.webp" srcset="assets/img/winter-night-800.webp 800w, assets/img/winter-night-1350.webp 1350w" sizes="(max-width: 600px) 100vw, 42vw" width="800" height="1067" alt="The cabin buried in snow to the eaves at night, lit pines and stars above" loading="lazy"></picture>
+      <span class="photo-label">The cabin at night<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
+    </button>
+    <button class="photo" data-photo="winter-river" aria-label="View the river between the snowdrifts">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-river-800.webp"><img src="assets/img/winter-river-800.webp" srcset="assets/img/winter-river-800.webp 800w, assets/img/winter-river-1500.webp 1500w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="The South Yuba running dark between snow-capped boulders under a blue sky" loading="lazy"></picture>
+      <span class="photo-label">The river<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
+    </button>
+    <button class="photo" data-photo="winter-cabin" aria-label="View the cabin in winter with the snowmobile track">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-cabin-800.webp"><img src="assets/img/winter-cabin-800.webp" srcset="assets/img/winter-cabin-800.webp 800w, assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="The green-roofed cabin almost buried in snow, with a snowmobile track leading to it" loading="lazy"></picture>
+      <span class="photo-label">The snowmobile track<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
+    </button>
+  </div>
 </section>
 
 <section id="where">
@@ -271,20 +317,20 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </div>
   <div class="arrival-photo">
     <picture><source media="(max-width: 600px)" srcset="assets/img/exit-sign-800.webp"><img src="assets/img/exit-sign-800.webp" srcset="assets/img/exit-sign-800.webp 800w, assets/img/exit-sign-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Interstate 80 sign reading Exit 168 Rainbow Road, three quarters of a mile" loading="lazy"></picture>
-    <div class="arrival-label">Exit 168 · Rainbow Road<p>Drive times are for a dry road with no traffic. Exact directions come with your confirmation.</p></div>
+    <div class="arrival-label">Exit 168 · Rainbow Road<p>A couple of minutes off I-80, then a private gate and a paved road down to the cabin. Drive times are for a dry road with no traffic.</p></div>
   </div>
 </section>
 
 <section id="land">
   <header class="section-head">
     <p class="eyebrow"><span>The land</span></p>
-    <h2>Bring what <br>you are into</h2>
-    <p class="subtitle">The cabin and the sauna are what you book. The forest and the river around them are what you make of them. Say what you have in mind when you check dates, and the host will confirm what works.</p>
+    <h2>More to do <br>on 168 acres</h2>
+    <p class="subtitle">The cabin and the sauna are what you book. The forest and the river around them are yours to use: say what you have in mind when you send your dates, and the host confirms what works.</p>
   </header>
   <dl class="know land-ledger">
     <div>
       <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12q6-7 13-5l7-4-2 5 2 5-7-4q-7 8-13 3Zm7 0h.01M3 18q4 3 8 0t8 0"/></svg>Fishing</dt>
-      <dd>Brown and rainbow trout in the South Yuba, straight off the deck. General California trout season, late April to mid-November. Bring your licence, 16 and over.</dd>
+      <dd>Brown and rainbow trout in the South Yuba. The general California trout season runs from late April to mid-November; bring a licence if you are 16 or over.</dd>
     </div>
     <div>
       <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m2 20 7-12 4 7 3-4 6 9ZM9 8l1.5-3L12 8"/></svg>Hiking</dt>
@@ -292,7 +338,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </div>
     <div>
       <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18a3 3 0 1 0 0-.01M19 18a3 3 0 1 0 0-.01M5 18l4-8h4l3 5h3M9 10l-2-4h3m2 2 3 0 2 5"/></svg>Dirt bikes and quads</dt>
-      <dd>168 private acres an hour and a half from Sacramento, with a paved pad by the cabin to unload on. Private land with permission: no green or red sticker needed, spark arrester and quiet pipes are. Tell us what you ride and how many; where you ride is agreed with the host.</dd>
+      <dd>Room to ride on 168 private acres, and a paved pad by the cabin to unload. Where you ride is agreed with the host. California requires a spark arrester on forest land and Placer County sets noise limits, so bring quiet pipes.</dd>
     </div>
     <div>
       <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h5a3 3 0 0 0 0-6h-3"/></svg>Motorcycle touring</dt>
@@ -300,96 +346,25 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </div>
     <div>
       <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16V7h11l3 4h4v5M3 16h3m4 0h5m4 0h2M6 10h5M6 16a2 2 0 1 0 4 0 2 2 0 1 0-4 0M15 16a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg>Camping</dt>
-      <dd>Tents, vans and RVs on the land, next to the cabin or off on their own. Public campgrounds up here sell out months ahead; here it is one group, one booking. By arrangement.</dd>
+      <dd>Tents, vans and RVs on the land, by arrangement. Public campgrounds up here sell out months ahead; here it is one group, one booking.</dd>
     </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V11l7-6 7 6v10M10 21v-5h4v5M12 5V2"/></svg>Planned</dt>
-      <dd>Glamping cabins on the property. Not open yet.</dd>
-    </div>
-  </dl>
-  <div class="breather-labelled">
-    <picture><source media="(max-width: 600px)" srcset="assets/img/fish-sign-800.webp"><img src="assets/img/fish-sign-800.webp" srcset="assets/img/fish-sign-800.webp 800w, assets/img/fish-sign-1400.webp 1400w" sizes="100vw" width="1400" height="1050" alt="State of California fish advisory sign for the South Yuba River standing among pines and granite" loading="lazy"></picture>
-    <div class="arrival-label">The state's own fish guide, posted here<p>The South Yuba advisory lists brown trout and rainbow trout for this river. It also says how much of each is safe to eat.</p></div>
-  </div>
-</section>
-
-<section id="gallery">
-  <header class="section-head">
-    <p class="eyebrow"><span>As it is</span></p>
-    <h2>Every photograph below <br>was taken here</h2>
-    <p class="subtitle">The cabin is simple: wood walls, a big table, a good sofa. The sauna is real and burns real wood. The river is the reason to come.</p>
-  </header>
-  <div class="mosaic">
-    <button class="photo" data-photo="river" aria-label="View the pool below the deck">
-      <img src="assets/img/river-800.webp" width="800" height="600" alt="The pool below the deck" loading="lazy">
-      <span class="photo-label">The pool<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="stove" aria-label="View the sauna stove">
-      <img src="assets/img/stove-800.webp" width="800" height="600" alt="The wood-fired stove" loading="lazy">
-      <span class="photo-label">The stove<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="sauna" aria-label="View the sauna benches">
-      <img src="assets/img/sauna-800.webp" width="800" height="600" alt="The sauna benches" loading="lazy">
-      <span class="photo-label">The benches<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="sauna-lounge" aria-label="View the changing lounge">
-      <img src="assets/img/sauna-lounge-800.webp" width="800" height="600" alt="The changing lounge with a sofa and a long table" loading="lazy">
-      <span class="photo-label">The lounge<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="dining" aria-label="View the dining table">
-      <img src="assets/img/dining-800.webp" width="800" height="600" alt="The dining table for six" loading="lazy">
-      <span class="photo-label">The table<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="living" aria-label="View the living room">
-      <img src="assets/img/living-800.webp" width="800" height="600" alt="The living room" loading="lazy">
-      <span class="photo-label">The living room<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="deck" aria-label="View the deck">
-      <img src="assets/img/deck-800.webp" width="800" height="600" alt="The deck with picnic tables" loading="lazy">
-      <span class="photo-label">The deck<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="cabin" aria-label="View the cabin">
-      <img src="assets/img/cabin-800.webp" width="800" height="600" alt="The cabin from the road" loading="lazy">
-      <span class="photo-label">The cabin<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-    <button class="photo" data-photo="gate" aria-label="View the gate">
-      <img src="assets/img/gate-800.webp" width="800" height="600" alt="The gate" loading="lazy">
-      <span class="photo-label">The gate<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
-    </button>
-  </div>
-</section>
-
-<section id="know">
-  <header class="section-head">
-    <p class="eyebrow"><span>Before you drive up</span></p>
-    <h2>Good to know</h2>
-    <p class="subtitle">The things people wish a listing had told them.</p>
-  </header>
-  <dl class="know">
-    <div><dt>Phone</dt><dd>Patchy. Nearby, AT&amp;T is reported to work best. Plan to be offline and leave the address with someone.</dd></div>
-    <div><dt>Road</dt><dd>Paved from the gate. Summer and fall: any car. Winter dates are by arrangement; I-80 chain controls start a few miles east at Kingvale.</dd></div>
-    <div><dt>Water</dt><dd>Snowmelt, cold even in August. Swimming is usually good from mid-July. In spring runoff the river is dangerous and nobody swims. Life jackets on kids.</dd></div>
-    <div><dt>Food</dt><dd>Bring everything. The nearest full grocery store is Truckee, twenty minutes away.</dd></div>
-    <div><dt>Fire</dt><dd>No open campfires in fire season, here or anywhere in the Sierra. The sauna stove is your fire, and there are grills on the deck.</dd></div>
-    <div><dt>Bears</dt><dd>Bear country. Food and anything scented stays inside, never in the car overnight.</dd></div>
-    <div><dt>Dogs, group size, beds</dt><dd>Ask when you check dates. You will get a straight answer.</dd></div>
   </dl>
 </section>
 
 <section class="offer" id="rates">
-  <picture class="offer-backdrop"><source media="(max-width: 600px)" srcset="assets/img/river-800.webp"><img src="assets/img/river-1440.webp" width="1440" height="1080" alt="" loading="lazy"></picture>
+  <picture class="offer-backdrop"><img src="assets/img/river-800.webp" width="800" height="600" alt="" loading="lazy"></picture>
   <div class="offer-card">
-    <img src="assets/img/sauna-lounge-800.webp" width="800" height="600" alt="The sauna changing lounge" loading="lazy">
+    <img src="assets/img/deck-view-800.webp" srcset="assets/img/deck-view-800.webp 800w, assets/img/deck-view-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 554px" width="800" height="430" alt="The pool and the granite seen over the deck rail" loading="lazy">
     <p class="overline">Cabin + sauna + river</p>
     <h2>The whole place, <br>for your group</h2>
     <div class="offer-rates">
       <div><strong>$500</strong><span>Day visit</span></div>
       <div><strong>$1,000</strong><span>24 hours</span></div>
     </div>
-    <p>Prices are for the place, not per person. One group at a time. River season is July to October; other months, ask.</p>
+    <p>Prices are for the whole place, not per person, and the cabin sleeps fifteen. Swimming from mid-July to October; winter dates by arrangement.</p>
     <div class="actions">
       <a class="button primary" href="#request">Check your dates</a>
-      <a class="button black" href="#request">Ask a question</a>
+      <a class="button black" href="mailto:rvsline@gmail.com?subject=Question%20about%20Exit%20168">Ask a question</a>
     </div>
     <p class="note">The host confirms dates, group size and terms before you pay anything. Nothing is charged on this site.</p>
   </div>
@@ -404,7 +379,11 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="faq-list">
     <details>
       <summary>How many people can come?<span aria-hidden="true">+</span></summary>
-      <p>The dining table seats six and the sauna takes a group. For beds and the maximum for your date, ask when you check dates. The host confirms before anything is paid.</p>
+      <p>The cabin sleeps fifteen, in bunks and a loft. For a day visit, send your group size and the host confirms. Prices are for the whole place, not per person.</p>
+    </details>
+    <details>
+      <summary>What should we bring?<span aria-hidden="true">+</span></summary>
+      <p>Food and drinks for everyone: the nearest full grocery store is in Truckee, twenty minutes away. The cabin has a kitchen with a gas stove, a fridge and a microwave. It is bear country, so food and anything scented stays inside, never in the car overnight. Ask about linens and firewood when you send your dates.</p>
     </details>
     <details>
       <summary>Do I need a 4WD or chains?<span aria-hidden="true">+</span></summary>
@@ -412,19 +391,19 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </details>
     <details>
       <summary>Is there phone signal or Wi-Fi?<span aria-hidden="true">+</span></summary>
-      <p>Count on neither. Coverage nearby is patchy. Share the address and your plan with someone before you drive up.</p>
+      <p>Count on neither. Coverage nearby is patchy; AT&amp;T is reported to work best. Leave the address and your plan with someone before you drive up.</p>
     </details>
     <details>
       <summary>Is the river safe for kids?<span aria-hidden="true">+</span></summary>
-      <p>The pool below the deck is quiet in summer, but it is a mountain river: cold, with current under calm water. Life jackets on kids, and no swimming during spring runoff, May to early July.</p>
+      <p>The pool below the deck is quiet in summer, but it is a mountain river: snowmelt-cold, with current under calm water. Swimming is usually good from mid-July; in spring runoff, May to early July, the river is dangerous and nobody swims. Life jackets on kids.</p>
     </details>
     <details>
       <summary>Can we make a fire?<span aria-hidden="true">+</span></summary>
-      <p>No open campfires in fire season, late June to October. The sauna's wood stove is the fire you get, and there are grills on the deck.</p>
+      <p>No open campfires in fire season, late June to October, here or anywhere in the Sierra. The sauna's wood stove is the fire you get, the cabin has a wood stove in the living room, and there are grills on the deck.</p>
     </details>
     <details>
       <summary>Can we bring the dog?<span aria-hidden="true">+</span></summary>
-      <p>Ask. Tell us about the dog when you send your dates.</p>
+      <p>Ask. Tell the host about the dog when you send your dates.</p>
     </details>
     <details>
       <summary>Can you hear the freeway?<span aria-hidden="true">+</span></summary>
@@ -432,11 +411,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </details>
     <details>
       <summary>How does booking work?<span aria-hidden="true">+</span></summary>
-      <p>Send your dates and group size through the form. The host replies with availability, capacity and terms. Nothing is charged on this site; you pay only after you have confirmed everything with the host.</p>
-    </details>
-    <details>
-      <summary>Can we fish, ride or camp?<span aria-hidden="true">+</span></summary>
-      <p>Fishing, yes, with a California licence. Riding and camping on the land are arranged with the host, so say what you have in mind. For dirt bikes and quads: on private land with the owner's permission you do not need a green or red sticker, but California still requires a spark arrester on forest land and Placer County sets noise limits, so bring quiet pipes.</p>
+      <p>Send your dates and group size through the form below, or email the host at <a href="mailto:rvsline@gmail.com">rvsline@gmail.com</a>. The host replies with the dates that are free and the terms. Nothing is charged on this site; you pay only after you have confirmed everything with the host.</p>
     </details>
   </div>
 </section>
@@ -445,21 +420,20 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <header class="section-head">
     <p class="eyebrow"><span>Check your dates</span></p>
     <h2>Send your dates. <br>The host writes back.</h2>
-    <p class="subtitle">No charge, no card. Your dates go to the host by email; the reply covers availability, group size and terms.</p>
+    <p class="subtitle">No charge, no card. Your request goes by email to Roman, who owns Exit 168, and his reply covers the dates that are free and the terms.</p>
   </header>
   <div class="contact-panels">
     <div class="contact-info">
-      <h3>What you are asking for</h3>
+      <h3>Who reads it</h3>
+      <p>Roman, the owner. Your request goes straight to his inbox; you can also write to him yourself.</p>
       <dl>
-        <div><dt>The place</dt><dd>Cabin, wood-fired sauna, the river</dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:rvsline@gmail.com">rvsline@gmail.com</a></dd></div>
         <div><dt>Day visit</dt><dd>$500</dd></div>
         <div><dt>24 hours</dt><dd>$1,000</dd></div>
-        <div><dt>Who</dt><dd>One group at a time</dd></div>
-        <div><dt>Where</dt><dd>I-80 Exit 168, Placer County</dd></div>
+        <div><dt>Sleeps</dt><dd>15</dd></div>
       </dl>
       <h3>What happens next</h3>
-      <p>Your request is written out here and goes to the host by email. The reply covers the dates that are free, how many people the place takes on that date, and the terms. You are not booked until the host confirms.</p>
-      <p id="request-pending" hidden>The host's email address is not published on this page yet, so for now the form writes your request out for you to send yourself.</p>
+      <p>Roman replies with the dates that are free, how many people the place takes on that date, and the terms. You are not booked until he confirms, and nothing is paid on this site.</p>
     </div>
     <form id="request-form">
       <fieldset>
@@ -471,7 +445,11 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       </fieldset>
       <div class="form-row">
         <label>First day<input type="date" name="date" required></label>
-        <label>Group size<input type="number" name="guests" min="1" max="60" step="1" inputmode="numeric" placeholder="How many of you" required></label>
+        <label>Group size<input type="number" name="guests" min="1" max="20" step="1" inputmode="numeric" placeholder="How many of you" required></label>
+      </div>
+      <div class="form-row">
+        <label>Your name<input type="text" name="name" autocomplete="name" placeholder="So the host knows who is writing" required></label>
+        <label>Email<input type="email" name="email" autocomplete="email" placeholder="Where the reply goes" required></label>
       </div>
       <fieldset>
         <legend>What you are into <span>(optional)</span></legend>
@@ -483,17 +461,13 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
           <label><input type="checkbox" name="interest" value="Camping or RV"><span>Camping or RV</span></label>
         </div>
       </fieldset>
-      <div class="form-row">
-        <label>Your name<input type="text" name="name" autocomplete="name" placeholder="So the host knows who is writing" required></label>
-        <label>Email<input type="email" name="email" autocomplete="email" placeholder="Where the reply goes" required></label>
-      </div>
-      <label>Anything else <span>(optional)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="Dog, kids, a birthday, a question"></textarea></label>
+      <label>Anything else <span>(optional)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="Staying longer? A dog, kids, a birthday, a question"></textarea></label>
       <div class="estimate"><span>Whole place · <span id="stay-duration">Day visit</span></span><strong id="rate-total">$500</strong></div>
       <button class="button primary submit" type="submit">Send my dates</button>
-      <p class="note">Writes your request out here, ready to send. Nothing is charged, and nothing is booked until the host confirms.</p>
+      <p class="note">Opens your mail app with the request addressed to Roman. Nothing is charged, and nothing is booked until he confirms.</p>
       <div id="request-result" hidden tabindex="-1" aria-live="polite">
         <h3>Your request is ready</h3>
-        <p id="request-lead">It should have opened in your mail app. Press send there. If nothing opened, copy the text and email it to the host yourself.</p>
+        <p>Your mail app should have opened with the request addressed to Roman. Press send there. If it did not open, copy the text and email it to <a href="mailto:rvsline@gmail.com">rvsline@gmail.com</a>.</p>
         <pre id="request-text"></pre>
         <div class="actions">
           <a class="button primary" id="request-mail" href="#">Open in mail app</a>
@@ -515,7 +489,9 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </div>
     <div>
       <a class="wordmark" href="#top">EXIT 168</a>
-      <p>A cabin, a wood-fired sauna and a swimming hole <br>on the South Yuba. 168 acres of forest.</p>
+      <p>A cabin that sleeps fifteen, a wood-fired sauna and a swimming hole on the South Yuba. 168 acres of forest.</p>
+      <a href="mailto:rvsline@gmail.com">rvsline@gmail.com</a>
+      <a href="https://www.facebook.com/clubexit168">Facebook</a>
     </div>
     <div>
       <h3>Rates</h3>
@@ -523,11 +499,11 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <a href="#request">Check your dates</a>
     </div>
   </div>
-  <div class="copyright">© 2026 Exit 168 · The opening scene is an illustration based on the property's own river; every other photograph was taken at Exit 168.</div>
+  <div class="copyright">© 2026 Exit 168 · The opening scene is an illustration based on the property's own river; every other photograph was taken at Exit 168. Visits to this site are counted with Yandex Metrica and Google Analytics.</div>
 </footer>
 
 <div class="sticky-cta" id="sticky-cta" hidden>
-  <span>$500 a day · $1,000 for 24 h</span>
+  <span>$500 a day · $1,000 / 24 h</span>
   <a class="button primary" href="#request">Check your dates</a>
 </div>
 
