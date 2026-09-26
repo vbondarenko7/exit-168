@@ -1,6 +1,3 @@
-// Host address for date requests (Roman, the owner; V's decision 2026-09-25).
-const HOST_EMAIL = 'rvsline@gmail.com';
-
 // ---- language: the Russian edition lives in /ru/ and shares this script ----
 const ru = document.documentElement.lang === 'ru';
 const t = (en, russian) => ru ? russian : en;
@@ -69,6 +66,8 @@ photoDialog.addEventListener('keydown', e => {
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
 
 // ---- date request ----
+// No email on the site (V's decision 2026-09-26): the form writes the request, copies it,
+// and the visitor sends it to the club's Facebook page in Messenger.
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
 const dateInput = form.elements.date;
@@ -85,65 +84,52 @@ form.addEventListener('input', () => {
 
 function requestText() {
   const date = new Date(`${dateInput.value}T12:00:00`).toLocaleDateString(t('en-US', 'ru-RU'), { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  const guests = Number(form.elements.guests.value);
-  const interests = [...form.querySelectorAll('input[name="interest"]:checked')].map(i => i.value);
   const notes = form.elements.notes.value.trim();
-  const lines = ru ? [
-    `Заявка на Exit 168`,
-    ``,
-    `Формат: ${stayLabel()} (${stayRate()}, дом + баня)`,
-    `Первый день: ${date}`,
-    `Гостей: ${guests}`,
-    interests.length ? `Интересно: ${interests.join(', ')}` : null,
-    notes ? `Комментарий: ${notes}` : null,
-    ``,
-    `Имя: ${form.elements.name.value.trim()}`,
-    `Ответить на: ${form.elements.email.value.trim()}`,
-  ] : [
-    `Date request for Exit 168`,
-    ``,
-    `Stay: ${stayLabel()} (${stayRate()}, cabin + sauna)`,
-    `First day: ${date}`,
-    `Group: ${guests} ${guests === 1 ? 'person' : 'people'}`,
-    interests.length ? `Into: ${interests.join(', ')}` : null,
-    notes ? `Notes: ${notes}` : null,
-    ``,
-    `Name: ${form.elements.name.value.trim()}`,
-    `Reply to: ${form.elements.email.value.trim()}`,
-  ];
-  return lines.filter(line => line !== null).join('\n');
+  return [
+    t('Exit 168 booking request', 'Заявка на Exit 168'),
+    `${t('Stay', 'Формат')}: ${stayLabel()} (${stayRate()})`,
+    `${t('Arrival', 'Дата приезда')}: ${date}`,
+    `${t('Group', 'Гостей')}: ${form.elements.guests.value}`,
+    `${t('Name', 'Имя')}: ${form.elements.name.value.trim()}`,
+    `${t('Contact', 'Связь')}: ${form.elements.contact.value.trim()}`,
+    notes && `${t('Notes', 'Комментарий')}: ${notes}`,
+  ].filter(Boolean).join('\n');
 }
 
-const mailLink = document.querySelector('#request-mail');
+const requestPre = document.querySelector('#request-text');
+const copyButton = document.querySelector('#request-copy');
+// Copying must start inside the tap itself: mobile browsers refuse the clipboard once it has passed.
+async function copyRequest() {
+  try {
+    await navigator.clipboard.writeText(requestPre.textContent);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
   if (!form.reportValidity()) return;
-  const text = requestText();
-  const href = `mailto:${HOST_EMAIL}?subject=${encodeURIComponent(`${t('Exit 168 date request', 'Exit 168, заявка')}: ${stayLabel()}, ${dateInput.value}`)}&body=${encodeURIComponent(text)}`;
-  document.querySelector('#request-text').textContent = text;
-  mailLink.href = href;
+  requestPre.textContent = requestText();
+  const copied = copyRequest();
+  document.querySelector('#result-title').textContent = t('Your request is ready', 'Заявка готова');
+  requestPre.hidden = copyButton.hidden = false;
   result.hidden = false;
+  result.focus();
+  document.querySelector('#result-text').textContent = await copied
+    ? t('We copied it for you. Open Messenger, paste it into the chat with our page and send.', 'Мы её уже скопировали. Откройте Messenger, вставьте в чат с нашей страницей и отправьте.')
+    : t('Copy the text below, open Messenger, paste it into the chat with our page and send.', 'Скопируйте текст ниже, откройте Messenger, вставьте в чат с нашей страницей и отправьте.');
   // The lead Google Ads imports from Analytics as its conversion; value = the rate asked for.
   if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: form.elements.stay.value === 'overnight' ? 1000 : 500 });
-  // Clicking a mailto link hands the request to the mail app without unloading this page;
-  // setting window.location instead reloads it and wipes the text the visitor just wrote.
-  mailLink.click();
-  result.focus();
 });
 
-document.querySelector('#request-copy').addEventListener('click', async e => {
-  const button = e.currentTarget;
-  try {
-    await navigator.clipboard.writeText(document.querySelector('#request-text').textContent);
-    button.textContent = t('Copied', 'Скопировано');
-  } catch {
-    button.textContent = t('Select and copy the text above', 'Выделите и скопируйте текст выше');
-  }
-  setTimeout(() => { button.textContent = t('Copy the text', 'Скопировать текст'); }, 2500);
+copyButton.addEventListener('click', async () => {
+  copyButton.textContent = await copyRequest() ? t('Copied', 'Скопировано') : t('Select and copy the text above', 'Выделите и скопируйте текст выше');
+  setTimeout(() => { copyButton.textContent = t('Copy the text', 'Скопировать текст'); }, 2500);
 });
 
-// ---- sticky action on small screens: after the hero, hidden while the rates card or the request form is on screen ----
+// ---- sticky action on small screens: after the hero, hidden while another booking button or the form is on screen ----
 const sticky = document.querySelector('#sticky-cta');
 const hero = document.querySelector('.hero');
 if ('IntersectionObserver' in window) {
@@ -155,5 +141,5 @@ if ('IntersectionObserver' in window) {
     entries.forEach(e => e.isIntersecting ? covering.add(e.target) : covering.delete(e.target));
     update();
   }, { threshold: 0.05 });
-  document.querySelectorAll('.offer-card, #request').forEach(el => cover.observe(el));
+  document.querySelectorAll('.offer-card, #request, .section-cta').forEach(el => cover.observe(el));
 }
