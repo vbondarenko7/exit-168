@@ -157,8 +157,3 @@ if ('IntersectionObserver' in window) {
   }, { threshold: 0.05 });
   document.querySelectorAll('.offer-card, #request').forEach(el => cover.observe(el));
 }
-
-// ---- map on narrow screens: open the scrolled plate on Exit 168, not on San Francisco ----
-const mapPlate = document.querySelector('.map');
-// Once, on load: mobile browsers fire resize while the page scrolls, and re-centring then would fight the visitor.
-if (mapPlate.scrollWidth > mapPlate.clientWidth) mapPlate.scrollLeft = mapPlate.scrollWidth * 900 / 1512 - mapPlate.clientWidth / 2;
