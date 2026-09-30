@@ -74,12 +74,15 @@ const dateInput = form.elements.date;
 const now = new Date();
 dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 const stayLabel = () => form.elements.stay.value === 'overnight' ? t('24 hours', 'Сутки') : t('Day visit', 'День');
-const stayRate = () => form.elements.stay.value === 'overnight' ? t('$1,000', '$1\u00a0000') : '$500';
+// Up to 10 people is the base rate; 11–15 adds half (Roman, 2026-09-30): $750 a day, $1,500 for 24 hours.
+const bigGroup = () => Number(form.elements.guests.value) > 10;
+const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 : 500) * (bigGroup() ? 1.5 : 1);
+const stayRate = () => '$' + String(stayPrice()).replace(/\B(?=(\d{3})+$)/, t(',', '\u00a0'));
 
 form.addEventListener('input', () => {
   result.hidden = true;
   document.querySelector('#rate-total').textContent = stayRate();
-  document.querySelector('#stay-duration').textContent = stayLabel();
+  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t('up to 10', 'до\u00a010')}, ${stayLabel().toLowerCase()}`;
 });
 
 function requestText() {
@@ -121,7 +124,7 @@ form.addEventListener('submit', async e => {
     ? t('We copied it for you. Open Messenger, paste it into the chat with our page and send.', 'Мы её уже скопировали. Откройте Messenger, вставьте в чат с нашей страницей и отправьте.')
     : t('Copy the text below, open Messenger, paste it into the chat with our page and send.', 'Скопируйте текст ниже, откройте Messenger, вставьте в чат с нашей страницей и отправьте.');
   // The lead Google Ads imports from Analytics as its conversion; value = the rate asked for.
-  if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: form.elements.stay.value === 'overnight' ? 1000 : 500 });
+  if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() });
 });
 
 copyButton.addEventListener('click', async () => {
