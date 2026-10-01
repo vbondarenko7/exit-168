@@ -239,6 +239,14 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-cabin-800.webp"><img src="../assets/img/winter-cabin-800.webp" srcset="../assets/img/winter-cabin-800.webp 800w, ../assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="Дом с зелёной крышей почти целиком в снегу, к нему ведёт след снегохода" loading="lazy"></picture>
       <span class="photo-label">След снегохода<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
     </button>
+    <button class="photo" data-photo="winter-trench" aria-label="Открыть фото тропы в снегу к двери дома">
+      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-trench-800.webp"><img src="../assets/img/winter-trench-800.webp" srcset="../assets/img/winter-trench-800.webp 800w, ../assets/img/winter-trench-941.webp 941w" sizes="(max-width: 600px) 50vw, 42vw" width="800" height="1422" alt="Тропа к двери дома, прокопанная в снегу выше человеческого роста, сверху синее небо и сосны" loading="lazy"></picture>
+      <span class="photo-label">Тропа к двери<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
+    </button>
+    <button class="photo" data-photo="winter-mountain" aria-label="Открыть фото реки под заснеженным хребтом">
+      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-mountain-800.webp"><img src="../assets/img/winter-mountain-800.webp" srcset="../assets/img/winter-mountain-800.webp 800w, ../assets/img/winter-mountain-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="Южная Юба между валунами под снежными шапками, сосны и заснеженный хребет под синим небом" loading="lazy"></picture>
+      <span class="photo-label">Река и хребет<span class="arrow-circle"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span>
+    </button>
   </div>
 </section>
 
@@ -427,7 +435,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </details>
     <details>
       <summary>Можно развести костёр?<span aria-hidden="true">+</span></summary>
-      <p>В&nbsp;пожароопасный сезон, с&nbsp;конца июня по&nbsp;октябрь, открытые костры запрещены и&nbsp;здесь, и&nbsp;по&nbsp;всей Сьерре. Ваш огонь&nbsp;— печь в&nbsp;бане, в&nbsp;гостиной есть дровяная печь, на&nbsp;террасе грили.</p>
+      <p>Да, вне пожароопасного сезона. С&nbsp;конца июня по&nbsp;октябрь открытые костры запрещены и&nbsp;здесь, и&nbsp;по&nbsp;всей Сьерре: тогда ваш огонь&nbsp;— печь в&nbsp;бане, в&nbsp;гостиной есть дровяная печь, на&nbsp;террасе грили.</p>
     </details>
     <details>
       <summary>Можно с&nbsp;собакой?<span aria-hidden="true">+</span></summary>
@@ -439,7 +447,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </details>
     <details>
       <summary>Как забронировать?<span aria-hidden="true">+</span></summary>
-      <p>Отправьте даты и&nbsp;число гостей через форму ниже или напишите нам в&nbsp;<a href="https://m.me/clubexit168">Messenger</a>. Ответим, какие даты свободны. Даты за&nbsp;вами после залога, равного цене аренды; саму аренду оплачиваете за&nbsp;три дня до&nbsp;приезда. На&nbsp;сайте ничего не&nbsp;списывается.</p>
+      <p>Отправьте даты и&nbsp;число гостей через форму ниже или напишите нам в&nbsp;<a href="https://m.me/clubexit168">Messenger</a>. Ответим, какие даты свободны. Даты за&nbsp;вами после залога, равного цене аренды; саму аренду оплачиваете за&nbsp;три дня до&nbsp;приезда. И&nbsp;то, и&nbsp;другое&nbsp;— переводом через Zelle, реквизиты пришлём, когда подтвердим даты. На&nbsp;сайте ничего не&nbsp;списывается.</p>
     </details>
     <details>
       <summary>Кто следит за&nbsp;местом, пока мы там?<span aria-hidden="true">+</span></summary>
@@ -459,7 +467,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <p class="subtitle">Без оплаты и&nbsp;без карты. Напишите, когда и&nbsp;сколько вас,&nbsp;— ответим, свободны&nbsp;ли даты и&nbsp;на&nbsp;каких условиях.</p>
   </header>
   <div class="contact-panels">
-    <form id="request-form">
+    <form id="request-form" data-api="">
       <fieldset>
         <legend>На&nbsp;сколько</legend>
         <div class="rate-options">
@@ -467,14 +475,27 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
           <label><input type="radio" name="stay" value="overnight"><span>Сутки <strong>$1&nbsp;000</strong></span></label>
         </div>
       </fieldset>
+      <div class="calendar" id="calendar" hidden>
+        <p class="cal-label">Дата приезда</p>
+        <div class="cal-head">
+          <button type="button" class="cal-prev" aria-label="Предыдущий месяц"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
+          <p class="cal-title" aria-live="polite"></p>
+          <button type="button" class="cal-next" aria-label="Следующий месяц"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+        </div>
+        <div class="cal-grid"></div>
+        <ul class="cal-legend"><li class="free">Свободно</li><li class="hold">Держим, может освободиться</li><li class="busy">Занято</li></ul>
+        <p class="cal-status" id="cal-status" aria-live="polite"></p>
+      </div>
       <div class="form-row">
-        <label>Дата приезда<input type="date" name="date" required></label>
-        <label>Сколько вас<input type="number" name="guests" min="1" max="99" step="1" inputmode="numeric" placeholder="В&nbsp;цену входит до&nbsp;10" required></label>
+        <label id="date-field">Дата приезда<input type="date" name="date" required></label>
+        <label id="nights-field" hidden>Сколько суток<select name="nights"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option></select></label>
+        <label>Сколько вас<input type="number" name="guests" min="1" max="15" step="1" inputmode="numeric" placeholder="В&nbsp;цену входит до&nbsp;10" required></label>
       </div>
       <div class="form-row">
         <label>Ваше имя<input type="text" name="name" autocomplete="name" required></label>
         <label>Телефон или почта<input type="text" name="contact" autocomplete="tel" placeholder="Куда вам ответить" required></label>
       </div>
+      <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
       <label>Что-то ещё <span>(необязательно)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="Рыбалка, эндуро, кемпинг, собака, дети, день рождения, вопрос"></textarea></label>
       <div class="estimate"><span>Всё место · <span id="stay-duration">до&nbsp;10, день</span></span><strong id="rate-total">$500</strong></div>
       <button class="button primary submit" type="submit">Отправить через Messenger</button>
