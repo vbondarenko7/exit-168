@@ -154,8 +154,8 @@ if (API) loadBusy().then(() => {
   dateInput.required = false; // the calendar checks the date itself on submit
   form.querySelector('.submit').textContent = t('Hold these dates', 'Забронировать даты');
   form.querySelector('.submit + .note').textContent = t(
-    'We hold the dates for 24 hours and message you where to send the deposit. Nothing is charged on this site.',
-    'Держим даты 24 часа и пишем вам, куда перевести залог. На сайте ничего не списывается.');
+    'We hold the dates for 24 hours and message you where to send the deposit. The deposit equals the rent, goes by Zelle and comes back after your stay; the rent is due three days before you arrive. Cancellation terms are in the questions above. Nothing is charged on this site.',
+    'Держим даты 24 часа и пишем вам, куда перевести залог. Залог равен цене аренды, через Zelle, и вернётся после выезда; аренду платите за три дня до приезда. Правила отмены — в вопросах выше. На сайте ничего не списывается.');
   renderCalendar();
 }).catch(() => {}); // no answer: the plain date field and Messenger keep working
 
@@ -196,7 +196,8 @@ async function copyRequest() {
 function showResult(title, text, withCopy) {
   document.querySelector('#result-title').textContent = title;
   document.querySelector('#result-text').textContent = text;
-  requestPre.hidden = copyButton.hidden = !withCopy;
+  // A hold needs nothing more from the guest: Messenger and copy show only for the Messenger request.
+  requestPre.hidden = result.querySelector('.actions').hidden = !withCopy;
   result.hidden = false;
   result.focus();
 }
@@ -223,9 +224,9 @@ async function holdDates() {
   if (!res.ok || !data.ok) return false;
   stayDays().forEach(d => { busy[d] = 'hold'; });
   const until = new Date(data.holdUntil).toLocaleString(locale, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-  showResult(t('Your dates are held', 'Даты за вами'), t(
-    `We hold them until ${until}. We will message you at ${fields.contact} with where to send the deposit, ${stayRate()}. Nothing is charged on this site.`,
-    `Держим до ${until}. Напишем вам по ${fields.contact}, куда перевести залог, ${stayRate()}. На сайте ничего не списывается.`), false);
+  showResult(t('Your dates are held', 'Держим ваши даты'), t(
+    `We hold them until ${until}. We will message you at ${fields.contact} with where to send the deposit, ${stayRate()}.`,
+    `Держим до ${until}. Напишем вам по ${fields.contact}, куда перевести залог, ${stayRate()}.`), false);
   dateInput.value = '';
   renderCalendar();
   countLead();
