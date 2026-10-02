@@ -9,6 +9,13 @@ document.querySelectorAll('.lang a').forEach(a => a.addEventListener('click', ()
   a.hash = location.hash;
 }));
 
+// ---- Messenger ----
+// On a computer m.me opens messenger.com, which asks for a separate login; the chat inside facebook.com
+// uses the session people already have (V, 2026-10-02). Phones keep m.me: it opens the Messenger app.
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('a[href="https://m.me/clubexit168"]').forEach(a => { a.href = 'https://www.facebook.com/messages/t/clubexit168'; });
+}
+
 // ---- navigation ----
 const menuButton = document.querySelector('.menu-toggle');
 const menu = document.querySelector('#mobile-nav');
