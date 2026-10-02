@@ -37,6 +37,7 @@ const photos = [
   ['living', 'assets/img/living-1440.webp', 'The living room', 'Гостиная'],
   ['sauna', 'assets/img/sauna-1600.webp', 'The sauna benches', 'Полок в бане'],
   ['cabin', 'assets/img/cabin-1400.webp', 'The cabin from the road', 'Дом со стороны дороги'],
+  ['gate', 'assets/img/gate-1440.webp', 'The gate of the property', 'Ворота участка'],
   ['winter-night', 'assets/img/winter-night-1350.webp', 'The cabin under snow at night', 'Дом под снегом ночью'],
   ['winter-river', 'assets/img/winter-river-1500.webp', 'The river between the snowdrifts', 'Река между сугробами'],
   ['winter-cabin', 'assets/img/winter-cabin-1600.webp', 'The cabin in winter, with the snowmobile track to the door', 'Дом зимой, к двери ведёт след снегохода'],
@@ -73,6 +74,204 @@ photoDialog.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { e.preventDefault(); showPhoto(photoIndex + 1); }
 });
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
+
+// ---- scroll scenes: the place from above, and the banya ----
+// Both pin to the screen and play out over the scroll. With reduced motion, or without this script,
+// the stylesheet shows their end state: the clearing with its pins (in summer), the stove alight with every step.
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp01 = v => Math.min(1, Math.max(0, v));
+const easeInOut = v => v < .5 ? 4 * v * v * v : 1 - (-2 * v + 2) ** 3 / 2;
+const progress = track => { const r = track.getBoundingClientRect(); return clamp01(-r.top / (r.height - innerHeight)); };
+// Each scene follows the scroll with a short lag, so a mouse wheel's 100-pixel jumps play as one smooth move.
+const scenes = [];
+let running = false, last = 0;
+const frame = now => {
+  const k = 1 - Math.exp(-(last ? now - last : 16.7) / 130); // about 95% of the way in 0.4 s
+  last = now;
+  let moving = false;
+  scenes.forEach(s => {
+    const to = progress(s.track), p = s.p + (to - s.p) * k;
+    s.p = Math.abs(to - p) < 1e-4 ? to : p;
+    if (s.p !== to) moving = true;
+    if (s.p !== s.drawn) { s.drawn = s.p; s.draw(s.p); }
+  });
+  running = moving;
+  if (moving) requestAnimationFrame(frame); else last = 0;
+};
+const queue = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+const scene = (track, draw, measure = () => {}) => scenes.push({ track, draw, measure, p: progress(track), drawn: NaN });
+// One full-screen quad drawn by one fragment shader; null without WebGL or when the shader does not build.
+const glQuad = (canvas, frag, attrs) => {
+  const gl = canvas.getContext('webgl', attrs);
+  if (!gl) return null;
+  const shader = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, shader(gl.VERTEX_SHADER, 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}'));
+  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
+  gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  return { gl, u: name => gl.getUniformLocation(prog, name) };
+};
+
+// Winter: a snowfall thickens over the summer view, the snowed-in view comes up under it, and the fall eases to a few flakes.
+// Flakes sit at depths: far ones small, slow and faint, near ones large, quicker and out of focus; all drift in a slow wind.
+// Returns the setter for the season, 0 summer … 1 winter.
+const snowfall = (stage, img, canvas, veil) => {
+  const ctx = canvas.getContext('2d');
+  // a round flake 64 px across; soft is the share of the radius that fades out
+  const sprite = soft => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d'), r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, '#fff'); r.addColorStop(1 - soft, '#ffffffeb'); r.addColorStop(1, '#fff0');
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    return c;
+  };
+  const sprites = [sprite(.45), sprite(.75), sprite(1)];
+  let flakes = [], w = 0, h = 0, density = 0, last = 0, running = false, onScreen = false;
+  const size = () => {
+    const d = Math.min(devicePixelRatio, 2);
+    w = stage.clientWidth; h = stage.clientHeight;
+    canvas.width = Math.round(w * d); canvas.height = Math.round(h * d);
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    flakes = Array.from({ length: Math.min(2400, Math.round(w * h / 600)) }, () => {
+      const z = Math.random() ** 1.7; // most flakes are far away
+      return {
+        z, x: Math.random() * w, y: Math.random() * h, at: Math.random() * .9, // at: the density at which this flake joins
+        r: .8 + z * z * 11, vy: 26 + z * 130 + Math.random() * 14, sway: 3 + z * 16, f: .5 + Math.random() * 1.1, ph: Math.random() * 7,
+        img: sprites[z < .45 ? 0 : z < .8 ? 1 : 2], a: z < .8 ? .5 + z * .45 : .5, tall: 1 + z * z * .7, // near flakes smear a little as they fall
+      };
+    });
+  };
+  const fall = ms => {
+    const t = ms / 1000, dt = last ? Math.min(.05, t - last) : 0;
+    last = t;
+    const wind = 12 + 9 * Math.sin(t * .21) + 5 * Math.sin(t * .57 + 1.3);
+    ctx.clearRect(0, 0, w, h);
+    for (const k of flakes) {
+      k.y += k.vy * dt; k.x += wind * (.3 + .7 * k.z) * dt;
+      if (k.y > h + k.r) { k.y = -k.r; k.x = Math.random() * w; }
+      if (k.x > w + k.r) k.x -= w + 2 * k.r;
+      const a = k.a * clamp01((density - k.at) / .1);
+      if (a <= 0) continue;
+      ctx.globalAlpha = a;
+      ctx.drawImage(k.img, k.x + Math.sin(t * k.f + k.ph) * k.sway - k.r, k.y - k.r * k.tall, k.r * 2, k.r * 2 * k.tall);
+    }
+    running = onScreen && density > 0;
+    if (running) requestAnimationFrame(fall); else { ctx.clearRect(0, 0, w, h); last = 0; }
+  };
+  const start = () => { if (!running && onScreen && density > 0) { running = true; requestAnimationFrame(fall); } };
+  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; start(); }).observe(stage);
+  addEventListener('resize', size);
+  size();
+  return s => {
+    img.style.opacity = clamp01((s - .3) / .45);
+    veil.style.opacity = (.3 * Math.sin(Math.PI * s) ** 1.5).toFixed(3); // the fall is thickest while the seasons swap
+    density = s < .5 ? clamp01(s / .4) : 1 - .8 * clamp01((s - .5) / .5);
+    start();
+  };
+};
+
+// The wide aerial zooms into the clearing; the close view fades in exactly where it sits in the wide one.
+// Then the two pins come up, and last the same view goes under snow.
+const estate = document.querySelector('.estate-track');
+if (estate && !still) {
+  const wide = estate.querySelector('.estate-wide');
+  const close = estate.querySelector('.estate-close');
+  const shield = estate.querySelector('.estate-shield');
+  const pins = [...estate.querySelectorAll('.pin')];
+  const stage = estate.querySelector('.estate-stage');
+  const winter = snowfall(stage, close.querySelector('.estate-winter'), stage.querySelector('.estate-snow'), stage.querySelector('.estate-veil'));
+  // The close view's frame inside the wide one, as fractions of the wide picture (fitted on the cabin, the sauna and the bridge).
+  const inWide = { x: .2669, y: .3770, w: .4082 };
+  let g;
+  const measure = () => {
+    const w = wide.offsetWidth, h = wide.offsetHeight;
+    const ow = [wide.offsetLeft, wide.offsetTop], oc = [close.offsetLeft, close.offsetTop];
+    const a1 = 1 / inWide.w; // the zoom that makes the frame fill the screen
+    g = { ow, oc, a1, b1: [oc[0] - a1 * (ow[0] + inWide.x * w), oc[1] - a1 * (ow[1] + inWide.y * h)] };
+  };
+  const draw = p => {
+    const e = easeInOut(clamp01((p - .03) / .35));
+    const { ow, oc, a1, b1 } = g;
+    // Zoom about the frame's fixed point: scale grows geometrically, so the speed feels even.
+    const a = a1 ** e, k = (a - 1) / (a1 - 1), b = [b1[0] * k, b1[1] * k], ac = a / a1;
+    wide.style.transform = `translate(${a * ow[0] + b[0] - ow[0]}px,${a * ow[1] + b[1] - ow[1]}px) scale(${a})`;
+    close.style.transform = `translate(${ac * (oc[0] - b1[0]) + b[0] - oc[0]}px,${ac * (oc[1] - b1[1]) + b[1] - oc[1]}px) scale(${ac})`;
+    close.style.opacity = clamp01((e - .45) / .4);
+    close.classList.toggle('is-growing', e < .995);
+    close.style.setProperty('--feather', `${(14 * clamp01((1 - e) / .55)).toFixed(2)}%`);
+    shield.style.opacity = 1 - clamp01(e / .25);
+    pins.forEach((pin, i) => pin.classList.toggle('is-on', p > .41 + i * .04));
+    winter(clamp01((p - .58) / .3));
+  };
+  measure();
+  scene(estate, draw, measure);
+}
+
+// The banya: five steps over the scroll; the fire takes on "light the stove", the river comes on the last step.
+const ritual = document.querySelector('.ritual-track');
+if (ritual && !still) {
+  const stage = ritual.querySelector('.ritual-stage');
+  const steps = [...stage.querySelectorAll('.ritual-steps li')];
+  const draw = p => {
+    const now = Math.min(steps.length - 1, Math.floor(p * steps.length));
+    steps.forEach((li, i) => { li.classList.toggle('is-now', i === now); li.classList.toggle('is-done', i < now); });
+    stage.style.setProperty('--p', p.toFixed(4));
+    stage.style.setProperty('--fire', clamp01((p - .17) / .2).toFixed(3));
+    stage.style.setProperty('--river', clamp01((p - .8) / .08).toFixed(3));
+  };
+  scene(ritual, draw);
+
+  // Firelight: the room's glow flickers and a live flame burns in the open firebox, only while the scene is on screen.
+  const flame = stage.querySelector('.ritual-flame');
+  const fire = glQuad(flame, `precision mediump float;uniform float t;uniform vec2 r;
+      float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+      float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.03;a*=.5;}return v;}
+      void main(){vec2 u=gl_FragCoord.xy/r;
+        float body=(1.-u.y)*1.2-abs(u.x-.5)*1.4;
+        float f=clamp(body+(fbm(vec2(u.x*3.2,u.y*2.6-t*1.7))-.5)*1.3,0.,1.);
+        f=smoothstep(.3,.95,f);
+        f*=smoothstep(0.,.18,u.y)*smoothstep(0.,.2,u.x)*smoothstep(0.,.2,1.-u.x)*smoothstep(0.,.12,1.-u.y)*.85;
+        vec3 c=mix(vec3(.45,.07,0.),vec3(1.,.42,.05),smoothstep(.1,.45,f));
+        c=mix(c,vec3(1.,.78,.4),smoothstep(.55,.85,f));
+        gl_FragColor=vec4(c*f,1.);}`, { premultipliedAlpha: false, antialias: false });
+  let fireDraw = () => {};
+  if (fire) {
+    const { gl, u } = fire, uT = u('t'), uR = u('r');
+    fireDraw = t => {
+      const w = Math.round(flame.clientWidth * devicePixelRatio), h = Math.round(flame.clientHeight * devicePixelRatio);
+      if (flame.width !== w || flame.height !== h) { flame.width = w; flame.height = h; gl.viewport(0, 0, w, h); }
+      gl.uniform1f(uT, t); gl.uniform2f(uR, w, h);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+  }
+  let burning = false;
+  const burn = ms => {
+    if (!burning) return;
+    const t = ms / 1000;
+    // three detuned waves read as a fire breathing, without a noise texture
+    stage.style.setProperty('--flick', (.78 + .14 * Math.sin(t * 7.1) + .08 * Math.sin(t * 13.3 + 1.7) + .05 * Math.sin(t * 23.9 + .4)).toFixed(3));
+    fireDraw(t);
+    requestAnimationFrame(burn);
+  };
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !burning) { burning = true; requestAnimationFrame(burn); }
+    if (!e.isIntersecting) burning = false;
+  }).observe(stage);
+}
+
+if (scenes.length) {
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', () => { scenes.forEach(s => { s.measure(); s.drawn = NaN; }); queue(); });
+  queue();
+}
 
 // ---- date request ----
 // With the booking service (form data-api, the Cloudflare Worker in календарь/) the form shows live
@@ -267,7 +466,7 @@ copyButton.addEventListener('click', async () => {
   setTimeout(() => { copyButton.textContent = t('Copy the text', 'Скопировать текст'); }, 2500);
 });
 
-// ---- sticky action on small screens: after the hero, hidden while another booking button or the form is on screen ----
+// ---- sticky action on small screens: after the hero, hidden while another booking button, the form or a full-screen scene is on screen ----
 const sticky = document.querySelector('#sticky-cta');
 const hero = document.querySelector('.hero');
 if ('IntersectionObserver' in window) {
@@ -279,5 +478,5 @@ if ('IntersectionObserver' in window) {
     entries.forEach(e => e.isIntersecting ? covering.add(e.target) : covering.delete(e.target));
     update();
   }, { threshold: 0.05 });
-  document.querySelectorAll('.offer-card, #request, .section-cta').forEach(el => cover.observe(el));
+  document.querySelectorAll('.offer-card, #request, .section-cta, .estate-stage, .ritual-stage').forEach(el => cover.observe(el));
 }

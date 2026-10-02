@@ -96,12 +96,103 @@ h3{font-size:var(--title);line-height:1.4}
 .photo-label::after{right:0;top:-24px}
 
 /* ---------- fact cards ---------- */
-.fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gutter)}
 .fact-card{background:var(--card);border:1px solid #384a49;padding:var(--inset);min-width:0}
-.fact-card>.photo{aspect-ratio:16/10}
-.fact-card h3{margin:32px 0 16px}
 .fact-card li{padding:11px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6}
 .fact-card li:last-child{border-bottom:1px solid #364947}
+
+/* ---------- scroll scenes share one placement rule: a 3:2 picture covers its stage,
+   with the picture point (--ax,--ay) held at the stage point (--sx,--sy) as far as the edges allow ---------- */
+.estate-wide,.estate-close,.estate-pins,.ritual-scene{
+  position:absolute;--w:max(calc(var(--zw,100) * 1cqw),150cqh);width:var(--w);height:calc(var(--w) / 1.5);transform-origin:0 0;
+  left:clamp(calc(100cqw - var(--w)),calc(var(--sx,.5) * 100cqw - var(--ax,.5) * var(--w)),0px);
+  top:clamp(calc(100cqh - var(--w) / 1.5),calc(var(--sy,.5) * 100cqh - var(--ay,.5) * var(--w) / 1.5),0px)}
+
+/* ---------- the place from above: the wide aerial zooms into the clearing, then the pins come up ---------- */
+.estate-stage{position:relative;height:min(100svh,66.67vw);min-height:520px;overflow:hidden;container-type:size;background:var(--night)}
+.estate-wide{--ax:.47;--ay:.585;display:none}
+.estate-close,.estate-pins{--ax:.51;--ay:.53}
+.estate-wide img,.estate-close img{position:absolute;inset:0}
+/* the same view in winter: only the scroll scene shows it (the winter photographs further down carry it otherwise);
+   a snowfall and a pale veil cover the change */
+.estate-winter,.estate-snow,.estate-veil{display:none}
+.estate-snow,.estate-veil{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.estate-veil{background:#dfe5e8;opacity:0}
+/* while the close view grows over the wide one its edges melt in, so no seam shows */
+.estate-close.is-growing{--f:var(--feather,0%);-webkit-mask-image:linear-gradient(90deg,#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000),linear-gradient(#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000),linear-gradient(#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000);mask-composite:intersect}
+.estate-shield{position:absolute;left:71%;top:15.5%;padding:3px 9px;background:var(--night);border:1px solid #6f8582;border-radius:4px;font:500 12px/1.4 var(--sans);letter-spacing:.08em;color:var(--soft)}
+.pin{position:absolute;left:var(--x);top:var(--y);display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%);color:var(--ivory);font:400 18px/1 Forum,Georgia,serif;letter-spacing:.06em;text-transform:uppercase}
+.pin>span{display:block;padding:11px 16px 9px;background:var(--night);border:1px solid #efe7d240;transition:background .18s ease-out,color .18s ease-out}
+.pin::before{content:'';order:2;width:1px;height:28px;background:var(--ivory)}
+.pin::after{content:'';order:3;width:15px;height:15px;margin-bottom:-7.5px;border-radius:50%;background:var(--ivory);border:3px solid var(--night)}
+button.pin:hover>span{background:var(--ivory);color:#000}
+.pin:focus-visible{outline:none}
+.pin:focus-visible>span{outline:2px solid var(--ivory);outline-offset:4px}
+.estate-note{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:8px 24px;flex-wrap:wrap;padding:48px 24px 18px;background:linear-gradient(180deg,#0f232100,#0f2321d9);font:500 11px/1.6 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);pointer-events:none}
+
+/* ---------- the deal ---------- */
+.deal{padding:var(--section-top) 24px;text-align:center}
+.deal h2{font-size:var(--display);line-height:1.02;max-width:20ch;margin:auto}
+.deal p{max-width:52ch;margin:40px auto 0;font-size:17px;line-height:1.75;color:var(--soft)}
+
+/* ---------- the banya: the stove takes fire as the steps go by, then the river ---------- */
+.ritual-stage{position:relative;height:100svh;min-height:560px;overflow:hidden;container-type:size;background:#000}
+.ritual-scene{--zw:135;--ax:.547;--sx:.68;--ay:.79;--sy:.78}
+.ritual-scene img{position:absolute;inset:0}
+.ritual-dark{filter:brightness(.42) saturate(.6)}
+.ritual-glow{position:absolute;inset:0;background:radial-gradient(ellipse 34% 30% at 43% 81%,#ff8a2e8c,#ff6a1e26 55%,#ff6a1e00 100%);mix-blend-mode:screen;opacity:.6;pointer-events:none}
+.ritual-flame{position:absolute;left:41.5%;top:73.2%;width:3.6%;height:12.3%;mix-blend-mode:screen;clip-path:polygon(5% 2%,96% 10%,93% 98%,9% 90%);display:none}
+.ritual-river{position:absolute;inset:0;object-position:50% 62%;opacity:0}
+.ritual-stage::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.9) 0%,rgba(8,27,24,.72) 30%,rgba(8,27,24,.2) 50%,rgba(8,27,24,0) 62%)}
+.ritual-copy{position:absolute;z-index:2;left:6.5vw;top:0;bottom:0;width:min(560px,38vw);display:flex;flex-direction:column;justify-content:center}
+.ritual-steps{margin:44px 0 0;padding:0;list-style:none}
+.ritual-steps li{padding:15px 0;border-top:1px solid #efe7d22e;font:400 20px/1.35 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase;transition:opacity .4s ease-out}
+.ritual-steps li:last-child{border-bottom:1px solid #efe7d22e}
+.ritual-river-note{margin-top:22px;max-width:46ch;color:var(--soft);line-height:1.7}
+.ritual-foot{position:absolute;left:0;right:0;bottom:40px}
+.ritual-progress{height:1px;margin-top:18px;background:#efe7d22e}
+.ritual-progress span{display:block;width:calc(var(--p,1) * 100%);height:100%;background:var(--ivory)}
+
+/* With script and motion allowed, both scenes pin to the screen and play out over the scroll. */
+@media(prefers-reduced-motion:no-preference){
+  .js .estate-track{height:360svh}
+  .js .estate-stage{position:sticky;top:0;height:100svh}
+  .js .estate-wide,.js .estate-snow,.js .estate-veil{display:block}
+  .js .estate-winter{display:block;opacity:0}
+  .js .estate-close{opacity:0}
+  .js .pin{opacity:0;translate:0 10px;pointer-events:none;transition:opacity .5s ease-out,translate .6s cubic-bezier(.16,1,.3,1)}
+  .js .pin.is-on,.js .pin:focus-visible{opacity:1;translate:0 0;pointer-events:auto}
+  .js .ritual-track{height:420svh}
+  .js .ritual-stage{position:sticky;top:0}
+  .js .ritual-fire{opacity:var(--fire,0)}
+  .js .ritual-glow{opacity:calc(var(--fire,0) * var(--flick,.6))}
+  .js .ritual-flame{display:block;opacity:var(--fire,0)}
+  .js .ritual-river,.js .ritual-river-note{opacity:var(--river,0)}
+  .js .ritual-river-note{transition:opacity .3s ease-out}
+  .js .ritual-steps li{opacity:.36}
+  .js .ritual-steps li.is-done{opacity:.6}
+  .js .ritual-steps li.is-now{opacity:1}
+}
+
+/* ---------- how it works: the gate photo beside four large steps, then what to bring ---------- */
+.route-body{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start;max-width:1240px;margin:0 auto;padding:0 24px}
+.route-photo{position:sticky;top:40px;aspect-ratio:4/5}
+.route-steps{list-style:none;margin:0;padding:0}
+.route-steps li{padding:40px 0 44px;border-top:1px solid var(--line)}
+.route-steps li:first-child{padding-top:0;border-top:0}
+.route-steps h3{font-size:40px;line-height:1.1}
+.route-steps p{margin-top:16px;max-width:46ch;font-size:17px;line-height:1.7;color:var(--soft)}
+.pack{max-width:1240px;margin:120px auto 0;padding:56px 60px 60px;background:var(--card);border:1px solid #384a49}
+.pack h3{font-size:var(--headline);line-height:1.111}
+.pack dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 48px;margin-top:44px}
+/* the three items share rows, so the notes start on one line however the words wrap */
+.pack dl>div{display:grid;grid-row:span 2;grid-template-rows:subgrid;padding-top:28px;border-top:1px solid var(--ivory)}
+.pack dt{font:400 40px/1.15 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase}
+.pack dd{margin-top:16px;font-size:17px;line-height:1.7;color:var(--soft)}
+.route .section-cta{margin-top:64px}
+
+/* ---------- the cabin ---------- */
+.house-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;max-width:1240px;margin:0 auto}
+.house-card>.photo{aspect-ratio:4/3}
 
 /* ---------- where: map ---------- */
 .map{margin:0 var(--gutter);background:var(--panel);border:1px solid #2a3c3b}
@@ -160,11 +251,11 @@ h3{font-size:var(--title);line-height:1.4}
 /* ---------- offer ---------- */
 .offer{padding:150px 24px 80px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center}
 .offer-card{background:var(--card);border:1px solid #384a49;padding:24px 24px 45px;text-align:center;width:602px;max-width:100%}
-.offer-card>img{height:300px;filter:brightness(.85)}
 .offer-card h2{font-size:40px;line-height:1.1;margin:24px 0 36px}
 .offer-rates{display:flex;justify-content:center;gap:50px;margin:24px 0}
 .offer-rates strong{display:block;font:400 54px/1.1 Forum,Georgia,serif}
 .offer-rates span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;color:var(--muted)}
+.offer-per{max-width:40ch;margin:0 auto 26px;font-size:14px;color:var(--soft)}
 .offer-terms{max-width:40ch;margin:0 auto}
 .offer-terms li{padding:12px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6}
 .offer-terms li:last-child{border-bottom:1px solid #364947}
@@ -297,7 +388,19 @@ dialog::backdrop{background:#000d}
   .hero h1{max-width:22ch}
   .hero-sub{max-width:52ch}
   .hero .actions{margin-top:34px}
-  .fact-grid{grid-template-columns:1fr}
+  .ritual-scene{--zw:100;--ax:.48;--sx:.5}
+  .ritual-stage::after{background:linear-gradient(180deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.84) 36%,rgba(8,27,24,.3) 56%,rgba(8,27,24,0) 68%)}
+  .ritual-copy{left:0;right:0;top:0;bottom:auto;width:auto;padding:96px 6vw 0;justify-content:flex-start}
+  .ritual-steps{margin-top:28px}
+  .ritual-foot{display:none}
+  .route-body{grid-template-columns:1fr;gap:48px;max-width:720px}
+  .route-photo{position:relative;top:0;aspect-ratio:4/3}
+  .pack{margin:96px 24px 0;padding:44px 40px 48px}
+  .pack h3{font-size:42px}
+  .pack dl{grid-template-columns:1fr;gap:32px;margin-top:36px}
+  .pack dl>div{display:block}
+  .house-card{grid-template-columns:1fr;gap:24px;margin:0 var(--gutter)}
+  .deal p{font-size:16px}
   .map .map-wide{display:none}
   .map .map-narrow{display:block;max-width:480px;margin:auto}
   .arrival-card dl{grid-template-columns:1fr}
@@ -330,7 +433,23 @@ dialog::backdrop{background:#000d}
   .section-head h2 br{display:none}
   .subtitle{margin-top:24px;max-width:38ch}
   .fact-card{padding:16px 16px 24px}
-  .fact-card h3{margin:24px 0 12px}
+  .ritual-copy{padding:72px 22px 0}
+  .ritual-steps li{font-size:16px;padding:10px 0}
+  .ritual-river-note{margin-top:16px;font-size:15px}
+  .pin{font-size:13px}
+  .pin>span{padding:7px 9px 5px}
+  .pin::before{height:20px}
+  .estate-note{padding:72px 16px 14px;flex-direction:column;background:linear-gradient(180deg,#0f232100,#0f2321e6 45%)}
+  .route-body{padding:0 20px;gap:36px}
+  .route-steps li{padding:32px 0 34px}
+  .route-steps h3{font-size:32px}
+  .route-steps p{margin-top:12px;font-size:16px}
+  .pack{margin:72px var(--gutter) 0;padding:32px 20px 36px}
+  .pack h3{font-size:32px}
+  .pack dl{gap:28px;margin-top:28px}
+  .pack dl>div{padding-top:22px}
+  .pack dt{font-size:30px}
+  .pack dd{font-size:16px}
   .arrival-card{padding:28px 20px}
   .arrival-card h3{margin-bottom:16px}
   .arrival-photo{height:380px}
@@ -347,7 +466,6 @@ dialog::backdrop{background:#000d}
   .know dt{font-size:18px}
   .offer{padding:100px 18px 50px}
   .offer-card{padding:16px 16px 30px}
-  .offer-card>img{height:210px}
   .offer-card h2{font-size:30px;margin:24px 0 28px}
   .offer-rates{gap:30px}
   .offer-rates strong{font-size:44px}
@@ -375,6 +493,10 @@ dialog::backdrop{background:#000d}
   .sticky-cta .button{padding:12px 14px;letter-spacing:.08em}
 }
 /* phones on their side: copy beside the guest, as on desktop, instead of below a 720px-tall scene */
+@media(max-width:900px) and (max-height:760px){
+  /* short phones: the river note reaches the bright rocks, so the shade goes further down */
+  .ritual-stage::after{background:linear-gradient(180deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.86) 50%,rgba(8,27,24,.5) 72%,rgba(8,27,24,0) 86%)}
+}
 @media(orientation:landscape) and (max-height:500px){
   .hero,.hero-content{min-height:100svh}
   .hero-image{object-position:30% 40%}
@@ -384,6 +506,15 @@ dialog::backdrop{background:#000d}
   .hero-sub{font-size:14px;line-height:1.6}
   .hero .actions{margin-top:18px;gap:10px}
   .hero .button{min-height:48px;padding:12px 16px}
+  .estate-stage,.ritual-stage{min-height:0}
+  .ritual-scene{--zw:135;--ax:.547;--sx:.7}
+  .ritual-stage::after{background:linear-gradient(90deg,rgba(8,27,24,.9) 0%,rgba(8,27,24,.72) 34%,rgba(8,27,24,0) 60%)}
+  .ritual-copy{left:5vw;right:auto;top:0;bottom:0;width:46vw;padding:0;justify-content:center}
+  .ritual-copy h2{font-size:24px}
+  .ritual-steps{margin-top:12px}
+  .ritual-steps li{font-size:13px;padding:5px 0}
+  .ritual-river-note{display:none}
+  .ritual-foot{position:static;margin-top:10px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
