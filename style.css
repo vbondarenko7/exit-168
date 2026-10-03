@@ -238,15 +238,22 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .winter-grid .photo:first-child img{object-position:50% 70%}
 .winter-grid [data-photo="winter-trench"] img{object-position:50% 35%}
 
-/* ---------- good to know ---------- */
-.know{max-width:1000px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr}
-.know>div{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:24px 0;border-top:1px solid var(--line)}
-.know>div:last-child{border-bottom:1px solid var(--line)}
-.know dt{font:400 20px/1.4 Forum,Georgia,serif;text-transform:uppercase;letter-spacing:.005em}
-.land-ledger>div{grid-template-columns:240px 1fr}
-.land-ledger dt{display:flex;align-items:center;gap:16px}
-.land-ledger dt .icon{width:30px;height:30px}
-.know dd{color:var(--soft);max-width:66ch;line-height:1.75}
+/* the place for time alone with nature: a morning on the deck, then what there is to do */
+.nature{margin-top:var(--section-top)}
+.nature-photo{position:relative;height:min(78svh,720px);min-height:520px;overflow:hidden}
+.nature-photo img{position:absolute;inset:0;object-position:60% 72%}
+.nature-photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.84) 34%,rgba(8,27,24,.3) 54%,rgba(8,27,24,0) 66%)}
+.nature-copy{position:absolute;z-index:1;left:6.5vw;top:0;bottom:0;width:min(700px,50vw);display:flex;flex-direction:column;justify-content:center}
+.nature-copy p{margin-top:28px;max-width:40ch;font-size:17px;line-height:1.7;color:var(--soft)}
+.nature-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1240px;margin:0 auto;padding:24px 24px 0}
+.nature-list>div{padding:44px 40px 48px;border-bottom:1px solid var(--line)}
+.nature-list>div:not(:nth-child(3n+1)){border-left:1px solid var(--line)}
+.nature-list>div:nth-child(3n+1){padding-left:0}
+.nature-list>div:nth-child(3n){padding-right:0}
+.nature-list dt{font:400 24px/1.25 Forum,Georgia,serif;text-transform:uppercase;letter-spacing:.005em}
+.nature-list dt .icon{display:block;width:36px;height:36px;margin-bottom:22px}
+.nature-list dd{margin-top:12px;color:var(--soft);line-height:1.7}
+.nature-note{margin-top:56px;padding:0 24px;text-align:center}
 
 /* ---------- offer ---------- */
 .offer{padding:150px 24px 80px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center}
@@ -366,6 +373,8 @@ dialog::backdrop{background:#000d}
   .navigation nav:not(.mobile-nav){gap:22px}
   :root{--display:56px}
   .arrival-card{padding:40px 28px}
+  .nature-copy{width:60vw}
+  .nature-copy h2{font-size:44px}
   .contact-info,form{padding:44px 32px}
   .rate-options label>span{flex-wrap:wrap;gap:2px 12px}
   .map-wide .map-pin text{font-size:24px}
@@ -400,6 +409,16 @@ dialog::backdrop{background:#000d}
   .pack dl{grid-template-columns:1fr;gap:32px;margin-top:36px}
   .pack dl>div{display:block}
   .house-card{grid-template-columns:1fr;gap:24px;margin:0 var(--gutter)}
+  .nature-photo{height:auto;min-height:0;overflow:visible}
+  .nature-photo img{position:static;height:min(62svh,560px);object-position:78% 70%}
+  .nature-photo::after{display:none}
+  .nature-copy{position:static;width:auto;padding:48px 24px 0}
+  .nature-copy h2{font-size:var(--headline)}
+  .nature-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nature-list>div,.nature-list>div:nth-child(n){padding:36px 28px 40px;border-left:0}
+  .nature-list>div:nth-child(2n){border-left:1px solid var(--line)}
+  .nature-list>div:nth-child(2n+1){padding-left:0}
+  .nature-list>div:nth-child(2n){padding-right:0}
   .deal p{font-size:16px}
   .map .map-wide{display:none}
   .map .map-narrow{display:block;max-width:480px;margin:auto}
@@ -409,8 +428,6 @@ dialog::backdrop{background:#000d}
   .arrival-card{padding:34px 26px}
   .arrival-card h3{gap:14px;font-size:18px}
   .arrival-card .icon{width:30px;height:30px}
-  .know>div{grid-template-columns:150px 1fr;gap:20px}
-  .land-ledger>div{grid-template-columns:200px 1fr}
   .contact-panels{grid-template-columns:1fr}
   .contact-info,form{padding:45px}
   .sticky-cta{position:fixed;z-index:6;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:#0f2321f2;border-top:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
@@ -453,6 +470,15 @@ dialog::backdrop{background:#000d}
   .arrival-card{padding:28px 20px}
   .arrival-card h3{margin-bottom:16px}
   .arrival-photo{height:380px}
+  .nature-photo img{height:auto;aspect-ratio:4/5;object-position:82% 70%}
+  .nature-copy{padding:36px 20px 0}
+  .nature-copy h2 br{display:none}
+  .nature-copy p{margin-top:20px}
+  .nature-list{grid-template-columns:1fr;padding:12px 20px 0}
+  .nature-list>div,.nature-list>div:nth-child(n){padding:28px 0 30px;border-left:0}
+  .nature-list dt{font-size:20px}
+  .nature-list dt .icon{width:30px;height:30px;margin-bottom:16px}
+  .nature-note{margin-top:36px}
   .arrival-photo img{object-position:75% 45%}
   .arrival-label{padding:16px 18px;font-size:17px}
   .arrival-label p{font-size:12px}
@@ -460,10 +486,6 @@ dialog::backdrop{background:#000d}
   .winter-grid .photo{aspect-ratio:1}
   .winter-grid .photo:first-child{grid-column:1/-1;grid-row:auto;aspect-ratio:4/5}
   .winter-grid .photo:not(:first-child) .photo-label{display:none}
-  .land-ledger>div{grid-template-columns:1fr}
-  .know{padding:0 20px}
-  .know>div{grid-template-columns:1fr;gap:8px;padding:20px 0}
-  .know dt{font-size:18px}
   .offer{padding:100px 18px 50px}
   .offer-card{padding:16px 16px 30px}
   .offer-card h2{font-size:30px;margin:24px 0 28px}
