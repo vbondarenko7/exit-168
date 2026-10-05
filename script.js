@@ -31,12 +31,19 @@ menu.addEventListener('keydown', e => { if (e.key === 'Escape') { setMenu(false)
 // ---- photographs ----
 const photos = [
   ['stove', 'assets/img/stove-1600.webp', 'The wood-fired stove in the sauna', 'Дровяная печь в бане'],
-  ['river', 'assets/img/river-1440.webp', 'The pool below the deck, with the steps down to the water', 'Заводь под террасой и ступеньки к воде'],
-  ['dining', 'assets/img/dining-1440.webp', 'The dining table in the cabin', 'Обеденный стол в доме'],
-  ['bunks', 'assets/img/bunks-1440.webp', 'The triple bunk in the cabin', 'Трёхъярусная кровать в доме'],
-  ['living', 'assets/img/living-1440.webp', 'The living room', 'Гостиная'],
   ['sauna', 'assets/img/sauna-1600.webp', 'The sauna benches', 'Полок в бане'],
+  ['deck', 'assets/img/deck-1440.webp', 'The deck by the sauna, above the river pool', 'Терраса у бани, над заводью'],
+  ['sauna-outside', 'assets/img/sauna-outside-1440.webp', 'The sauna from the road: a white trailer by the river and the bridge', 'Баня с дороги: белый вагончик у реки и моста'],
+  ['river', 'assets/img/river-1440.webp', 'The pool below the deck, with the steps down to the water', 'Заводь под террасой и ступеньки к воде'],
   ['cabin', 'assets/img/cabin-1400.webp', 'The cabin from the road', 'Дом со стороны дороги'],
+  ['greatroom', 'assets/img/greatroom-1440.webp', 'The living room: sofa, foosball and the wood stove', 'Гостиная: диван, настольный футбол и дровяная печь'],
+  ['living', 'assets/img/living-1440.webp', 'The living room from the other side', 'Гостиная с другой стороны'],
+  ['dining', 'assets/img/dining-1440.webp', 'The dining table in the cabin', 'Обеденный стол в доме'],
+  ['kitchen', 'assets/img/kitchen-1440.webp', 'The kitchen', 'Кухня'],
+  ['bunkroom', 'assets/img/bunkroom-1440.webp', 'The room with the triple bunk', 'Комната с трёхъярусной кроватью'],
+  ['bedroom', 'assets/img/bedroom-1440.webp', 'The bedroom: a bunk bed and one more bed', 'Спальня: двухъярусная кровать и ещё одна'],
+  ['loft', 'assets/img/loft-1440.webp', 'The bed in the loft', 'Кровать в мансарде'],
+  ['bathroom', 'assets/img/bathroom-1440.webp', 'The bathroom in the cabin', 'Санузел в доме'],
   ['gate', 'assets/img/gate-1440.webp', 'The gate of the property', 'Ворота участка'],
   ['winter-night', 'assets/img/winter-night-1350.webp', 'The cabin under snow at night', 'Дом под снегом ночью'],
   ['winter-river', 'assets/img/winter-river-1500.webp', 'The river between the snowdrifts', 'Река между сугробами'],
@@ -47,10 +54,12 @@ const photos = [
 const photoDialog = document.querySelector('#photo-dialog');
 const lightboxImage = document.querySelector('#lightbox-image');
 let photoIndex = 0;
+// The picture is hidden until its own file has arrived, so a slow link never shows the last photo under a new caption.
+lightboxImage.addEventListener('load', () => { lightboxImage.style.opacity = ''; });
 function showPhoto(index) {
   photoIndex = (index + photos.length) % photos.length;
   const [, src, caption] = photos[photoIndex];
-  lightboxImage.src = src;
+  if (lightboxImage.src !== src) { lightboxImage.style.opacity = 0; lightboxImage.src = src; }
   lightboxImage.alt = caption;
   document.querySelector('#photo-caption').textContent = caption;
   document.querySelector('#photo-count').textContent = `Exit 168 · ${String(photoIndex + 1).padStart(2, '0')} ${t('of', 'из')} ${photos.length}`;
@@ -73,7 +82,17 @@ photoDialog.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { e.preventDefault(); showPhoto(photoIndex - 1); }
   if (e.key === 'ArrowRight') { e.preventDefault(); showPhoto(photoIndex + 1); }
 });
+// On a phone the photographs page with a swipe as well as with the arrows.
+let swipeX = null;
+photoDialog.addEventListener('touchstart', e => { swipeX = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+photoDialog.addEventListener('touchend', e => {
+  if (swipeX === null) return;
+  const dx = e.changedTouches[0].clientX - swipeX;
+  swipeX = null;
+  if (Math.abs(dx) > 40) showPhoto(photoIndex + (dx < 0 ? 1 : -1));
+}, { passive: true });
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
+document.querySelectorAll('[data-all-photos]').forEach(el => { el.textContent = t(`All ${photos.length} photos`, `Все ${photos.length} фото`); el.hidden = false; });
 
 // ---- scroll scenes: the place from above, and the banya ----
 // Both pin to the screen and play out over the scroll. With reduced motion, or without this script,
@@ -170,7 +189,7 @@ const snowfall = (stage, img, canvas, veil) => {
   addEventListener('resize', size);
   size();
   return s => {
-    img.style.opacity = clamp01((s - .3) / .45);
+    img.style.opacity = img.complete && img.naturalWidth > 1 ? clamp01((s - .3) / .45) : 0; // 1px is the placeholder the page ships with
     veil.style.opacity = (.3 * Math.sin(Math.PI * s) ** 1.5).toFixed(3); // the fall is thickest while the seasons swap
     density = s < .5 ? clamp01(s / .4) : 1 - .8 * clamp01((s - .5) / .5);
     start();
@@ -186,7 +205,18 @@ if (estate && !still) {
   const shield = estate.querySelector('.estate-shield');
   const pins = [...estate.querySelectorAll('.pin')];
   const stage = estate.querySelector('.estate-stage');
-  const winter = snowfall(stage, close.querySelector('.estate-winter'), stage.querySelector('.estate-snow'), stage.querySelector('.estate-veil'));
+  const winterImg = close.querySelector('.estate-winter');
+  const winter = snowfall(stage, winterImg, stage.querySelector('.estate-snow'), stage.querySelector('.estate-veil'));
+  // The winter view is the last thing the scene needs, so it loads after the summer views instead of alongside them.
+  const loadWinter = () => { if (!winterImg.dataset.srcset) return; winterImg.srcset = winterImg.dataset.srcset; winterImg.src = winterImg.dataset.src; delete winterImg.dataset.srcset; };
+  // If the visitor is already standing on the winter step when the file arrives, draw the scene again.
+  winterImg.addEventListener('load', () => { scenes.forEach(sc => { sc.drawn = NaN; }); queue(); });
+  // The wide view is the first frame; the close one starts loading when it has arrived (see the stylesheet).
+  const wideImg = wide.querySelector('img');
+  const closeReady = () => close.classList.add('is-ready');
+  if (wideImg.complete) closeReady(); else ['load', 'error'].forEach(e => wideImg.addEventListener(e, closeReady, { once: true }));
+  const summerImg = close.querySelector('img:not(.estate-winter)');
+  if (summerImg.complete && summerImg.naturalWidth) loadWinter(); else summerImg.addEventListener('load', loadWinter, { once: true });
   // The close view's frame inside the wide one, as fractions of the wide picture (fitted on the cabin, the sauna and the bridge).
   const inWide = { x: .2669, y: .3770, w: .4082 };
   let g;
@@ -208,6 +238,8 @@ if (estate && !still) {
     close.style.setProperty('--feather', `${(14 * clamp01((1 - e) / .55)).toFixed(2)}%`);
     shield.style.opacity = 1 - clamp01(e / .25);
     pins.forEach((pin, i) => pin.classList.toggle('is-on', p > .41 + i * .04));
+    stage.classList.toggle('pins-on', p > .41);
+    if (p > .3) loadWinter();
     winter(clamp01((p - .58) / .3));
   };
   measure();
@@ -298,6 +330,7 @@ const calGrid = cal.querySelector('.cal-grid');
 const calStatus = document.querySelector('#cal-status');
 const locale = t('en-US', 'ru-RU');
 let busy = null; // { 'YYYY-MM-DD': 'hold' | 'busy' } once the service has answered
+let loading = false; // the calendar is on the page, its days closed until the service answers
 let today = dateInput.min;
 let month = today.slice(0, 7);
 const utc = iso => new Date(`${iso}T00:00:00Z`);
@@ -326,14 +359,15 @@ function renderCalendar() {
   for (let day = 1; day <= count; day++) {
     const iso = `${month}-${String(day).padStart(2, '0')}`;
     const state = busy[iso];
-    const off = iso < today || iso > lastDay() || !!state;
+    const off = loading || iso < today || iso > lastDay() || !!state;
     const cls = ['cal-day', state, range.includes(iso) && (bad.includes(iso) ? 'clash' : 'range')].filter(Boolean).join(' ');
     const note = state === 'hold' ? t(', held', ', держим') : state ? t(', booked', ', занято') : '';
     cells.push(`<button type="button" class="${cls}" data-day="${iso}" aria-pressed="${iso === dateInput.value}" aria-label="${nice(iso)}${note}"${off ? ' disabled' : ''}>${day}</button>`);
   }
   calGrid.innerHTML = cells.join('');
   const days = stayDays();
-  calStatus.textContent = !days.length ? ''
+  calStatus.textContent = loading ? t('Checking which dates are free…', 'Смотрим, какие даты свободны…')
+    : !days.length ? ''
     : bad.length ? t(`${nice(bad[0])} is taken. Pick another arrival day or fewer nights.`, `${nice(bad[0])} занято. Выберите другой день приезда или меньше суток.`)
     : days.length === 1 ? nice(days[0]) : `${nice(days[0])} – ${nice(days.at(-1))}`;
 }
@@ -354,16 +388,20 @@ async function loadBusy() {
   if (month < today.slice(0, 7)) month = today.slice(0, 7);
 }
 
-if (API) loadBusy().then(() => {
-  cal.hidden = false;
-  document.querySelector('#date-field').hidden = true;
-  dateInput.required = false; // the calendar checks the date itself on submit
-  form.querySelector('.submit').textContent = t('Hold these dates', 'Забронировать даты');
-  form.querySelector('.submit + .note').textContent = t(
-    'We hold the dates for 24 hours and message you where to send the deposit. The deposit equals the rent, goes by Zelle and comes back after your stay; the rent is due three days before you arrive. Cancellation terms are in the questions above. Nothing is charged on this site.',
-    'Держим даты 24 часа и пишем вам, куда перевести залог. Залог равен цене аренды, через Zelle, и вернётся после выезда; аренду платите за три дня до приезда. Правила отмены — в вопросах выше. На сайте ничего не списывается.');
+if (API) {
+  // The calendar takes its place at once, so the form does not jump under the visitor when the service answers.
+  const dateField = document.querySelector('#date-field');
+  const showCalendar = on => { cal.hidden = !on; dateField.hidden = on; dateInput.required = !on; }; // the calendar checks the date itself on submit
+  loading = true; busy = {};
+  showCalendar(true);
   renderCalendar();
-}).catch(() => {}); // no answer: the plain date field and Messenger keep working
+  loadBusy().then(() => {
+    loading = false;
+    form.querySelector('.submit').textContent = t('Hold these dates', 'Забронировать даты');
+    form.querySelector('.submit + .note').textContent = t('Nothing is charged on this site.', 'На сайте ничего не списывается.');
+    renderCalendar();
+  }).catch(() => { loading = false; busy = null; showCalendar(false); }); // no answer: the plain date field and Messenger keep working
+}
 
 form.addEventListener('input', () => {
   result.hidden = true;
@@ -431,8 +469,8 @@ async function holdDates() {
   stayDays().forEach(d => { busy[d] = 'hold'; });
   const until = new Date(data.holdUntil).toLocaleString(locale, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   showResult(t('Your dates are held', 'Держим ваши даты'), t(
-    `We hold them until ${until}. We will message you at ${fields.contact} with where to send the deposit, ${stayRate()}.`,
-    `Держим до ${until}. Напишем вам по ${fields.contact}, куда перевести залог, ${stayRate()}.`), false);
+    `We hold them until ${until}. Within that time we will message you where to send the deposit, ${stayRate()}. Your contact: ${fields.contact}.`,
+    `Держим до ${until}. За это время напишем вам, куда перевести залог — ${stayRate()}. Ваш контакт: ${fields.contact}.`), false);
   dateInput.value = '';
   renderCalendar();
   countLead();
@@ -456,8 +494,8 @@ form.addEventListener('submit', async e => {
   const copied = copyRequest();
   showResult(t('Your request is ready', 'Заявка готова'), '', true);
   document.querySelector('#result-text').textContent = await copied
-    ? t('We copied it for you. Open Messenger, paste it into the chat with our page and send.', 'Мы её уже скопировали. Откройте Messenger, вставьте в чат с нашей страницей и отправьте.')
-    : t('Copy the text below, open Messenger, paste it into the chat with our page and send.', 'Скопируйте текст ниже, откройте Messenger, вставьте в чат с нашей страницей и отправьте.');
+    ? t('We copied it for you. Open Messenger, paste it into the chat with our page and send it: until you do, the request has not reached us.', 'Мы её уже скопировали. Откройте Messenger, вставьте в чат с нашей страницей и отправьте: без этого заявка до нас не дойдёт.')
+    : t('Copy the text below, open Messenger, paste it into the chat with our page and send it: until you do, the request has not reached us.', 'Скопируйте текст ниже, откройте Messenger, вставьте в чат с нашей страницей и отправьте: без этого заявка до нас не дойдёт.');
   countLead();
 });
 
@@ -466,7 +504,7 @@ copyButton.addEventListener('click', async () => {
   setTimeout(() => { copyButton.textContent = t('Copy the text', 'Скопировать текст'); }, 2500);
 });
 
-// ---- sticky action on small screens: after the hero, hidden while another booking button, the form or a full-screen scene is on screen ----
+// ---- sticky action on small screens: after the hero, hidden while another booking button or the form is on screen ----
 const sticky = document.querySelector('#sticky-cta');
 const hero = document.querySelector('.hero');
 if ('IntersectionObserver' in window) {
@@ -478,5 +516,5 @@ if ('IntersectionObserver' in window) {
     entries.forEach(e => e.isIntersecting ? covering.add(e.target) : covering.delete(e.target));
     update();
   }, { threshold: 0.05 });
-  document.querySelectorAll('.offer-card, #request, .section-cta, .estate-stage, .ritual-stage').forEach(el => cover.observe(el));
+  document.querySelectorAll('.offer-card, #request, .section-cta').forEach(el => cover.observe(el));
 }

@@ -33,11 +33,13 @@ try{var l=localStorage.getItem('lang')||(navigator.languages&&navigator.language
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
+  // visits are counted on the live site only: a local preview or a check must not land in the statistics
+  window['ga-disable-G-EYQ6W511HE'] = location.hostname !== 'clubexit168.com';
   gtag('config', 'G-EYQ6W511HE');
 </script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
+if (location.hostname === 'clubexit168.com') {
 (function(m,e,t,r,i,k,a){
 m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 m[i].l=1*new Date();
@@ -46,6 +48,7 @@ k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNo
 })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112842688', 'ym');
 
 ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+}
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/112842688" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
@@ -58,10 +61,10 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <nav aria-label="Main navigation">
     <a href="#place">The place</a>
     <a href="#banya">Sauna</a>
+    <a href="#rates">Rates</a>
     <a href="#route">How it works</a>
     <a href="#winter">Winter</a>
     <a href="#where">Where</a>
-    <a href="#rates">Rates</a>
     <a href="#faq">FAQ</a>
   </nav>
   <div class="lang" aria-label="Language"><a href="ru/" hreflang="ru" lang="ru">RU</a><span aria-current="page">EN</span></div>
@@ -70,10 +73,10 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
     <a href="#place">The place</a>
     <a href="#banya">Sauna</a>
+    <a href="#rates">Rates</a>
     <a href="#route">How it works</a>
     <a href="#winter">Winter</a>
     <a href="#where">Where</a>
-    <a href="#rates">Rates</a>
     <a href="#faq">FAQ</a>
     <a href="#request">Book your dates</a>
   </nav>
@@ -82,14 +85,18 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 <main id="top">
 
 <section class="hero">
-  <picture>
-    <source media="(max-width: 600px)" srcset="assets/img/hero-mobile-800.webp">
-    <img class="hero-image" src="assets/img/hero-river-sauna.webp" width="1672" height="941" alt="A man stands waist-deep in the river below the sauna, steam rising off the water into the pines" fetchpriority="high">
+  <picture class="hero-wide">
+    <source media="not all and (max-width: 600px) and (orientation: portrait)" srcset="assets/img/hero-river-sauna.webp">
+    <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1672" height="941" alt="A man stands waist-deep in the river below the sauna, steam rising off the water into the pines" fetchpriority="high">
+  </picture>
+  <picture class="hero-phone">
+    <source media="(max-width: 600px) and (orientation: portrait)" srcset="assets/img/hero-winter-phone-780.webp 780w, assets/img/hero-winter-phone-1180.webp 1180w" sizes="100vw">
+    <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1180" height="1110" alt="The cabin at night under a thick cap of snow, light in its windows, lit pines beside it" fetchpriority="high">
   </picture>
   <div class="hero-content">
-    <p class="hero-location">Placer County, California · <span class="nowrap">I-80</span>, Exit&nbsp;168</p>
-    <h1><span>Feel reborn.</span><span>A wood-fired sauna by a&nbsp;mountain river, 168&nbsp;acres of forest around it, and no&nbsp;one there but you.</span></h1>
-    <p class="hero-sub">The whole place for a group of up to 10: $500&nbsp;for a&nbsp;day, $1,000&nbsp;for 24&nbsp;hours. An hour and a half from Sacramento.</p>
+    <h1><span>Feel reborn.</span> <span>A&nbsp;wood-fired sauna by a&nbsp;mountain river.</span> <span>No&nbsp;one there but you.</span></h1>
+    <p class="hero-where">California, Sierra Nevada. <span class="nowrap">An hour and a half from Sacramento.</span></p>
+    <p class="hero-sub">$500&nbsp;for a&nbsp;day, $1,000&nbsp;for 24&nbsp;hours, <span class="nowrap">for your whole group of up to&nbsp;10.</span></p>
     <div class="actions">
       <a class="button primary" href="#request">Book your dates</a>
     </div>
@@ -109,7 +116,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       </div>
       <div class="estate-close">
         <img src="assets/img/estate-close-800.webp" srcset="assets/img/estate-close-800.webp 800w, assets/img/estate-close-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Aerial view: a cabin with a green roof on a paved clearing among pines; by the bridge over the river, the white sauna trailer with a deck and steps down to the pool" loading="lazy">
-        <img class="estate-winter" src="assets/img/estate-winter-800.webp" srcset="assets/img/estate-winter-800.webp 800w, assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="The same view in winter: the clearing, the road and the bridge under deep snow, the cabin and the sauna buried to the roof, a trench dug to the cabin door" loading="lazy">
+        <img class="estate-winter" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="assets/img/estate-winter-800.webp" data-srcset="assets/img/estate-winter-800.webp 800w, assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="The same view in winter: the clearing, the road and the bridge under deep snow, the cabin and the sauna buried to the roof, a trench dug to the cabin door" loading="lazy">
       </div>
       <div class="estate-veil" aria-hidden="true"></div>
       <canvas class="estate-snow" aria-hidden="true"></canvas>
@@ -136,7 +143,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
         <div class="ritual-glow" aria-hidden="true"></div>
         <canvas class="ritual-flame" aria-hidden="true"></canvas>
       </div>
-      <img class="ritual-river" src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="100vw" width="1440" height="1080" alt="Wooden steps go down from the deck into a quiet pool between granite boulders" loading="lazy">
+      <img class="ritual-river" src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="max(100vw, 134svh)" width="1440" height="1080" alt="Wooden steps go down from the deck into a quiet pool between granite boulders" loading="lazy">
       <div class="ritual-copy">
         <h2>The sauna is right by&nbsp;the&nbsp;river</h2>
         <ol class="ritual-steps">
@@ -151,6 +158,73 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
           <div class="ritual-progress" aria-hidden="true"><span></span></div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="banya-photos strip">
+    <button class="photo" data-photo="sauna" aria-label="Open the photo of the sauna benches">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/sauna-800.webp"><img src="assets/img/sauna-800.webp" srcset="assets/img/sauna-800.webp 800w, assets/img/sauna-1600.webp 1600w" sizes="(max-width: 600px) 84vw, 34vw" width="1600" height="1200" alt="The hot room: two tiers of benches along three walls, wooden walls and ceiling" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="deck" aria-label="Open the photo of the deck by the river">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/deck-800.webp"><img src="assets/img/deck-800.webp" srcset="assets/img/deck-800.webp 800w, assets/img/deck-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The deck by the sauna above the river pool: a table with benches, carved railings, granite boulders and pines beyond" loading="lazy"></picture>
+    </button>
+    <button class="photo still-only" data-photo="river" aria-label="Open the photo of the steps down to the river pool">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/river-800.webp"><img src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 25vw" width="1440" height="1080" alt="Wooden steps lead from the deck down into a calm pool between granite boulders" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="sauna-outside" aria-label="Open the photo of the sauna from outside">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/sauna-outside-800.webp"><img src="assets/img/sauna-outside-800.webp" srcset="assets/img/sauna-outside-800.webp 800w, assets/img/sauna-outside-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The sauna from outside: a white trailer with a chimney by the road, the deck, the river pool and a concrete bridge" loading="lazy"></picture><span class="photo-label">The sauna from outside</span>
+    </button>
+  </div>
+</section>
+
+<section id="house" class="house">
+  <header class="section-head">
+    <h2>A cabin that sleeps&nbsp;12</h2>
+  </header>
+  <div class="house-photos strip">
+    <button class="photo" data-photo="greatroom" aria-label="Open the photo of the living room">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/greatroom-800.webp"><img src="assets/img/greatroom-800.webp" srcset="assets/img/greatroom-800.webp 800w, assets/img/greatroom-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="1440" height="1080" alt="Living room: a big sectional sofa, a foosball table, the wood-stove pipe and windows to the forest" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="cabin" aria-label="Open the photo of the cabin from outside">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/cabin-800.webp"><img src="assets/img/cabin-800.webp" srcset="assets/img/cabin-800.webp 800w, assets/img/cabin-1400.webp 1400w" sizes="(max-width: 900px) 50vw, 25vw" width="1400" height="1050" alt="The cabin from outside: a wooden cabin with a green roof, a deck with railings and grills, solar panels" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="dining" aria-label="Open the photo of the cabin dining room">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/dining-800.webp"><img src="assets/img/dining-800.webp" srcset="assets/img/dining-800.webp 800w, assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Cabin dining room with a carved wooden table, a chandelier and a window to the forest" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="bunkroom" aria-label="Open the photo of the room with the triple bunk">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/bunkroom-800.webp"><img src="assets/img/bunkroom-800.webp" srcset="assets/img/bunkroom-800.webp 800w, assets/img/bunkroom-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="A room with a hand-built triple bunk, a window and a door to the deck" loading="lazy"></picture>
+    </button>
+    <button class="photo" data-photo="loft" aria-label="Open the photo of the bed in the loft">
+      <picture><source media="(max-width: 600px)" srcset="assets/img/loft-800.webp"><img src="assets/img/loft-800.webp" srcset="assets/img/loft-800.webp 800w, assets/img/loft-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="The loft: a wide bed under the windows, wood-panelled walls" loading="lazy"></picture><span class="photo-label" data-all-photos hidden></span>
+    </button>
+  </div>
+  <ul class="house-facts">
+    <li>Bunk beds and a sleeping loft</li>
+    <li>A big carved table, a kitchen with a gas stove, a fridge and a microwave</li>
+    <li>A living room with a wood stove, a big sofa and foosball</li>
+    <li>Two decks with tables, benches and grills</li>
+    <li>A bathroom inside the cabin</li>
+    <li>Power from solar panels and a generator</li>
+  </ul>
+</section>
+
+<section class="offer" id="rates">
+  <div class="offer-card">
+    <h2>The whole place, <br>for your group</h2>
+    <div class="offer-rates">
+      <div><strong>$500</strong><span>Day visit</span></div>
+      <div><strong>$1,000</strong><span>24&nbsp;hours</span></div>
+    </div>
+    <p class="offer-per">If there are ten of you, that's $50 a&nbsp;person for a&nbsp;day and $100&nbsp;for&nbsp;24&nbsp;hours</p>
+    <ul class="offer-terms">
+      <li>The price is for the whole place and a group of up to&nbsp;10</li>
+      <li>More than 10 people: we agree separately</li>
+      <li>The whole property for a month or longer: we agree separately</li>
+      <li>Same price on holidays</li>
+      <li>The deposit equals the rent and comes back after your stay</li>
+    </ul>
+    <div class="actions">
+      <a class="button primary" href="#request">Book your dates</a>
+      <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
     </div>
   </div>
 </section>
@@ -179,25 +253,6 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </dl>
   </div>
   <div class="actions section-cta"><a class="button primary" href="#request">Book your dates</a></div>
-</section>
-
-<section id="house">
-  <header class="section-head">
-    <h2>A cabin that sleeps&nbsp;12</h2>
-  </header>
-  <article class="fact-card house-card">
-    <button class="photo" data-photo="dining" aria-label="Open the photo of the cabin dining room">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/dining-800.webp"><img src="assets/img/dining-800.webp" srcset="assets/img/dining-800.webp 800w, assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="800" height="600" alt="Cabin dining room with a carved wooden table, a chandelier and a window to the forest" loading="lazy"></picture>
-    </button>
-    <ul>
-      <li>Bunk beds and a sleeping loft</li>
-      <li>A big carved table, a kitchen with a gas stove, a fridge and a microwave</li>
-      <li>A living room with a wood stove, a big sofa and foosball</li>
-      <li>Two decks with tables, benches and grills</li>
-      <li>A bathroom inside the cabin</li>
-      <li>Power from solar panels and a generator</li>
-    </ul>
-  </article>
 </section>
 
 <section id="winter">
@@ -252,7 +307,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <g class="map-town"><circle cx="700" cy="282" r="5"/><text x="700" y="252" text-anchor="middle">COLFAX</text><text class="map-time" x="700" y="230" text-anchor="middle">35 min</text></g>
       <g class="map-town"><circle cx="652" cy="120" r="5"/><text x="652" y="100" text-anchor="middle">NEVADA CITY</text><text class="map-time" x="652" y="78" text-anchor="middle">40 min</text></g>
       <g class="map-town"><circle cx="1112" cy="208" r="5"/><text x="1112" y="178" text-anchor="middle">TRUCKEE</text><text class="map-time" x="1112" y="156" text-anchor="middle">20 min</text></g>
-      <g class="map-town"><circle cx="1202" cy="318" r="5"/><text x="1160" y="300" text-anchor="end">TAHOE CITY</text><text class="map-time" x="1160" y="278" text-anchor="end">40 min</text></g>
+      <g class="map-town"><circle cx="1202" cy="318" r="5"/><text x="1144" y="300" text-anchor="end">TAHOE CITY</text><text class="map-time" x="1144" y="278" text-anchor="end">40 min</text></g>
       <g class="map-town"><circle cx="1460" cy="212" r="5"/><text x="1492" y="252" text-anchor="end">RENO</text><text class="map-time" x="1492" y="274" text-anchor="end">50 min</text></g>
       <g class="map-pin">
         <path d="M900 232c-14-16-22-30-22-42a22 22 0 0 1 44 0c0 12-8 26-22 42Z"/>
@@ -349,27 +404,6 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <p class="subtitle nature-note">You book the cabin and the sauna, but the forest and the river around them are yours too. Write what you have in mind in the notes when you book, and we'll tell you if it works.</p>
 </section>
 
-<section class="offer" id="rates">
-  <div class="offer-card">
-    <h2>The whole place, <br>for your group</h2>
-    <div class="offer-rates">
-      <div><strong>$500</strong><span>Day visit</span></div>
-      <div><strong>$1,000</strong><span>24&nbsp;hours</span></div>
-    </div>
-    <p class="offer-per">If there are ten of you, that's $50 a&nbsp;person for a&nbsp;day and $100&nbsp;for&nbsp;24&nbsp;hours</p>
-    <ul class="offer-terms">
-      <li>The price is for the whole place and a group of up to&nbsp;10</li>
-      <li>More than 10 people: we agree separately</li>
-      <li>The whole property for a month or longer: we agree separately</li>
-      <li>Same price on holidays</li>
-    </ul>
-    <div class="actions">
-      <a class="button primary" href="#request">Book your dates</a>
-      <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
-    </div>
-  </div>
-</section>
-
 <section class="faq" id="faq">
   <header class="section-head">
     <h2>Questions</h2>
@@ -402,14 +436,6 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <details>
       <summary>Can you hear the freeway?<span aria-hidden="true">+</span></summary>
       <p>The exit is a couple of minutes away, so at the gate you can. How much reaches the cabin and the water depends on the wind and the river.</p>
-    </details>
-    <details>
-      <summary>How does booking work?<span aria-hidden="true">+</span></summary>
-      <p>Pick your dates in the form below and send it: we hold the dates for 24&nbsp;hours and message you where to send the deposit. The dates are yours once the deposit is paid; it equals the rent. The rent itself is due three days before you arrive. Both go by Zelle. You can also just <a href="https://m.me/clubexit168">message us on Facebook</a>.</p>
-    </details>
-    <details>
-      <summary>Can we cancel?<span aria-hidden="true">+</span></summary>
-      <p>If you book more than 14&nbsp;days ahead, you have 7&nbsp;days to change your mind and get the deposit back. After that, or if you book 14&nbsp;days ahead or less, the deposit isn't refundable.</p>
     </details>
   </div>
 </section>
@@ -451,7 +477,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <label>Anything else <span>(optional)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="A retreat, fishing, dirt bikes, camping, a dog, kids, a birthday, a question"></textarea></label>
       <div class="estimate"><span>Whole place · <span id="stay-duration">up to 10, day visit</span></span><strong id="rate-total">$500</strong></div>
       <button class="button primary submit" type="submit">Send via Messenger</button>
-      <p class="note">The request is copied for you: paste it into the chat with our page. The deposit equals the rent, goes by Zelle and comes back after your stay; the rent is due three days before you arrive. Nothing is charged on this site.</p>
+      <p class="note">The request is copied for you: paste it into the chat with our page. Nothing is charged on this site.</p>
       <div id="request-result" hidden tabindex="-1" aria-live="polite">
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
@@ -462,10 +488,22 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
         </div>
       </div>
     </form>
-    <div class="contact-info">
-      <h3>Rather use Facebook?</h3>
-      <p>Message the Exit&nbsp;168 page on Facebook about dates or anything else. We answer there too.</p>
-      <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
+    <div class="contact-side">
+      <div class="contact-info booking-steps">
+        <h3>How booking works</h3>
+        <dl>
+          <div><dt>Now</dt><dd>You pick your dates and send the request.</dd></div>
+          <div><dt>Within 24&nbsp;hours</dt><dd>We hold the dates for 24&nbsp;hours and message you where to send the deposit. It equals the rent and goes by Zelle. Once it's paid, the dates are yours.</dd></div>
+          <div><dt>Three days before you arrive</dt><dd>You pay the rent, also by Zelle.</dd></div>
+          <div><dt>After your stay</dt><dd>We return the deposit.</dd></div>
+          <div><dt>If you change your mind</dt><dd>If you book more than 14&nbsp;days ahead, you have 7&nbsp;days to cancel and get the deposit back. After that, or if you book 14&nbsp;days ahead or less, the deposit isn't refundable.</dd></div>
+        </dl>
+      </div>
+      <div class="contact-info">
+        <h3>Rather use Facebook?</h3>
+        <p>Message the Exit&nbsp;168 page on Facebook about dates or anything else. We answer there too.</p>
+        <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
+      </div>
     </div>
   </div>
 </section>
@@ -478,7 +516,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <p>Exit&nbsp;168 · Rainbow Road · Placer County, California</p>
     <p><a href="https://m.me/clubexit168">Messenger</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
   </div>
-  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · The opening picture, the aerial view (in summer and in winter), the stove with the fire and the morning on the deck are illustrations based on this property; every other photo was taken at Exit&nbsp;168. Visits to this site are counted with Yandex Metrica and Google Analytics.</div>
+  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Illustrations based on this property: <span class="wide-only">the opening picture, </span>the aerial view (in summer and in winter), the stove with the fire and the morning on the deck. Every other photo was taken at Exit&nbsp;168. Visits to this site are counted with Yandex Metrica and Google Analytics.</div>
 </footer>
 
 <div class="sticky-cta" id="sticky-cta" hidden>
@@ -491,7 +529,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <p id="photo-count"></p>
     <button class="lightbox-close" aria-label="Close photographs"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
   </div>
-  <img id="lightbox-image" src="assets/img/river-800.webp" alt="" loading="lazy">
+  <img id="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
   <div class="lightbox-bottom">
     <button id="photo-prev" aria-label="Previous photograph"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7"/></svg></button>
     <p id="photo-caption"></p>

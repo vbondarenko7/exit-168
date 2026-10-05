@@ -16,7 +16,7 @@
 
 /* ---------- base ---------- */
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:24px;scrollbar-color:var(--muted) var(--night)}
+html{scroll-behavior:smooth;scroll-padding:24px 0;scrollbar-color:var(--muted) var(--night)}
 body{margin:0;background:var(--night);color:var(--ivory);font:300 var(--body)/1.8 var(--sans)}
 body.gallery-open{overflow:hidden}
 ::selection{background:var(--ivory);color:var(--night)}
@@ -25,7 +25,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
 button,a,input,textarea{touch-action:manipulation}
 button:disabled{opacity:.45;cursor:default}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--ivory);outline-offset:5px}
+a:focus-visible,button:focus-visible,summary:focus-visible,video:focus-visible{outline:2px solid var(--ivory);outline-offset:5px}
 input:focus-visible,textarea:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 img{display:block;width:100%;height:100%;object-fit:cover}
 picture:not(.hero picture){display:contents}
@@ -56,7 +56,7 @@ h3{font-size:var(--title);line-height:1.4}
 .lang{display:flex;font-size:11px;font-weight:500;letter-spacing:.18em}
 .lang>*{display:grid;place-items:center;min-width:44px;min-height:44px;padding-left:.18em}
 .lang span{color:var(--ivory);text-decoration:underline;text-underline-offset:6px}
-.lang a{color:var(--muted)}
+.lang a{color:var(--soft)}
 
 /* ---------- hero (V's concept) ---------- */
 .hero{position:relative;min-height:max(748px,100svh);display:grid;overflow:hidden}
@@ -64,11 +64,14 @@ h3{font-size:var(--title);line-height:1.4}
 .hero-image{position:absolute;inset:0;object-position:50% 50%}
 .hero::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.04) 0%,rgba(8,27,24,.1) 28%,rgba(8,27,24,.5) 40%,rgba(8,27,24,.88) 50%,rgba(8,27,24,.93) 100%)}
 .hero-content{position:relative;z-index:1;display:flex;min-height:max(748px,100svh);width:100%;padding:128px 6.5vw 80px 54%;flex-direction:column;align-items:flex-start;justify-content:center}
-.hero-location{font-size:11px;font-weight:500;letter-spacing:.24em;line-height:1.7;text-transform:uppercase;color:var(--ivory)}
-.hero h1{margin:22px 0 26px;max-width:17ch}
+.hero-phone{display:none}
+.hero h1{margin:0 0 26px;max-width:17ch}
 .hero h1 span{display:block;text-wrap:balance}
 .hero h1 span+span{font-size:.6em;line-height:1.12;margin-top:.5em}
-.hero-sub{max-width:44ch;font-size:15px;line-height:1.7;color:var(--ivory)}
+.hero h1 span+span+span{margin-top:.14em}
+/* where it is, in type a visitor cannot miss (V, 5 October 2026: the old 11px label was too small) */
+.hero-where{max-width:40ch;font-size:18px;font-weight:500;line-height:1.5;color:var(--ivory)}
+.hero-sub{max-width:44ch;margin-top:8px;font-size:15px;line-height:1.7;color:var(--ivory)}
 .actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .hero .actions{margin-top:40px}
 
@@ -94,11 +97,6 @@ h3{font-size:var(--title);line-height:1.4}
 .photo-label::before,.photo-label::after{content:'';position:absolute;width:24px;height:24px;border-radius:50%;box-shadow:12px 12px 0 var(--night);pointer-events:none}
 .photo-label::before{left:-24px;bottom:0}
 .photo-label::after{right:0;top:-24px}
-
-/* ---------- fact cards ---------- */
-.fact-card{background:var(--card);border:1px solid #384a49;padding:var(--inset);min-width:0}
-.fact-card li{padding:11px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6}
-.fact-card li:last-child{border-bottom:1px solid #364947}
 
 /* ---------- scroll scenes share one placement rule: a 3:2 picture covers its stage,
    with the picture point (--ax,--ay) held at the stage point (--sx,--sy) as far as the edges allow ---------- */
@@ -133,6 +131,10 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .deal{padding:var(--section-top) 24px;text-align:center}
 .deal h2{font-size:var(--display);line-height:1.02;max-width:20ch;margin:auto}
 .deal p{max-width:52ch;margin:40px auto 0;font-size:17px;line-height:1.75;color:var(--soft)}
+/* the three-minute video about the place (Russian edition): it loads only when played */
+.deal-video{max-width:960px;margin:64px auto 0}
+.deal-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.deal-video figcaption{margin-top:14px;font-size:13px;line-height:1.7;color:var(--muted)}
 
 /* ---------- the banya: the stove takes fire as the steps go by, then the river ---------- */
 .ritual-stage{position:relative;height:100svh;min-height:560px;overflow:hidden;container-type:size;background:#000}
@@ -141,7 +143,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .ritual-dark{filter:brightness(.42) saturate(.6)}
 .ritual-glow{position:absolute;inset:0;background:radial-gradient(ellipse 34% 30% at 43% 81%,#ff8a2e8c,#ff6a1e26 55%,#ff6a1e00 100%);mix-blend-mode:screen;opacity:.6;pointer-events:none}
 .ritual-flame{position:absolute;left:41.5%;top:73.2%;width:3.6%;height:12.3%;mix-blend-mode:screen;clip-path:polygon(5% 2%,96% 10%,93% 98%,9% 90%);display:none}
-.ritual-river{position:absolute;inset:0;object-position:50% 62%;opacity:0}
+.ritual-river{position:absolute;inset:0;object-position:50% 62%;opacity:0;display:none}
 .ritual-stage::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.9) 0%,rgba(8,27,24,.72) 30%,rgba(8,27,24,.2) 50%,rgba(8,27,24,0) 62%)}
 .ritual-copy{position:absolute;z-index:2;left:6.5vw;top:0;bottom:0;width:min(560px,38vw);display:flex;flex-direction:column;justify-content:center}
 .ritual-steps{margin:44px 0 0;padding:0;list-style:none}
@@ -159,18 +161,34 @@ button.pin:hover>span{background:var(--ivory);color:#000}
   .js .estate-wide,.js .estate-snow,.js .estate-veil{display:block}
   .js .estate-winter{display:block;opacity:0}
   .js .estate-close{opacity:0}
+  /* the close view starts loading once the wide one has arrived: on a slow link the first frame comes first */
+  .js .estate-close:not(.is-ready) img{display:none}
   .js .pin{opacity:0;translate:0 10px;pointer-events:none;transition:opacity .5s ease-out,translate .6s cubic-bezier(.16,1,.3,1)}
   .js .pin.is-on,.js .pin:focus-visible{opacity:1;translate:0 0;pointer-events:auto}
+  /* the hint about the labels waits for the labels */
+  .js .estate-note span:first-child{opacity:0;transition:opacity .4s ease-out}
+  .js .pins-on .estate-note span:first-child{opacity:1}
   .js .ritual-track{height:420svh}
   .js .ritual-stage{position:sticky;top:0}
   .js .ritual-fire{opacity:var(--fire,0)}
   .js .ritual-glow{opacity:calc(var(--fire,0) * var(--flick,.6))}
   .js .ritual-flame{display:block;opacity:var(--fire,0)}
+  .js .ritual-river{display:block}
+  .js .still-only{display:none}
   .js .ritual-river,.js .ritual-river-note{opacity:var(--river,0)}
   .js .ritual-river-note{transition:opacity .3s ease-out}
-  .js .ritual-steps li{opacity:.36}
-  .js .ritual-steps li.is-done{opacity:.6}
+  .js .ritual-steps li{opacity:.5}
+  .js .ritual-steps li.is-done{opacity:.72}
   .js .ritual-steps li.is-now{opacity:1}
+}
+/* On phones the same two scenes play out over about half the scroll: they took a third of the page (audit, 5 October 2026). */
+@media(prefers-reduced-motion:no-preference) and (max-width:600px){
+  .js .estate-track{height:240svh}
+  .js .ritual-track{height:280svh}
+}
+/* The booking bar stays on screen over the scenes, so the place-scene caption sits above it. */
+@media(prefers-reduced-motion:no-preference) and (max-width:900px){
+  .js .estate-note{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
 }
 
 /* ---------- how it works: the gate photo beside four large steps, then what to bring ---------- */
@@ -190,9 +208,14 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .pack dd{margin-top:16px;font-size:17px;line-height:1.7;color:var(--soft)}
 .route .section-cta{margin-top:64px}
 
-/* ---------- the cabin ---------- */
-.house-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;max-width:1240px;margin:0 auto}
-.house-card>.photo{aspect-ratio:4/3}
+/* ---------- the cabin and the sauna in photographs: a mosaic on wide screens, a strip to swipe on phones ---------- */
+.house-photos{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(2,min(21vw,330px));gap:var(--gutter)}
+.house-photos .photo:first-child{grid-row:span 2}
+.house-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px;max-width:1240px;margin:56px auto 0;padding:0 24px}
+.house-facts li{padding:14px 0;border-top:1px solid var(--line);color:var(--soft);line-height:1.6}
+.house-facts li:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+.banya-photos{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:var(--gutter);margin-top:var(--gutter)}
+.banya-photos .photo{aspect-ratio:4/3}
 
 /* ---------- where: map ---------- */
 .map{margin:0 var(--gutter);background:var(--panel);border:1px solid #2a3c3b}
@@ -286,6 +309,13 @@ details a{text-decoration:underline}
 .contact-panels{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);margin-bottom:100px}
 .contact-info,form{padding:54px 60px;background:var(--card);border:1px solid var(--line);min-width:0}
 .contact-info{align-self:start}
+.contact-side{display:grid;gap:var(--gutter);align-content:start;min-width:0}
+/* how booking works: when, then what; the terms sit in Forum, the answers in prose */
+.booking-steps dl{margin:22px 0 0}
+.booking-steps dl>div{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,9fr);gap:6px 28px;padding:16px 0;border-top:1px solid #364947}
+.booking-steps dl>div:last-child{padding-bottom:0}
+.booking-steps dt{font:400 18px/1.4 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase;text-wrap:balance}
+.booking-steps dd{color:var(--soft);line-height:1.7}
 .contact-info .button{margin-top:32px}
 .contact-info>p{margin-top:18px;max-width:60ch}
 fieldset{padding:0;margin:0 0 30px;border:0;min-width:0}
@@ -336,9 +366,12 @@ select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 .cal-legend .busy::before{background:linear-gradient(to top right,var(--night) 44%,#5d7570 44% 56%,var(--night) 56%)}
 .cal-status{margin-top:12px;font-size:14px;color:var(--ivory)}
 .cal-status:empty{display:none}
-#request-result{margin-top:24px;border-top:1px solid var(--line);padding-top:24px}
-#request-result p{margin:12px 0 16px}
-#request-result pre{white-space:pre-wrap;font:300 13px/1.7 var(--sans);color:var(--soft);background:var(--night);border:1px solid #3a4b47;padding:16px 18px;margin:0 0 20px}
+/* what happened to the request: a panel of its own, so the answer is not lost under the note */
+#request-result{margin-top:24px;padding:26px 28px 28px;background:var(--night);border:1px solid var(--ivory);outline:0}
+#request-result h3{font-size:24px;line-height:1.3}
+#request-result p{margin:12px 0 0;color:var(--soft)}
+#request-result pre{white-space:pre-wrap;font:300 13px/1.7 var(--sans);color:var(--soft);border-top:1px solid #3a4b47;border-bottom:1px solid #3a4b47;padding:16px 0;margin:18px 0 0}
+#request-result .actions{margin-top:22px}
 #request-result .button{font-size:11px;padding:15px 20px}
 
 /* ---------- footer ---------- */
@@ -359,7 +392,7 @@ dialog::backdrop{background:#000d}
 .lightbox-top{margin-bottom:16px}
 .lightbox-top p{font-size:11px;letter-spacing:.15em;text-transform:uppercase}
 .lightbox-top button,.lightbox-bottom button{background:transparent;width:44px;height:44px;display:grid;place-items:center;flex:none}
-#lightbox-image{height:auto;max-height:70dvh;object-fit:contain}
+#lightbox-image{height:auto;max-height:70dvh;object-fit:contain;transition:opacity .2s ease-out}
 .lightbox-bottom{margin-top:16px}
 .lightbox-bottom p{text-align:center;font-size:13px}
 
@@ -383,6 +416,7 @@ dialog::backdrop{background:#000d}
 @media(max-width:900px){
   :root{--headline:42px;--display:50px;--section-top:100px;--section-bottom:60px}
   .navigation nav:not(.mobile-nav),.nav-action{display:none}
+  .estate-shield{display:none}
   .lang{margin-left:auto}
   .menu-toggle{display:flex;width:44px;height:44px;background:transparent;flex-direction:column;justify-content:center;gap:7px;padding:10px}
   .menu-toggle span{height:1px;background:var(--ivory);width:24px}
@@ -408,7 +442,11 @@ dialog::backdrop{background:#000d}
   .pack h3{font-size:42px}
   .pack dl{grid-template-columns:1fr;gap:32px;margin-top:36px}
   .pack dl>div{display:block}
-  .house-card{grid-template-columns:1fr;gap:24px;margin:0 var(--gutter)}
+  .house-photos{grid-template-columns:1fr 1fr;grid-template-rows:none}
+  .house-photos .photo{aspect-ratio:4/3}
+  .house-photos .photo:first-child{grid-column:1/-1;grid-row:auto;aspect-ratio:16/10}
+  .house-facts{grid-template-columns:1fr;margin-top:40px}
+  .house-facts li:nth-last-child(2){border-bottom:0}
   .nature-photo{height:auto;min-height:0;overflow:visible}
   .nature-photo img{position:static;height:min(62svh,560px);object-position:78% 70%}
   .nature-photo::after{display:none}
@@ -420,6 +458,7 @@ dialog::backdrop{background:#000d}
   .nature-list>div:nth-child(2n+1){padding-left:0}
   .nature-list>div:nth-child(2n){padding-right:0}
   .deal p{font-size:16px}
+  .deal-video{margin-top:44px}
   .map .map-wide{display:none}
   .map .map-narrow{display:block;max-width:480px;margin:auto}
   .arrival-card dl{grid-template-columns:1fr}
@@ -441,18 +480,21 @@ dialog::backdrop{background:#000d}
   .hero picture,.hero::after{bottom:auto;height:100svh}
   .hero::after{background:linear-gradient(180deg,rgba(8,27,24,.04) 0%,rgba(8,27,24,.1) 32%,rgba(8,27,24,.74) 46%,rgba(8,27,24,.88) 64%,rgba(8,27,24,.84) 86%,var(--night) 100%)}
   .hero-content{min-height:100svh;padding:max(110px,44svh) 22px 40px;justify-content:flex-end}
-  .hero-location{letter-spacing:.14em}
-  .hero h1{margin:16px 0 18px;max-width:none}
+  .hero h1{margin:0 0 18px;max-width:none}
+  .hero-where{font-size:17px}
   .hero-sub{max-width:40ch;font-size:15px}
   .hero .actions{margin-top:26px;gap:10px;align-self:stretch}
   .button{font-size:11px;letter-spacing:.1em;padding:16px 15px;min-height:52px}
   .hero .button{flex:1 1 auto;white-space:nowrap;letter-spacing:.08em;padding:16px 14px}
   .section-head h2 br{display:none}
   .subtitle{margin-top:24px;max-width:38ch}
-  .fact-card{padding:16px 16px 24px}
+  .strip{display:flex;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);padding-inline:var(--gutter);scrollbar-width:none}
+  .strip::-webkit-scrollbar{display:none}
+  .strip .photo,.house-photos .photo:first-child{flex:0 0 84%;aspect-ratio:4/3;scroll-snap-align:start}
+  .house-facts{padding:0 20px;margin-top:28px}
   .ritual-copy{padding:72px 22px 0}
   .ritual-steps li{font-size:16px;padding:10px 0}
-  .ritual-river-note{margin-top:16px;font-size:15px}
+  .ritual-river-note{margin:14px -12px 0;padding:10px 12px 12px;background:#0f2321d9;font-size:15px}
   .pin{font-size:13px}
   .pin>span{padding:7px 9px 5px}
   .pin::before{height:20px}
@@ -496,6 +538,8 @@ dialog::backdrop{background:#000d}
   .contact-panels{margin-bottom:var(--section-bottom)}
   .contact-info,form{padding:36px 22px}
   .contact-info .button{margin-top:24px;width:100%}
+  .booking-steps dl>div{grid-template-columns:1fr;padding:14px 0}
+  #request-result{padding:22px 20px 24px}
   .rate-options{grid-template-columns:1fr;gap:10px}
   .rate-options label>span{font-size:14px;padding-left:34px}
   .form-row{grid-template-columns:1fr;gap:24px}
@@ -515,6 +559,37 @@ dialog::backdrop{background:#000d}
   .sticky-cta .button{padding:12px 14px;letter-spacing:.08em}
 }
 /* phones on their side: copy beside the guest, as on desktop, instead of below a 720px-tall scene */
+/* phones held upright: Roman's night photograph of the cabin under snow sits at the top of the first screen,
+   and the copy starts below its lit windows (V, 5 October 2026); wider screens keep the river illustration */
+@media(max-width:600px) and (orientation:portrait){
+  .hero .hero-wide,.wide-only{display:none}
+  .hero .hero-phone{display:block}
+  /* the photograph is about half the screen, and grows on tall phones so that it reaches down to the copy */
+  .hero picture,.hero::after{height:min(150vw,max(52svh,calc(126svh - 545px)))}
+  .hero-image{object-position:62% 100%}
+  .hero::after{background:linear-gradient(180deg,rgba(15,35,33,0) 0%,rgba(15,35,33,0) 66%,rgba(15,35,33,.55) 76%,rgba(15,35,33,.88) 83%,var(--night) 100%)}
+  .hero-content{padding-top:max(110px,min(64vw,38svh))}
+  /* that night photograph is the first screen here, so winter leads with the cabin by day instead of repeating it */
+  .winter-grid [data-photo="winter-night"]{display:none}
+  .winter-grid [data-photo="winter-cabin"]{order:-1;grid-column:1/-1;aspect-ratio:4/3}
+  .winter-grid .photo:not(:first-child)[data-photo="winter-cabin"] .photo-label{display:flex}
+  .winter-grid [data-photo="winter-mountain"]{grid-column:1/-1;aspect-ratio:16/9}
+}
+/* phones with the browser's bars showing (about 660px of height): the first screen keeps its button above the fold */
+@media(max-width:600px) and (max-height:700px){
+  .hero-content{padding-bottom:24px}
+  .hero h1{margin-bottom:14px}
+  .hero h1 span+span{margin-top:.4em}
+  .hero h1 span+span+span{margin-top:.1em}
+  .hero .actions{margin-top:18px}
+}
+/* the shortest phones (about 550px of height): tighter type, so the button is still on the first screen */
+@media(max-width:600px) and (max-height:600px){
+  .hero h1{font-size:36px;margin-bottom:10px}
+  .hero-content{padding-bottom:16px}
+  .hero-sub{margin-top:4px}
+  .hero .actions{margin-top:12px}
+}
 @media(max-width:900px) and (max-height:760px){
   /* short phones: the river note reaches the bright rocks, so the shade goes further down */
   .ritual-stage::after{background:linear-gradient(180deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.86) 50%,rgba(8,27,24,.5) 72%,rgba(8,27,24,0) 86%)}
@@ -524,8 +599,9 @@ dialog::backdrop{background:#000d}
   .hero-image{object-position:30% 40%}
   .hero::after{background:linear-gradient(90deg,rgba(8,27,24,.04) 0%,rgba(8,27,24,.1) 26%,rgba(8,27,24,.6) 40%,rgba(8,27,24,.9) 50%,rgba(8,27,24,.93) 100%)}
   .hero-content{padding:88px 5vw 24px 50%;justify-content:center}
-  .hero h1{font-size:34px;margin:12px 0 14px;max-width:none}
-  .hero-sub{font-size:14px;line-height:1.6}
+  .hero h1{font-size:34px;margin:0 0 12px;max-width:none}
+  .hero-where{font-size:15px}
+  .hero-sub{font-size:14px;line-height:1.6;margin-top:4px}
   .hero .actions{margin-top:18px;gap:10px}
   .hero .button{min-height:48px;padding:12px 16px}
   .estate-stage,.ritual-stage{min-height:0}
