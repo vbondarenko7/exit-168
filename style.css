@@ -50,6 +50,9 @@ h3{font-size:var(--title);line-height:1.4}
 .navigation nav a{font-size:13px}
 .navigation a:hover{color:#fff}
 .nav-action{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.18em}
+/* the phone for guests, beside the booking link: the number where there is room for it, a handset where there is not */
+.nav-phone{font-size:13px;white-space:nowrap}
+.nav-phone .icon{display:none}
 .menu-toggle{display:none}
 .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(4px) rotate(45deg)}
 .menu-toggle[aria-expanded=true] span:last-child{transform:translateY(-4px) rotate(-45deg)}
@@ -261,21 +264,29 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .winter-grid .photo:first-child img{object-position:50% 70%}
 .winter-grid [data-photo="winter-trench"] img{object-position:50% 35%}
 
-/* the place for time alone with nature: a morning on the deck, then what there is to do */
+/* the place for time alone with nature: a morning on the deck, and six things to do shown one at a time —
+   the names switch them, and on a phone a swipe does too */
 .nature{margin-top:var(--section-top)}
-.nature-photo{position:relative;height:min(78svh,720px);min-height:520px;overflow:hidden}
-.nature-photo img{position:absolute;inset:0;object-position:60% 72%}
-.nature-photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.84) 34%,rgba(8,27,24,.3) 54%,rgba(8,27,24,0) 66%)}
-.nature-copy{position:absolute;z-index:1;left:6.5vw;top:0;bottom:0;width:min(700px,50vw);display:flex;flex-direction:column;justify-content:center}
-.nature-copy p{margin-top:28px;max-width:40ch;font-size:17px;line-height:1.7;color:var(--soft)}
-.nature-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1240px;margin:0 auto;padding:24px 24px 0}
-.nature-list>div{padding:44px 40px 48px;border-bottom:1px solid var(--line)}
-.nature-list>div:not(:nth-child(3n+1)){border-left:1px solid var(--line)}
-.nature-list>div:nth-child(3n+1){padding-left:0}
-.nature-list>div:nth-child(3n){padding-right:0}
-.nature-list dt{font:400 24px/1.25 Forum,Georgia,serif;text-transform:uppercase;letter-spacing:.005em}
-.nature-list dt .icon{display:block;width:36px;height:36px;margin-bottom:22px}
-.nature-list dd{margin-top:12px;color:var(--soft);line-height:1.7}
+.nature-photo{position:relative;display:grid;align-items:center;min-height:max(520px,min(78svh,720px));overflow:hidden}
+.nature-photo>img{position:absolute;inset:0;object-position:60% 72%}
+.nature-photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.88) 38%,rgba(8,27,24,.4) 56%,rgba(8,27,24,0) 70%)}
+.nature-copy{position:relative;z-index:1;width:min(700px,50vw);margin-left:6.5vw;padding:72px 0}
+.nature-tabs{display:flex;flex-wrap:wrap;gap:0 28px;max-width:min(520px,46vw);margin-top:32px}
+.nature-tabs a{display:block;padding:11px 0;font:400 18px/1.25 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase;text-decoration-line:underline;text-decoration-thickness:1px;text-decoration-color:transparent;text-underline-offset:8px;transition:color .18s ease-out,text-decoration-color .18s ease-out}
+/* the mark of the text on show needs the script; without it the names are plain links to their texts */
+.js .nature-tabs a[aria-current]{text-decoration-color:var(--ivory)}
+.js .nature-tabs a:not([aria-current]){color:var(--muted)}
+.js .nature-tabs a:hover{color:var(--ivory)}
+.nature-tabs a:focus-visible{outline-offset:2px}
+/* the six texts lie side by side in a row that snaps, so a finger can drag it; over the photograph the row keeps
+   the height of the longest text and the heading stays where it is */
+.nature-slides{display:flex;max-width:min(520px,46vw);margin-top:20px;overflow:auto hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.nature-slides::-webkit-scrollbar{display:none}
+.nature-slide{position:relative;flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;scroll-margin-top:45svh;transition:opacity .35s ease-out}
+.js .nature-slide:not(.is-current){opacity:.4}
+/* each text keeps its heading for screen readers; on screen the row of names already says it */
+.nature-slide h3{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.nature-slide p{font-size:17px;line-height:1.7;color:var(--soft)}
 .nature-note{margin-top:56px;padding:0 24px;text-align:center}
 
 /* ---------- offer ---------- */
@@ -303,7 +314,7 @@ summary::-webkit-details-marker{display:none}
 summary span{font:300 24px/1 var(--sans);transition:transform .2s ease-out}
 details[open] summary span{transform:rotate(45deg)}
 details p{max-width:72ch;padding:0 30px 26px 0}
-details a{text-decoration:underline}
+details a,.contact-info p a{text-decoration:underline}
 
 /* ---------- request ---------- */
 .contact-panels{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);margin-bottom:100px}
@@ -316,7 +327,8 @@ details a{text-decoration:underline}
 .booking-steps dl>div:last-child{padding-bottom:0}
 .booking-steps dt{font:400 18px/1.4 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase;text-wrap:balance}
 .booking-steps dd{color:var(--soft);line-height:1.7}
-.contact-info .button{margin-top:32px}
+.contact-info .actions{margin-top:32px}
+.contact-info .actions .button{flex:1 1 auto}
 .contact-info>p{margin-top:18px;max-width:60ch}
 fieldset{padding:0;margin:0 0 30px;border:0;min-width:0}
 legend{color:var(--muted);padding:0;margin-bottom:14px}
@@ -342,6 +354,10 @@ textarea{resize:vertical}
 select{-webkit-appearance:none;appearance:none;width:100%;display:block;background:var(--night) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%23c8d0c6' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center;border:1px solid #3a4b47;border-radius:0;padding:14px 44px 14px 18px;color:var(--soft);margin-top:14px;min-height:52px;cursor:pointer}
 select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* the phone field shows +1 in front of the number, so a guest types the number alone (V, 8 October 2026) */
+.tel-field{position:relative;display:block;margin-top:14px}
+.tel-field span{position:absolute;left:18px;top:0;bottom:0;display:flex;align-items:center;color:var(--soft);pointer-events:none}
+.tel-field input{margin-top:0;padding-left:46px}
 /* booking calendar: shown only when the booking service answers; otherwise the plain date field stays */
 .calendar{margin-bottom:30px}
 .cal-label{color:var(--muted);margin-bottom:14px}
@@ -408,10 +424,19 @@ dialog::backdrop{background:#000d}
   .arrival-card{padding:40px 28px}
   .nature-copy{width:60vw}
   .nature-copy h2{font-size:44px}
+  .nature-photo::after{background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.9) 46%,rgba(8,27,24,.45) 62%,rgba(8,27,24,0) 76%)}
   .contact-info,form{padding:44px 32px}
   .rate-options label>span{flex-wrap:wrap;gap:2px 12px}
   .map-wide .map-pin text{font-size:24px}
   .map-wide :is(.map-town text,.map-time,.map-note,.map-water text,.map-shield text){font-size:17px}
+}
+@media(min-width:901px) and (max-width:1100px){
+  .nav-phone{display:grid;place-items:center;width:44px;height:44px}
+  .nav-phone span{display:none}
+  .nav-phone .icon{display:block}
+}
+@media(min-width:901px) and (max-width:1010px){
+  .nav-phone{display:none}
 }
 @media(max-width:900px){
   :root{--headline:42px;--display:50px;--section-top:100px;--section-bottom:60px}
@@ -447,16 +472,15 @@ dialog::backdrop{background:#000d}
   .house-photos .photo:first-child{grid-column:1/-1;grid-row:auto;aspect-ratio:16/10}
   .house-facts{grid-template-columns:1fr;margin-top:40px}
   .house-facts li:nth-last-child(2){border-bottom:0}
-  .nature-photo{height:auto;min-height:0;overflow:visible}
-  .nature-photo img{position:static;height:min(62svh,560px);object-position:78% 70%}
+  .nature-photo{display:block;min-height:0;overflow:visible}
+  .nature-photo>img{position:static;height:min(62svh,560px);object-position:78% 70%}
   .nature-photo::after{display:none}
-  .nature-copy{position:static;width:auto;padding:48px 24px 0}
+  .nature-copy{width:auto;margin:0;padding:48px 24px 0}
   .nature-copy h2{font-size:var(--headline)}
-  .nature-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .nature-list>div,.nature-list>div:nth-child(n){padding:36px 28px 40px;border-left:0}
-  .nature-list>div:nth-child(2n){border-left:1px solid var(--line)}
-  .nature-list>div:nth-child(2n+1){padding-left:0}
-  .nature-list>div:nth-child(2n){padding-right:0}
+  .nature-tabs{max-width:none}
+  .nature-slides{max-width:66ch}
+  /* under the photograph the row takes the height of the text on show, so a short one leaves no gap */
+  .js .nature-slides{align-items:flex-start;height:var(--h,auto);transition:height .35s ease-out}
   .deal p{font-size:16px}
   .deal-video{margin-top:44px}
   .map .map-wide{display:none}
@@ -475,6 +499,10 @@ dialog::backdrop{background:#000d}
 }
 @media(max-width:600px){
   :root{--headline:32px;--display:40px;--body:16px;--section-top:80px;--section-bottom:48px;--gutter:6px}
+  .navigation{gap:8px}
+  .nav-phone{display:grid;place-items:center;width:44px;height:44px}
+  .nav-phone span{display:none}
+  .nav-phone .icon{display:block}
   .hero{min-height:100svh}
   .hero-image{object-position:50% 40%}
   .hero picture,.hero::after{bottom:auto;height:100svh}
@@ -512,14 +540,13 @@ dialog::backdrop{background:#000d}
   .arrival-card{padding:28px 20px}
   .arrival-card h3{margin-bottom:16px}
   .arrival-photo{height:380px}
-  .nature-photo img{height:auto;aspect-ratio:4/5;object-position:82% 70%}
+  .nature-photo>img{height:auto;aspect-ratio:4/5;object-position:82% 70%}
   .nature-copy{padding:36px 20px 0}
   .nature-copy h2 br{display:none}
-  .nature-copy p{margin-top:20px}
-  .nature-list{grid-template-columns:1fr;padding:12px 20px 0}
-  .nature-list>div,.nature-list>div:nth-child(n){padding:28px 0 30px;border-left:0}
-  .nature-list dt{font-size:20px}
-  .nature-list dt .icon{width:30px;height:30px;margin-bottom:16px}
+  .nature-tabs{gap:0 22px;margin-top:20px}
+  .nature-tabs a{padding:12px 0;font-size:17px}
+  .nature-slides{margin-top:14px}
+  .nature-slide p{font-size:16px}
   .nature-note{margin-top:36px}
   .arrival-photo img{object-position:75% 45%}
   .arrival-label{padding:16px 18px;font-size:17px}
@@ -537,7 +564,8 @@ dialog::backdrop{background:#000d}
   .offer-card .button{width:100%;font-size:11px}
   .contact-panels{margin-bottom:var(--section-bottom)}
   .contact-info,form{padding:36px 22px}
-  .contact-info .button{margin-top:24px;width:100%}
+  .contact-info .actions{margin-top:24px}
+  .contact-info .button{width:100%}
   .booking-steps dl>div{grid-template-columns:1fr;padding:14px 0}
   #request-result{padding:22px 20px 24px}
   .rate-options{grid-template-columns:1fr;gap:10px}
@@ -557,6 +585,9 @@ dialog::backdrop{background:#000d}
 @media(max-width:380px){
   .sticky-cta{gap:10px}
   .sticky-cta .button{padding:12px 14px;letter-spacing:.08em}
+}
+@media(max-width:350px){
+  .nav-phone{display:none}
 }
 /* phones on their side: copy beside the guest, as on desktop, instead of below a 720px-tall scene */
 /* phones held upright: Roman's night photograph of the cabin under snow sits at the top of the first screen,

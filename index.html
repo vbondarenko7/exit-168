@@ -68,6 +68,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <a href="#faq">FAQ</a>
   </nav>
   <div class="lang" aria-label="Language"><a href="ru/" hreflang="ru" lang="ru">RU</a><span aria-current="page">EN</span></div>
+  <a class="nav-phone" href="tel:+19169144407" aria-label="Call 916-914-4407"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/></svg><span>916-914-4407</span></a>
   <a class="nav-action" href="#request">Book your dates</a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button>
   <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
@@ -79,6 +80,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <a href="#where">Where</a>
     <a href="#faq">FAQ</a>
     <a href="#request">Book your dates</a>
+    <a href="tel:+19169144407">Call 916-914-4407</a>
   </nav>
 </header>
 
@@ -106,7 +108,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 <section id="place" class="estate">
   <header class="section-head">
     <h2>The cabin and the sauna sit <br>in the same clearing by&nbsp;the&nbsp;river</h2>
-    <p class="subtitle">Around them are 168&nbsp;acres of pine forest, four parcels behind a private gate. It's about 5,700&nbsp;feet up, so in summer it's cooler here than in Sacramento.</p>
+    <p class="subtitle">Around them are 168&nbsp;acres of pine forest, four parcels behind a private gate. It's about 5,900&nbsp;feet up, so in summer it's cooler here than in Sacramento.</p>
   </header>
   <div class="estate-track">
     <div class="estate-stage">
@@ -202,7 +204,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <li>A big carved table, a kitchen with a gas stove, a fridge and a microwave</li>
     <li>A living room with a wood stove, a big sofa and foosball</li>
     <li>Two decks with tables, benches and grills</li>
-    <li>A bathroom inside the cabin</li>
+    <li>A bathroom inside the cabin; there's a shower and hot water</li>
     <li>Power from solar panels and a generator</li>
   </ul>
 </section>
@@ -216,10 +218,11 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </div>
     <p class="offer-per">If there are ten of you, that's $50 a&nbsp;person for a&nbsp;day and $100&nbsp;for&nbsp;24&nbsp;hours</p>
     <ul class="offer-terms">
-      <li>The price is for the whole place and a group of up to&nbsp;10</li>
+      <li>The price is for the whole place and a group of up to&nbsp;10, children included</li>
+      <li>A day visit is 10&nbsp;a.m. to midnight; 24&nbsp;hours is 10&nbsp;a.m. to 10&nbsp;a.m. the next day</li>
       <li>More than 10 people: we agree separately</li>
       <li>The whole property for a month or longer: we agree separately</li>
-      <li>Same price on holidays</li>
+      <li>Same price on holidays. Over New Year and Independence Day the shortest stay is 2&nbsp;×&nbsp;24&nbsp;hours</li>
       <li>The deposit equals the rent and comes back after your stay</li>
     </ul>
     <div class="actions">
@@ -313,7 +316,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
         <path d="M900 232c-14-16-22-30-22-42a22 22 0 0 1 44 0c0 12-8 26-22 42Z"/>
         <circle cx="900" cy="190" r="7"/>
         <text x="900" y="122" text-anchor="middle">EXIT 168 · RAINBOW ROAD</text>
-        <text class="map-time" x="900" y="146" text-anchor="middle">5,700 FT · SOUTH YUBA RIVER</text>
+        <text class="map-time" x="900" y="146" text-anchor="middle">5,900 FT · SOUTH YUBA RIVER</text>
       </g>
       <text class="map-note" x="1490" y="500" text-anchor="end">SCHEMATIC, NOT TO SCALE</text>
     </svg>
@@ -343,7 +346,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
         <circle cx="170" cy="196" r="6"/>
         <text x="14" y="128" text-anchor="start">EXIT 168</text>
         <text class="map-pin-sub" x="14" y="150" text-anchor="start">RAINBOW ROAD</text>
-        <text class="map-time" x="14" y="168" text-anchor="start">5,700 FT · SOUTH YUBA</text>
+        <text class="map-time" x="14" y="168" text-anchor="start">5,900 FT · SOUTH YUBA</text>
       </g>
       <text class="map-note" x="346" y="506" text-anchor="end">SCHEMATIC, NOT TO SCALE</text>
     </svg>
@@ -372,35 +375,42 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <img src="assets/img/deck-morning-800.webp" srcset="assets/img/deck-morning-800.webp 800w, assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Morning on the deck above the river: mist over the water, a woman sits on a yoga mat by the railing with her back to us, granite boulders and pines across" loading="lazy">
     <div class="nature-copy">
       <h2>A place to be alone <br>with nature</h2>
-      <p>You can come here for yoga, for a&nbsp;retreat, or just to spend some quiet time by the river.</p>
+      <ul class="nature-tabs" aria-label="Things to do here">
+        <li><a href="#nature-retreat" aria-current="true">Yoga and retreats</a></li>
+        <li><a href="#nature-walks">Walks and hikes</a></li>
+        <li><a href="#nature-fishing">Fishing</a></li>
+        <li><a href="#nature-riding">Dirt bikes and quads</a></li>
+        <li><a href="#nature-touring">Motorcycle touring</a></li>
+        <li><a href="#nature-camping">Camping</a></li>
+      </ul>
+      <div class="nature-slides">
+        <div class="nature-slide is-current" id="nature-retreat">
+          <h3>Yoga and retreats</h3>
+          <p>You can come here for yoga, for a&nbsp;retreat, or just to spend some quiet time by the river. You rent the whole place, so there's no one here but your group and the schedule is your own. A&nbsp;retreat can run for several days in a&nbsp;row, for a&nbsp;group of up to&nbsp;15. After practice there's the <span class="nowrap">wood-fired</span> sauna and the river. There's no internet. Bring your own program, teacher and mats.</p>
+        </div>
+        <div class="nature-slide" id="nature-walks">
+          <h3>Walks and hikes</h3>
+          <p>You can walk straight from the cabin: there are 168&nbsp;acres of private forest around it, and the river runs through the property. The Loch Leven Lakes trail starts a mile from the exit: three and a half miles uphill to granite lakes, with a season of roughly June to November. The Pacific Crest Trail crosses <span class="nowrap">I-80</span> at Donner Summit, fifteen minutes east.</p>
+        </div>
+        <div class="nature-slide" id="nature-fishing">
+          <h3>Fishing</h3>
+          <p>There are brown and rainbow trout in the South Yuba. Trout season in California runs from late April to mid-November, and from age 16 you need a fishing license.</p>
+        </div>
+        <div class="nature-slide" id="nature-riding">
+          <h3>Dirt bikes and quads</h3>
+          <p>There's room to ride on 168&nbsp;acres of private land, and a paved area by the cabin to unload. We'll agree on where to ride beforehand. California requires a spark arrester on forest land and Placer County limits noise, so bring quiet exhausts.</p>
+        </div>
+        <div class="nature-slide" id="nature-touring">
+          <h3>Motorcycle touring</h3>
+          <p><span class="nowrap">I-80</span> over Donner Summit and Highway&nbsp;49 through Gold Country are close by. You park the bikes right by the cabin and warm up in the sauna after a cold pass.</p>
+        </div>
+        <div class="nature-slide" id="nature-camping">
+          <h3>Camping</h3>
+          <p>Tents, vans and RVs can go on the land, by arrangement. Public campgrounds in the mountains book up months ahead, and here there'll be no one but your group.</p>
+        </div>
+      </div>
     </div>
   </div>
-  <dl class="nature-list">
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0M12 6.5v7M12 8.5 7.5 12 9 15.5M12 8.5l4.5 3.5-1.5 3.5M3.5 18.5q8.5-5 17 0-8.5 2.5-17 0Z"/></svg>Yoga and retreats</dt>
-      <dd>A&nbsp;retreat can run for several days in a&nbsp;row, for a&nbsp;group of up to&nbsp;15.</dd>
-    </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12q6-7 13-5l7-4-2 5 2 5-7-4q-7 8-13 3Zm7 0h.01M3 18q4 3 8 0t8 0"/></svg>Fishing</dt>
-      <dd>There are brown and rainbow trout in the South Yuba. Trout season in California runs from late April to mid-November, and from age 16 you need a fishing license.</dd>
-    </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m2 20 7-12 4 7 3-4 6 9ZM9 8l1.5-3L12 8"/></svg>Hiking</dt>
-      <dd>The Loch Leven Lakes trail starts a mile from the exit: three and a half miles uphill to granite lakes. The Pacific Crest Trail crosses <span class="nowrap">I-80</span> at Donner Summit, fifteen minutes east.</dd>
-    </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18a3 3 0 1 0 0-.01M19 18a3 3 0 1 0 0-.01M5 18l4-8h4l3 5h3M9 10l-2-4h3m2 2 3 0 2 5"/></svg>Dirt bikes and quads</dt>
-      <dd>There's room to ride on 168&nbsp;acres of private land, and a paved area by the cabin to unload. We'll agree on where to ride beforehand. California requires a spark arrester on forest land and Placer County limits noise, so bring quiet exhausts.</dd>
-    </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h5a3 3 0 0 0 0-6h-3"/></svg>Motorcycle touring</dt>
-      <dd><span class="nowrap">I-80</span> over Donner Summit and Highway&nbsp;49 through Gold Country are close by. You park the bikes right by the cabin and warm up in the sauna after a cold pass.</dd>
-    </div>
-    <div>
-      <dt><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16V7h11l3 4h4v5M3 16h3m4 0h5m4 0h2M6 10h5M6 16a2 2 0 1 0 4 0 2 2 0 1 0-4 0M15 16a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg>Camping</dt>
-      <dd>Tents, vans and RVs can go on the land, by arrangement. Public campgrounds in the mountains book up months ahead, and here there'll be no one but your group.</dd>
-    </div>
-  </dl>
   <p class="subtitle nature-note">You book the cabin and the sauna, but the forest and the river around them are yours too. Write what you have in mind in the notes when you book, and we'll tell you if it works.</p>
 </section>
 
@@ -411,7 +421,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="faq-list">
     <details>
       <summary>How many people can come?<span aria-hidden="true">+</span></summary>
-      <p>Up to 15. The price is for the whole place, not per person: up to 10 people, $500 for a day and $1,000 for 24&nbsp;hours; 11 to 15 people, $750 and $1,500.</p>
+      <p>Up to 15, children included. The price is for the whole place, not per person: up to 10 people, $500 for a day and $1,000 for 24&nbsp;hours; 11 to 15 people, $750 and $1,500.</p>
     </details>
     <details>
       <summary>Can we rent it for a month?<span aria-hidden="true">+</span></summary>
@@ -423,11 +433,15 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </details>
     <details>
       <summary>Is there phone signal or Wi-Fi?<span aria-hidden="true">+</span></summary>
-      <p>Don't count on either. Coverage nearby is patchy; people say AT&amp;T works best. Before you drive up, leave the address and your plans with someone.</p>
+      <p>There's no Wi-Fi or internet at the place, only mobile signal. Coverage is patchy; people say AT&amp;T works best. Before you drive up, leave the address and your plans with someone.</p>
     </details>
     <details>
       <summary>Is the river safe for kids?<span aria-hidden="true">+</span></summary>
       <p>It's a mountain river: the water is ice-cold, and there's current under the calm surface. In spring runoff, from May to early July, it's dangerous and nobody swims. In summer the pool below the deck is quiet, but kids need life jackets.</p>
+    </details>
+    <details>
+      <summary>Can we bring a dog?<span aria-hidden="true">+</span></summary>
+      <p>Yes, but dogs stay outside: they aren't allowed in the cabin or in the sauna.</p>
     </details>
     <details>
       <summary>Can we make a fire?<span aria-hidden="true">+</span></summary>
@@ -467,11 +481,11 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
       <div class="form-row">
         <label id="date-field">Arrival date<input type="date" name="date" required></label>
         <label id="nights-field" hidden>24-hour stays<select name="nights"><option value="1">1 × 24&nbsp;h</option><option value="2">2 × 24&nbsp;h</option><option value="3">3 × 24&nbsp;h</option><option value="4">4 × 24&nbsp;h</option><option value="5">5 × 24&nbsp;h</option><option value="6">6 × 24&nbsp;h</option><option value="7">7 × 24&nbsp;h</option></select></label>
-        <label>Group size<input type="number" name="guests" min="1" max="15" step="1" inputmode="numeric" placeholder="Up to 10 included" required></label>
+        <label>Group size, with children<input type="number" name="guests" min="1" max="15" step="1" inputmode="numeric" placeholder="Up to 10 included" required></label>
       </div>
       <div class="form-row">
         <label>Your name<input type="text" name="name" autocomplete="name" required></label>
-        <label>Phone or email<input type="text" name="contact" autocomplete="tel" placeholder="Where we reply" required></label>
+        <label>Phone with WhatsApp<span class="tel-field"><span aria-hidden="true">+1</span><input type="tel" name="contact" autocomplete="tel-national" inputmode="tel" pattern="(?:\D*\d){10,}\D*" maxlength="100" title="A phone number, 10 digits" placeholder="Your number" required></span></label>
       </div>
       <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
       <label>Anything else <span>(optional)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="A retreat, fishing, dirt bikes, camping, a dog, kids, a birthday, a question"></textarea></label>
@@ -493,16 +507,19 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
         <h3>How booking works</h3>
         <dl>
           <div><dt>Now</dt><dd>You pick your dates and send the request.</dd></div>
-          <div><dt>Within 24&nbsp;hours</dt><dd>We hold the dates for 24&nbsp;hours and message you where to send the deposit. It equals the rent and goes by Zelle. Once it's paid, the dates are yours.</dd></div>
+          <div><dt>Within 24&nbsp;hours</dt><dd>We hold the dates for 24&nbsp;hours and message you on WhatsApp where to send the deposit. It equals the rent and goes by Zelle. Once it's paid, the dates are yours.</dd></div>
           <div><dt>Three days before you arrive</dt><dd>You pay the rent, also by Zelle.</dd></div>
           <div><dt>After your stay</dt><dd>We return the deposit.</dd></div>
           <div><dt>If you change your mind</dt><dd>If you book more than 14&nbsp;days ahead, you have 7&nbsp;days to cancel and get the deposit back. After that, or if you book 14&nbsp;days ahead or less, the deposit isn't refundable.</dd></div>
         </dl>
       </div>
       <div class="contact-info">
-        <h3>Rather use Facebook?</h3>
-        <p>Message the Exit&nbsp;168 page on Facebook about dates or anything else. We answer there too.</p>
-        <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
+        <h3>Call or message</h3>
+        <p>Call or text <a class="nowrap" href="tel:+19169144407">916-914-4407</a>. On&nbsp;Facebook, message the Exit&nbsp;168 page. We answer about dates and anything else.</p>
+        <div class="actions">
+          <a class="button black" href="tel:+19169144407">Call us</a>
+          <a class="button black" href="https://m.me/clubexit168">Message us on Facebook</a>
+        </div>
       </div>
     </div>
   </div>
@@ -514,7 +531,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="footer-main">
     <a class="wordmark" href="#top">EXIT 168</a>
     <p>Exit&nbsp;168 · Rainbow Road · Placer County, California</p>
-    <p><a href="https://m.me/clubexit168">Messenger</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
+    <p><a href="tel:+19169144407">916-914-4407</a> <a href="https://m.me/clubexit168">Messenger</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
   </div>
   <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Illustrations based on this property: <span class="wide-only">the opening picture, </span>the aerial view (in summer and in winter), the stove with the fire and the morning on the deck. Every other photo was taken at Exit&nbsp;168. Visits to this site are counted with Yandex Metrica and Google Analytics.</div>
 </footer>

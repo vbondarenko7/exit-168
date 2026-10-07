@@ -94,6 +94,36 @@ photoDialog.addEventListener('touchend', e => {
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
 document.querySelectorAll('[data-all-photos]').forEach(el => { el.textContent = t(`All ${photos.length} photos`, `Все ${photos.length} фото`); el.hidden = false; });
 
+// ---- time alone with nature: six things to do, one text at a time ----
+// The texts lie in a row that snaps; a name jumps to its text, and on a phone a finger can drag the row.
+const natureSlides = document.querySelector('.nature-slides');
+if (natureSlides) {
+  const names = [...document.querySelectorAll('.nature-tabs a')];
+  let shown = 0;
+  // under the photograph (narrow screens) the stylesheet gives the row the height of the text on show
+  const fit = () => natureSlides.style.setProperty('--h', `${natureSlides.children[shown].offsetHeight}px`);
+  const show = i => {
+    shown = i;
+    names.forEach((a, n) => {
+      if (n === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      natureSlides.children[n].classList.toggle('is-current', n === i);
+    });
+    fit();
+  };
+  names.forEach((a, i) => a.addEventListener('click', e => {
+    e.preventDefault(); // without this script the link itself scrolls the row to its text
+    natureSlides.scrollTo({ left: i * natureSlides.clientWidth, behavior: 'instant' });
+    show(i);
+  }));
+  natureSlides.addEventListener('scroll', () => {
+    const i = Math.round(natureSlides.scrollLeft / natureSlides.clientWidth);
+    if (i !== shown) show(i);
+  }, { passive: true });
+  addEventListener('resize', fit);
+  document.fonts.ready.then(fit);
+  fit();
+}
+
 // ---- scroll scenes: the place from above, and the banya ----
 // Both pin to the screen and play out over the scroll. With reduced motion, or without this script,
 // the stylesheet shows their end state: the clearing with its pins (in summer), the stove alight with every step.
@@ -323,6 +353,13 @@ const bigGroup = () => Number(form.elements.guests.value) > 10;
 const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 * nights() : 500) * (bigGroup() ? 1.5 : 1);
 const usd = n => '$' + String(n).replace(/\B(?=(\d{3})+$)/g, t(',', ' '));
 const stayRate = () => usd(stayPrice());
+// The form shows +1 in front of the phone field, so a guest types the number alone (V, 2026-10-08).
+// A number typed with its own country code stays as typed; a leading 1 before ten digits is the same code twice.
+const phone = () => {
+  const v = form.elements.contact.value.trim();
+  if (v.startsWith('+')) return v;
+  return `+1 ${v.replace(/\D/g, '').length === 11 ? v.replace(/^\D*1\D*/, '') : v}`;
+};
 
 // ---- calendar ----
 const cal = document.querySelector('#calendar');
@@ -331,6 +368,7 @@ const calStatus = document.querySelector('#cal-status');
 const locale = t('en-US', 'ru-RU');
 let busy = null; // { 'YYYY-MM-DD': 'hold' | 'busy' } once the service has answered
 let loading = false; // the calendar is on the page, its days closed until the service answers
+let longWeekends = [], minNights = 2; // New Year and Independence Day and their shortest stay, sent by the service with the busy days
 let today = dateInput.min;
 let month = today.slice(0, 7);
 const utc = iso => new Date(`${iso}T00:00:00Z`);
@@ -340,6 +378,7 @@ const nice = iso => utc(iso).toLocaleDateString(locale, { timeZone: 'UTC', weekd
 // A day visit takes its date; N × 24 hours take the arrival date and the N dates after it.
 const stayDays = () => dateInput.value ? Array.from({ length: nights() + 1 }, (_, i) => addDays(dateInput.value, i)) : [];
 const clashes = () => busy ? stayDays().filter(d => busy[d] || d > lastDay()) : [];
+const tooShort = () => nights() < minNights && stayDays().some(d => longWeekends.some(([a, b]) => d >= a && d <= b));
 
 function renderCalendar() {
   const [y, m] = month.split('-').map(Number);
@@ -349,7 +388,7 @@ function renderCalendar() {
   cal.querySelector('.cal-title').textContent = `${first.toLocaleDateString(locale, { timeZone: 'UTC', month: 'long' })} ${y}`;
   cal.querySelector('.cal-prev').disabled = month <= today.slice(0, 7);
   cal.querySelector('.cal-next').disabled = month >= lastDay().slice(0, 7);
-  const range = stayDays(), bad = clashes();
+  const range = stayDays(), bad = clashes(), short = tooShort();
   const cells = [];
   for (let i = 0; i < 7; i++) {
     const d = new Date(Date.UTC(2026, 1, 1 + i + (ru ? 1 : 0))); // 1 Feb 2026 is a Sunday
@@ -360,7 +399,7 @@ function renderCalendar() {
     const iso = `${month}-${String(day).padStart(2, '0')}`;
     const state = busy[iso];
     const off = loading || iso < today || iso > lastDay() || !!state;
-    const cls = ['cal-day', state, range.includes(iso) && (bad.includes(iso) ? 'clash' : 'range')].filter(Boolean).join(' ');
+    const cls = ['cal-day', state, range.includes(iso) && (short || bad.includes(iso) ? 'clash' : 'range')].filter(Boolean).join(' ');
     const note = state === 'hold' ? t(', held', ', держим') : state ? t(', booked', ', занято') : '';
     cells.push(`<button type="button" class="${cls}" data-day="${iso}" aria-pressed="${iso === dateInput.value}" aria-label="${nice(iso)}${note}"${off ? ' disabled' : ''}>${day}</button>`);
   }
@@ -369,6 +408,7 @@ function renderCalendar() {
   calStatus.textContent = loading ? t('Checking which dates are free…', 'Смотрим, какие даты свободны…')
     : !days.length ? ''
     : bad.length ? t(`${nice(bad[0])} is taken. Pick another arrival day or fewer nights.`, `${nice(bad[0])} занято. Выберите другой день приезда или меньше суток.`)
+    : short ? t(`These are holiday dates: the shortest stay is ${minNights} × 24 hours.`, `Это праздничные дни: бронь от ${minNights} суток.`)
     : days.length === 1 ? nice(days[0]) : `${nice(days[0])} – ${nice(days.at(-1))}`;
 }
 
@@ -384,7 +424,7 @@ cal.querySelector('.cal-next').addEventListener('click', () => { month = addDays
 async function loadBusy() {
   const res = await fetch(`${API}/busy`, { cache: 'no-store' });
   if (!res.ok) throw new Error(res.status);
-  ({ days: busy, today } = await res.json());
+  ({ days: busy, today, longWeekends = [], minNights = 2 } = await res.json());
   if (month < today.slice(0, 7)) month = today.slice(0, 7);
 }
 
@@ -420,7 +460,7 @@ function requestText() {
     `${t('Arrival', 'Дата приезда')}: ${date}`,
     `${t('Group', 'Гостей')}: ${form.elements.guests.value}`,
     `${t('Name', 'Имя')}: ${form.elements.name.value.trim()}`,
-    `${t('Contact', 'Связь')}: ${form.elements.contact.value.trim()}`,
+    `WhatsApp: ${phone()}`,
     notes && `${t('Notes', 'Комментарий')}: ${notes}`,
   ].filter(Boolean).join('\n');
 }
@@ -448,10 +488,12 @@ function showResult(title, text, withCopy) {
 
 // The lead Google Ads imports from Analytics as its conversion; value = the rate asked for.
 const countLead = () => { if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() }); };
+// A call leaves no other trace on the site: count the taps on the phone number.
+document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => { if (window.gtag) gtag('event', 'phone_click'); }));
 
 // Returns true when the booking service took the request (or said the dates are taken).
 async function holdDates() {
-  const fields = Object.fromEntries(new FormData(form));
+  const fields = { ...Object.fromEntries(new FormData(form)), contact: phone() };
   let res;
   try {
     res = await fetch(`${API}/request`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...fields, lang: ru ? 'ru' : 'en' }) });
@@ -469,8 +511,8 @@ async function holdDates() {
   stayDays().forEach(d => { busy[d] = 'hold'; });
   const until = new Date(data.holdUntil).toLocaleString(locale, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   showResult(t('Your dates are held', 'Держим ваши даты'), t(
-    `We hold them until ${until}. Within that time we will message you where to send the deposit, ${stayRate()}. Your contact: ${fields.contact}.`,
-    `Держим до ${until}. За это время напишем вам, куда перевести залог — ${stayRate()}. Ваш контакт: ${fields.contact}.`), false);
+    `We hold them until ${until}. Within that time we will message you on WhatsApp at ${fields.contact} with where to send the deposit, ${stayRate()}.`,
+    `Держим до ${until}. За это время напишем вам в WhatsApp на ${fields.contact}, куда перевести залог — ${stayRate()}.`), false);
   dateInput.value = '';
   renderCalendar();
   countLead();
@@ -482,7 +524,7 @@ form.addEventListener('submit', async e => {
   if (!form.reportValidity()) return;
   if (busy) {
     if (!dateInput.value) { calStatus.textContent = t('Pick your arrival day in the calendar.', 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
-    if (clashes().length) { renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
+    if (clashes().length || tooShort()) { renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
     const button = form.querySelector('.submit');
     button.disabled = true;
     const done = await holdDates();
