@@ -20,7 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0f2321">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230f2321'/%3E%3Cpath d='m20 5-10 14h6l-7 10h9v6h4v-6h9l-7-10h6Z' fill='none' stroke='%23efe7d2' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="preload" as="font" href="../assets/forum.ttf" type="font/ttf" crossorigin>
+<link rel="preload" as="font" href="../assets/forum-cyrillic.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="../assets/forum-latin.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="font" href="../assets/manrope-cyrillic.woff2" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../style.css">
 <script>document.documentElement.classList.add('js')</script>
@@ -85,10 +86,12 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 
 <section class="hero">
   <picture class="hero-wide">
+    <source media="not all and (max-width: 600px) and (orientation: portrait)" type="image/avif" srcset="../assets/img/hero-river-sauna.avif">
     <source media="not all and (max-width: 600px) and (orientation: portrait)" srcset="../assets/img/hero-river-sauna.webp">
     <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1672" height="941" alt="Мужчина стоит по пояс в реке под баней, от воды поднимается пар, вокруг сосны" fetchpriority="high">
   </picture>
   <picture class="hero-phone">
+    <source media="(max-width: 600px) and (orientation: portrait)" type="image/avif" srcset="../assets/img/hero-winter-phone-780.avif 780w, ../assets/img/hero-winter-phone-1180.avif 1180w" sizes="100vw">
     <source media="(max-width: 600px) and (orientation: portrait)" srcset="../assets/img/hero-winter-phone-780.webp 780w, ../assets/img/hero-winter-phone-1180.webp 1180w" sizes="100vw">
     <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1180" height="1110" alt="Дом ночью под толстой шапкой снега, в окнах свет, рядом подсвеченные сосны" fetchpriority="high">
   </picture>
@@ -110,8 +113,8 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="estate-track">
     <div class="estate-stage">
       <div class="estate-close">
-        <img src="../assets/img/estate-close-800.webp" srcset="../assets/img/estate-close-800.webp 800w, ../assets/img/estate-close-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Вид сверху: на асфальтовой поляне среди сосен дом с зелёной крышей; у моста через реку белый вагончик бани с террасой и ступенями к заводи" loading="lazy">
-        <img class="estate-winter" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../assets/img/estate-winter-800.webp" data-srcset="../assets/img/estate-winter-800.webp 800w, ../assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Тот же вид зимой: поляна, дорога и мост под глубоким снегом, дом и баня засыпаны по крышу, к двери дома прокопана траншея" loading="lazy">
+        <picture><source type="image/avif" srcset="../assets/img/estate-close-800.avif 800w, ../assets/img/estate-close-1536.avif 1536w" sizes="max(100vw, 150svh)"><img src="../assets/img/estate-close-800.webp" srcset="../assets/img/estate-close-800.webp 800w, ../assets/img/estate-close-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Вид сверху: на асфальтовой поляне среди сосен дом с зелёной крышей; у моста через реку белый вагончик бани с террасой и ступенями к заводи" loading="lazy"></picture>
+        <picture><source type="image/avif" data-srcset="../assets/img/estate-winter-800.avif 800w, ../assets/img/estate-winter-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="estate-winter" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../assets/img/estate-winter-800.webp" data-srcset="../assets/img/estate-winter-800.webp 800w, ../assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Тот же вид зимой: поляна, дорога и мост под глубоким снегом, дом и баня засыпаны по крышу, к двери дома прокопана траншея" loading="lazy"></picture>
       </div>
       <div class="estate-pins">
         <button class="pin" style="--x:58.7%;--y:52.4%" data-photo="cabin" aria-label="Гостевой дом: открыть фото"><span>Гостевой дом</span></button>
@@ -126,7 +129,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <h2>Как своя дача <br>на&nbsp;день или на&nbsp;сутки</h2>
   <p>Здесь никто не&nbsp;живёт, персонала нет. Дом, баня, река и&nbsp;лес на&nbsp;это время только ваши: приезжаете своей компанией и&nbsp;хозяйничаете сами.</p>
   <figure class="deal-video">
-    <video controls preload="none" playsinline poster="../assets/video/exit168-poster.webp" width="1280" height="720" aria-label="Видео о месте, три минуты">
+    <video controls preload="none" playsinline data-poster="../assets/video/exit168-poster.webp" width="1280" height="720" aria-label="Видео о месте, три минуты">
       <source src="../assets/video/exit168-ru-720.mp4" type="video/mp4">
     </video>
     <figcaption>Видео о&nbsp;месте, три минуты</figcaption>
@@ -137,12 +140,12 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="ritual-track">
     <div class="ritual-stage">
       <div class="ritual-scene">
-        <img class="ritual-dark" src="../assets/img/stove-dark-800.webp" srcset="../assets/img/stove-dark-800.webp 800w, ../assets/img/stove-dark-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Парилка: дровяная печь-каменка с трубой, котёл на камнях, полок в два яруса" loading="lazy">
-        <img class="ritual-fire" src="../assets/img/stove-fire-800.webp" srcset="../assets/img/stove-fire-800.webp 800w, ../assets/img/stove-fire-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="" loading="lazy">
+        <picture><source type="image/avif" srcset="../assets/img/stove-dark-800.avif 800w, ../assets/img/stove-dark-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="ritual-dark" src="../assets/img/stove-dark-800.webp" srcset="../assets/img/stove-dark-800.webp 800w, ../assets/img/stove-dark-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Парилка: дровяная печь-каменка с трубой, котёл на камнях, полок в два яруса" loading="lazy"></picture>
+        <picture><source type="image/avif" srcset="../assets/img/stove-fire-800.avif 800w, ../assets/img/stove-fire-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="ritual-fire" src="../assets/img/stove-fire-800.webp" srcset="../assets/img/stove-fire-800.webp 800w, ../assets/img/stove-fire-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="" loading="lazy"></picture>
         <div class="ritual-glow" aria-hidden="true"></div>
         <canvas class="ritual-flame" aria-hidden="true"></canvas>
       </div>
-      <img class="ritual-river" src="../assets/img/river-800.webp" srcset="../assets/img/river-800.webp 800w, ../assets/img/river-1440.webp 1440w" sizes="max(100vw, 134svh)" width="1440" height="1080" alt="Деревянные ступени с террасы спускаются в тихую заводь между гранитных валунов" loading="lazy">
+      <picture><source type="image/avif" srcset="../assets/img/river-800.avif 800w, ../assets/img/river-1440.avif 1440w" sizes="max(100vw, 134svh)"><img class="ritual-river" src="../assets/img/river-800.webp" srcset="../assets/img/river-800.webp 800w, ../assets/img/river-1440.webp 1440w" sizes="max(100vw, 134svh)" width="1440" height="1080" alt="Деревянные ступени с террасы спускаются в тихую заводь между гранитных валунов" loading="lazy"></picture>
       <div class="ritual-copy">
         <h2>Баня у&nbsp;самой реки</h2>
         <div class="ritual-progress" aria-hidden="true"><span></span></div>
@@ -158,16 +161,16 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </div>
   <div class="banya-photos strip">
     <button class="photo" data-photo="sauna" aria-label="Открыть фото полка в бане">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/sauna-800.webp"><img src="../assets/img/sauna-800.webp" srcset="../assets/img/sauna-800.webp 800w, ../assets/img/sauna-1600.webp 1600w" sizes="(max-width: 600px) 84vw, 34vw" width="1600" height="1200" alt="Парилка: полок в два яруса вдоль трёх стен, стены и потолок из дерева" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/sauna-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/sauna-800.webp"><source type="image/avif" srcset="../assets/img/sauna-800.avif 800w, ../assets/img/sauna-1600.avif 1600w" sizes="(max-width: 600px) 84vw, 34vw"><img src="../assets/img/sauna-800.webp" srcset="../assets/img/sauna-800.webp 800w, ../assets/img/sauna-1600.webp 1600w" sizes="(max-width: 600px) 84vw, 34vw" width="1600" height="1200" alt="Парилка: полок в два яруса вдоль трёх стен, стены и потолок из дерева" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="deck" aria-label="Открыть фото террасы у реки">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/deck-800.webp"><img src="../assets/img/deck-800.webp" srcset="../assets/img/deck-800.webp 800w, ../assets/img/deck-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="Терраса у бани над заводью: стол со скамьями, резные перила, за ними гранитные валуны и сосны" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/deck-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/deck-800.webp"><source type="image/avif" srcset="../assets/img/deck-800.avif 800w, ../assets/img/deck-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 34vw"><img src="../assets/img/deck-800.webp" srcset="../assets/img/deck-800.webp 800w, ../assets/img/deck-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="Терраса у бани над заводью: стол со скамьями, резные перила, за ними гранитные валуны и сосны" loading="lazy"></picture>
     </button>
     <button class="photo still-only" data-photo="river" aria-label="Открыть фото ступенек к заводи">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/river-800.webp"><img src="../assets/img/river-800.webp" srcset="../assets/img/river-800.webp 800w, ../assets/img/river-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 25vw" width="1440" height="1080" alt="Деревянные ступени с террасы спускаются в тихую заводь между гранитных валунов" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/river-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/river-800.webp"><source type="image/avif" srcset="../assets/img/river-800.avif 800w, ../assets/img/river-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 25vw"><img src="../assets/img/river-800.webp" srcset="../assets/img/river-800.webp 800w, ../assets/img/river-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 25vw" width="1440" height="1080" alt="Деревянные ступени с террасы спускаются в тихую заводь между гранитных валунов" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="sauna-outside" aria-label="Открыть фото бани снаружи">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/sauna-outside-800.webp"><img src="../assets/img/sauna-outside-800.webp" srcset="../assets/img/sauna-outside-800.webp 800w, ../assets/img/sauna-outside-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="Баня снаружи: белый вагончик с трубой у дороги, рядом терраса, заводь и бетонный мост" loading="lazy"></picture><span class="photo-label">Баня снаружи</span>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/sauna-outside-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/sauna-outside-800.webp"><source type="image/avif" srcset="../assets/img/sauna-outside-800.avif 800w, ../assets/img/sauna-outside-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 34vw"><img src="../assets/img/sauna-outside-800.webp" srcset="../assets/img/sauna-outside-800.webp 800w, ../assets/img/sauna-outside-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="Баня снаружи: белый вагончик с трубой у дороги, рядом терраса, заводь и бетонный мост" loading="lazy"></picture><span class="photo-label">Баня снаружи</span>
     </button>
   </div>
 </section>
@@ -178,19 +181,19 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="house-photos strip">
     <button class="photo" data-photo="greatroom" aria-label="Открыть фото гостиной">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/greatroom-800.webp"><img src="../assets/img/greatroom-800.webp" srcset="../assets/img/greatroom-800.webp 800w, ../assets/img/greatroom-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="1440" height="1080" alt="Гостиная: большой угловой диван, настольный футбол, труба дровяной печи, окна в лес" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/greatroom-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/greatroom-800.webp"><source type="image/avif" srcset="../assets/img/greatroom-800.avif 800w, ../assets/img/greatroom-1440.avif 1440w" sizes="(max-width: 900px) 100vw, 50vw"><img src="../assets/img/greatroom-800.webp" srcset="../assets/img/greatroom-800.webp 800w, ../assets/img/greatroom-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="1440" height="1080" alt="Гостиная: большой угловой диван, настольный футбол, труба дровяной печи, окна в лес" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="cabin" aria-label="Открыть фото дома снаружи">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/cabin-800.webp"><img src="../assets/img/cabin-800.webp" srcset="../assets/img/cabin-800.webp 800w, ../assets/img/cabin-1400.webp 1400w" sizes="(max-width: 900px) 50vw, 25vw" width="1400" height="1050" alt="Дом снаружи: деревянный дом с зелёной крышей, терраса с перилами и грилями, солнечные панели" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/cabin-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/cabin-800.webp"><source type="image/avif" srcset="../assets/img/cabin-800.avif 800w, ../assets/img/cabin-1400.avif 1400w" sizes="(max-width: 900px) 50vw, 25vw"><img src="../assets/img/cabin-800.webp" srcset="../assets/img/cabin-800.webp 800w, ../assets/img/cabin-1400.webp 1400w" sizes="(max-width: 900px) 50vw, 25vw" width="1400" height="1050" alt="Дом снаружи: деревянный дом с зелёной крышей, терраса с перилами и грилями, солнечные панели" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="dining" aria-label="Открыть фото столовой в доме">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/dining-800.webp"><img src="../assets/img/dining-800.webp" srcset="../assets/img/dining-800.webp 800w, ../assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Столовая в доме: резной деревянный стол, люстра и окно в лес" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/dining-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/dining-800.webp"><source type="image/avif" srcset="../assets/img/dining-800.avif 800w, ../assets/img/dining-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="../assets/img/dining-800.webp" srcset="../assets/img/dining-800.webp 800w, ../assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Столовая в доме: резной деревянный стол, люстра и окно в лес" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="bunkroom" aria-label="Открыть фото комнаты с трёхъярусной кроватью">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/bunkroom-800.webp"><img src="../assets/img/bunkroom-800.webp" srcset="../assets/img/bunkroom-800.webp 800w, ../assets/img/bunkroom-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Комната с трёхъярусной кроватью из бруса, окно и дверь на террасу" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/bunkroom-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/bunkroom-800.webp"><source type="image/avif" srcset="../assets/img/bunkroom-800.avif 800w, ../assets/img/bunkroom-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="../assets/img/bunkroom-800.webp" srcset="../assets/img/bunkroom-800.webp 800w, ../assets/img/bunkroom-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Комната с трёхъярусной кроватью из бруса, окно и дверь на террасу" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="loft" aria-label="Открыть фото кровати в мансарде">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/loft-800.webp"><img src="../assets/img/loft-800.webp" srcset="../assets/img/loft-800.webp 800w, ../assets/img/loft-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Мансарда: широкая кровать под окнами, стены из вагонки" loading="lazy"></picture><span class="photo-label" data-all-photos hidden></span>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/loft-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/loft-800.webp"><source type="image/avif" srcset="../assets/img/loft-800.avif 800w, ../assets/img/loft-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="../assets/img/loft-800.webp" srcset="../assets/img/loft-800.webp 800w, ../assets/img/loft-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Мансарда: широкая кровать под окнами, стены из вагонки" loading="lazy"></picture><span class="photo-label" data-all-photos hidden></span>
     </button>
   </div>
   <ul class="house-facts">
@@ -232,7 +235,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="route-body">
     <button class="photo route-photo" data-photo="gate" aria-label="Открыть фото ворот участка">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/gate-800.webp"><img src="../assets/img/gate-800.webp" srcset="../assets/img/gate-800.webp 800w, ../assets/img/gate-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 42vw" width="1440" height="1080" alt="Ворота участка: кованые створки поперёк асфальтовой дороги, за ними сосновый лес" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/gate-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/gate-800.webp"><source type="image/avif" srcset="../assets/img/gate-800.avif 800w, ../assets/img/gate-1440.avif 1440w" sizes="(max-width: 900px) 100vw, 42vw"><img src="../assets/img/gate-800.webp" srcset="../assets/img/gate-800.webp 800w, ../assets/img/gate-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 42vw" width="1440" height="1080" alt="Ворота участка: кованые створки поперёк асфальтовой дороги, за ними сосновый лес" loading="lazy"></picture>
     </button>
     <ol class="route-steps">
       <li><h3>Приезд</h3><p>Летом и&nbsp;осенью доезжаете на&nbsp;машине до&nbsp;самого дома. Зимой машину оставляете у&nbsp;дороги возле ворот и&nbsp;последний километр идёте на&nbsp;снегоступах: снег здесь никто не&nbsp;чистит.</p></li>
@@ -258,21 +261,21 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="winter-grid">
     <button class="photo" data-photo="winter-night" aria-label="Открыть фото дома под снегом ночью">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-night-800.webp"><img src="../assets/img/winter-night-800.webp" srcset="../assets/img/winter-night-800.webp 800w, ../assets/img/winter-night-1350.webp 1350w" sizes="(max-width: 600px) 100vw, 42vw" width="800" height="1067" alt="Дом ночью, занесённый снегом по самую крышу, подсвеченные сосны и звёзды" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/winter-night-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/winter-night-800.webp"><source type="image/avif" srcset="../assets/img/winter-night-800.avif 800w, ../assets/img/winter-night-1350.avif 1350w" sizes="(max-width: 600px) 100vw, 42vw"><img src="../assets/img/winter-night-800.webp" srcset="../assets/img/winter-night-800.webp 800w, ../assets/img/winter-night-1350.webp 1350w" sizes="(max-width: 600px) 100vw, 42vw" width="800" height="1067" alt="Дом ночью, занесённый снегом по самую крышу, подсвеченные сосны и звёзды" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="winter-river" aria-label="Открыть фото реки между сугробами">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-river-800.webp"><img src="../assets/img/winter-river-800.webp" srcset="../assets/img/winter-river-800.webp 800w, ../assets/img/winter-river-1500.webp 1500w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="Тёмная вода Южной Юбы между заснеженными валунами под синим небом" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/winter-river-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/winter-river-800.webp"><source type="image/avif" srcset="../assets/img/winter-river-800.avif 800w, ../assets/img/winter-river-1500.avif 1500w" sizes="(max-width: 600px) 50vw, 58vw"><img src="../assets/img/winter-river-800.webp" srcset="../assets/img/winter-river-800.webp 800w, ../assets/img/winter-river-1500.webp 1500w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="Тёмная вода Южной Юбы между заснеженными валунами под синим небом" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="winter-cabin" aria-label="Открыть фото дома зимой со следом снегохода">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-cabin-800.webp"><img src="../assets/img/winter-cabin-800.webp" srcset="../assets/img/winter-cabin-800.webp 800w, ../assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="Дом с зелёной крышей почти целиком в снегу, к нему ведёт след снегохода" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/winter-cabin-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/winter-cabin-800.webp"><source type="image/avif" srcset="../assets/img/winter-cabin-800.avif 800w, ../assets/img/winter-cabin-1600.avif 1600w" sizes="(max-width: 600px) 50vw, 58vw"><img src="../assets/img/winter-cabin-800.webp" srcset="../assets/img/winter-cabin-800.webp 800w, ../assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="Дом с зелёной крышей почти целиком в снегу, к нему ведёт след снегохода" loading="lazy"></picture>
       <span class="photo-label">След снегохода</span>
     </button>
     <button class="photo" data-photo="winter-trench" aria-label="Открыть фото тропы в снегу к двери дома">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-trench-800.webp"><img src="../assets/img/winter-trench-800.webp" srcset="../assets/img/winter-trench-800.webp 800w, ../assets/img/winter-trench-941.webp 941w" sizes="(max-width: 600px) 50vw, 42vw" width="800" height="1422" alt="Тропа к двери дома, прокопанная в снегу выше человеческого роста, сверху синее небо и сосны" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/winter-trench-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/winter-trench-800.webp"><source type="image/avif" srcset="../assets/img/winter-trench-800.avif 800w, ../assets/img/winter-trench-941.avif 941w" sizes="(max-width: 600px) 50vw, 42vw"><img src="../assets/img/winter-trench-800.webp" srcset="../assets/img/winter-trench-800.webp 800w, ../assets/img/winter-trench-941.webp 941w" sizes="(max-width: 600px) 50vw, 42vw" width="800" height="1422" alt="Тропа к двери дома, прокопанная в снегу выше человеческого роста, сверху синее небо и сосны" loading="lazy"></picture>
       <span class="photo-label">Тропа к двери</span>
     </button>
     <button class="photo" data-photo="winter-mountain" aria-label="Открыть фото реки под заснеженным хребтом">
-      <picture><source media="(max-width: 600px)" srcset="../assets/img/winter-mountain-800.webp"><img src="../assets/img/winter-mountain-800.webp" srcset="../assets/img/winter-mountain-800.webp 800w, ../assets/img/winter-mountain-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="Южная Юба между валунами под снежными шапками, сосны и заснеженный хребет под синим небом" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/winter-mountain-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/winter-mountain-800.webp"><source type="image/avif" srcset="../assets/img/winter-mountain-800.avif 800w, ../assets/img/winter-mountain-1600.avif 1600w" sizes="(max-width: 600px) 50vw, 58vw"><img src="../assets/img/winter-mountain-800.webp" srcset="../assets/img/winter-mountain-800.webp 800w, ../assets/img/winter-mountain-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="Южная Юба между валунами под снежными шапками, сосны и заснеженный хребет под синим небом" loading="lazy"></picture>
     </button>
   </div>
 </section>
@@ -359,14 +362,14 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </article>
   </div>
   <div class="arrival-photo">
-    <picture><source media="(max-width: 600px)" srcset="../assets/img/exit-sign-800.webp"><img src="../assets/img/exit-sign-800.webp" srcset="../assets/img/exit-sign-800.webp 800w, ../assets/img/exit-sign-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Указатель на трассе I-80: Exit 168 Rainbow Road, три четверти мили" loading="lazy"></picture>
+    <picture><source media="(max-width: 600px)" type="image/avif" srcset="../assets/img/exit-sign-800.avif"><source media="(max-width: 600px)" srcset="../assets/img/exit-sign-800.webp"><source type="image/avif" srcset="../assets/img/exit-sign-800.avif 800w, ../assets/img/exit-sign-1600.avif 1600w" sizes="100vw"><img src="../assets/img/exit-sign-800.webp" srcset="../assets/img/exit-sign-800.webp 800w, ../assets/img/exit-sign-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Указатель на трассе I-80: Exit 168 Rainbow Road, три четверти мили" loading="lazy"></picture>
     <div class="arrival-label">Съезд&nbsp;168 · Rainbow Road<p>От&nbsp;съезда до&nbsp;ворот пара минут. Время в&nbsp;пути на&nbsp;схеме&nbsp;— для сухой дороги без пробок.</p></div>
   </div>
 </section>
 
 <section id="land" class="nature">
   <div class="nature-photo">
-    <img src="../assets/img/deck-morning-800.webp" srcset="../assets/img/deck-morning-800.webp 800w, ../assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Утро на террасе над рекой: над водой туман, на коврике у перил спиной к нам сидит женщина, напротив гранитные валуны и сосны" loading="lazy">
+    <picture><source type="image/avif" srcset="../assets/img/deck-morning-800.avif 800w, ../assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/deck-morning-800.webp" srcset="../assets/img/deck-morning-800.webp 800w, ../assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Утро на террасе над рекой: над водой туман, на коврике у перил спиной к нам сидит женщина, напротив гранитные валуны и сосны" loading="lazy"></picture>
     <div class="nature-copy">
       <h2>Место, чтобы побыть <br>наедине с&nbsp;природой</h2>
       <ul class="nature-tabs" aria-label="Чем здесь заняться">
@@ -540,7 +543,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <p id="photo-count"></p>
     <button class="lightbox-close" aria-label="Закрыть фотографии"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
   </div>
-  <img id="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+  <picture><source id="lightbox-avif" type="image/avif"><img id="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></picture>
   <div class="lightbox-bottom">
     <button id="photo-prev" aria-label="Предыдущая фотография"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7"/></svg></button>
     <p id="photo-caption"></p>

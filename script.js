@@ -29,6 +29,9 @@ menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMen
 menu.addEventListener('keydown', e => { if (e.key === 'Escape') { setMenu(false); menuButton.focus(); } });
 
 // ---- photographs ----
+// The video's poster is a picture like any other: it loads when the video comes near, not with the first screen.
+const clip = document.querySelector('video[data-poster]');
+if (clip) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { clip.poster = clip.dataset.poster; io.disconnect(); } }, { rootMargin: '1500px' }).observe(clip);
 const photos = [
   ['stove', 'assets/img/stove-1600.webp', 'The wood-fired stove in the sauna', 'Дровяная печь в бане'],
   ['sauna', 'assets/img/sauna-1600.webp', 'The sauna benches', 'Полок в бане'],
@@ -53,13 +56,14 @@ const photos = [
 ].map(([name, src, en, russian]) => [name, asset(src), t(en, russian)]);
 const photoDialog = document.querySelector('#photo-dialog');
 const lightboxImage = document.querySelector('#lightbox-image');
+const lightboxAvif = document.querySelector('#lightbox-avif');
 let photoIndex = 0;
 // The picture is hidden until its own file has arrived, so a slow link never shows the last photo under a new caption.
 lightboxImage.addEventListener('load', () => { lightboxImage.style.opacity = ''; });
 function showPhoto(index) {
   photoIndex = (index + photos.length) % photos.length;
   const [, src, caption] = photos[photoIndex];
-  if (lightboxImage.src !== src) { lightboxImage.style.opacity = 0; lightboxImage.src = src; }
+  if (lightboxImage.src !== src) { lightboxImage.style.opacity = 0; lightboxAvif.srcset = src.replace('.webp', '.avif'); lightboxImage.src = src; }
   lightboxImage.alt = caption;
   document.querySelector('#photo-caption').textContent = caption;
   document.querySelector('#photo-count').textContent = `Exit 168 · ${String(photoIndex + 1).padStart(2, '0')} ${t('of', 'из')} ${photos.length}`;
@@ -174,7 +178,7 @@ if (estate && !still) {
   const pins = [...estate.querySelectorAll('.pin')];
   const winterImg = estate.querySelector('.estate-winter');
   // The winter view is the last thing the scene needs, so it loads after the summer view instead of alongside it.
-  const loadWinter = () => { if (!winterImg.dataset.srcset) return; winterImg.srcset = winterImg.dataset.srcset; winterImg.src = winterImg.dataset.src; delete winterImg.dataset.srcset; };
+  const loadWinter = () => { if (!winterImg.dataset.srcset) return; const lighter = winterImg.previousElementSibling; lighter.srcset = lighter.dataset.srcset; winterImg.srcset = winterImg.dataset.srcset; winterImg.src = winterImg.dataset.src; delete winterImg.dataset.srcset; };
   // If the visitor is already standing on the winter step when the file arrives, draw the scene again.
   winterImg.addEventListener('load', () => { scenes.forEach(sc => { sc.drawn = NaN; }); queue(); });
   const summerImg = estate.querySelector('.estate-close img:not(.estate-winter)');

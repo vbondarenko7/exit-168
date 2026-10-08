@@ -23,7 +23,7 @@ try{var l=localStorage.getItem('lang')||(navigator.languages&&navigator.language
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0f2321">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230f2321'/%3E%3Cpath d='m20 5-10 14h6l-7 10h9v6h4v-6h9l-7-10h6Z' fill='none' stroke='%23efe7d2' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="preload" as="font" href="assets/forum.ttf" type="font/ttf" crossorigin>
+<link rel="preload" as="font" href="assets/forum-latin.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="font" href="assets/satoshi-light.woff2" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.classList.add('js')</script>
@@ -88,10 +88,12 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 
 <section class="hero">
   <picture class="hero-wide">
+    <source media="not all and (max-width: 600px) and (orientation: portrait)" type="image/avif" srcset="assets/img/hero-river-sauna.avif">
     <source media="not all and (max-width: 600px) and (orientation: portrait)" srcset="assets/img/hero-river-sauna.webp">
     <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1672" height="941" alt="A man stands waist-deep in the river below the sauna, steam rising off the water into the pines" fetchpriority="high">
   </picture>
   <picture class="hero-phone">
+    <source media="(max-width: 600px) and (orientation: portrait)" type="image/avif" srcset="assets/img/hero-winter-phone-780.avif 780w, assets/img/hero-winter-phone-1180.avif 1180w" sizes="100vw">
     <source media="(max-width: 600px) and (orientation: portrait)" srcset="assets/img/hero-winter-phone-780.webp 780w, assets/img/hero-winter-phone-1180.webp 1180w" sizes="100vw">
     <img class="hero-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1180" height="1110" alt="The cabin at night under a thick cap of snow, light in its windows, lit pines beside it" fetchpriority="high">
   </picture>
@@ -113,8 +115,8 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="estate-track">
     <div class="estate-stage">
       <div class="estate-close">
-        <img src="assets/img/estate-close-800.webp" srcset="assets/img/estate-close-800.webp 800w, assets/img/estate-close-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Aerial view: a cabin with a green roof on a paved clearing among pines; by the bridge over the river, the white sauna trailer with a deck and steps down to the pool" loading="lazy">
-        <img class="estate-winter" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="assets/img/estate-winter-800.webp" data-srcset="assets/img/estate-winter-800.webp 800w, assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="The same view in winter: the clearing, the road and the bridge under deep snow, the cabin and the sauna buried to the roof, a trench dug to the cabin door" loading="lazy">
+        <picture><source type="image/avif" srcset="assets/img/estate-close-800.avif 800w, assets/img/estate-close-1536.avif 1536w" sizes="max(100vw, 150svh)"><img src="assets/img/estate-close-800.webp" srcset="assets/img/estate-close-800.webp 800w, assets/img/estate-close-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Aerial view: a cabin with a green roof on a paved clearing among pines; by the bridge over the river, the white sauna trailer with a deck and steps down to the pool" loading="lazy"></picture>
+        <picture><source type="image/avif" data-srcset="assets/img/estate-winter-800.avif 800w, assets/img/estate-winter-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="estate-winter" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="assets/img/estate-winter-800.webp" data-srcset="assets/img/estate-winter-800.webp 800w, assets/img/estate-winter-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="The same view in winter: the clearing, the road and the bridge under deep snow, the cabin and the sauna buried to the roof, a trench dug to the cabin door" loading="lazy"></picture>
       </div>
       <div class="estate-pins">
         <button class="pin" style="--x:58.7%;--y:52.4%" data-photo="cabin" aria-label="Cabin: open the photo"><span>Cabin</span></button>
@@ -134,12 +136,12 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   <div class="ritual-track">
     <div class="ritual-stage">
       <div class="ritual-scene">
-        <img class="ritual-dark" src="assets/img/stove-dark-800.webp" srcset="assets/img/stove-dark-800.webp 800w, assets/img/stove-dark-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Inside the sauna: a wood-burning stove with a chimney pipe, a water tank on the stones, benches on two tiers" loading="lazy">
-        <img class="ritual-fire" src="assets/img/stove-fire-800.webp" srcset="assets/img/stove-fire-800.webp 800w, assets/img/stove-fire-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="" loading="lazy">
+        <picture><source type="image/avif" srcset="assets/img/stove-dark-800.avif 800w, assets/img/stove-dark-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="ritual-dark" src="assets/img/stove-dark-800.webp" srcset="assets/img/stove-dark-800.webp 800w, assets/img/stove-dark-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="Inside the sauna: a wood-burning stove with a chimney pipe, a water tank on the stones, benches on two tiers" loading="lazy"></picture>
+        <picture><source type="image/avif" srcset="assets/img/stove-fire-800.avif 800w, assets/img/stove-fire-1536.avif 1536w" sizes="max(100vw, 150svh)"><img class="ritual-fire" src="assets/img/stove-fire-800.webp" srcset="assets/img/stove-fire-800.webp 800w, assets/img/stove-fire-1536.webp 1536w" sizes="max(100vw, 150svh)" width="1536" height="1024" alt="" loading="lazy"></picture>
         <div class="ritual-glow" aria-hidden="true"></div>
         <canvas class="ritual-flame" aria-hidden="true"></canvas>
       </div>
-      <img class="ritual-river" src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="max(100vw, 134svh)" width="1440" height="1080" alt="Wooden steps go down from the deck into a quiet pool between granite boulders" loading="lazy">
+      <picture><source type="image/avif" srcset="assets/img/river-800.avif 800w, assets/img/river-1440.avif 1440w" sizes="max(100vw, 134svh)"><img class="ritual-river" src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="max(100vw, 134svh)" width="1440" height="1080" alt="Wooden steps go down from the deck into a quiet pool between granite boulders" loading="lazy"></picture>
       <div class="ritual-copy">
         <h2>The sauna is right by&nbsp;the&nbsp;river</h2>
         <div class="ritual-progress" aria-hidden="true"><span></span></div>
@@ -155,16 +157,16 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </div>
   <div class="banya-photos strip">
     <button class="photo" data-photo="sauna" aria-label="Open the photo of the sauna benches">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/sauna-800.webp"><img src="assets/img/sauna-800.webp" srcset="assets/img/sauna-800.webp 800w, assets/img/sauna-1600.webp 1600w" sizes="(max-width: 600px) 84vw, 34vw" width="1600" height="1200" alt="The hot room: two tiers of benches along three walls, wooden walls and ceiling" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/sauna-800.avif"><source media="(max-width: 600px)" srcset="assets/img/sauna-800.webp"><source type="image/avif" srcset="assets/img/sauna-800.avif 800w, assets/img/sauna-1600.avif 1600w" sizes="(max-width: 600px) 84vw, 34vw"><img src="assets/img/sauna-800.webp" srcset="assets/img/sauna-800.webp 800w, assets/img/sauna-1600.webp 1600w" sizes="(max-width: 600px) 84vw, 34vw" width="1600" height="1200" alt="The hot room: two tiers of benches along three walls, wooden walls and ceiling" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="deck" aria-label="Open the photo of the deck by the river">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/deck-800.webp"><img src="assets/img/deck-800.webp" srcset="assets/img/deck-800.webp 800w, assets/img/deck-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The deck by the sauna above the river pool: a table with benches, carved railings, granite boulders and pines beyond" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/deck-800.avif"><source media="(max-width: 600px)" srcset="assets/img/deck-800.webp"><source type="image/avif" srcset="assets/img/deck-800.avif 800w, assets/img/deck-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 34vw"><img src="assets/img/deck-800.webp" srcset="assets/img/deck-800.webp 800w, assets/img/deck-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The deck by the sauna above the river pool: a table with benches, carved railings, granite boulders and pines beyond" loading="lazy"></picture>
     </button>
     <button class="photo still-only" data-photo="river" aria-label="Open the photo of the steps down to the river pool">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/river-800.webp"><img src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 25vw" width="1440" height="1080" alt="Wooden steps lead from the deck down into a calm pool between granite boulders" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/river-800.avif"><source media="(max-width: 600px)" srcset="assets/img/river-800.webp"><source type="image/avif" srcset="assets/img/river-800.avif 800w, assets/img/river-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 25vw"><img src="assets/img/river-800.webp" srcset="assets/img/river-800.webp 800w, assets/img/river-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 25vw" width="1440" height="1080" alt="Wooden steps lead from the deck down into a calm pool between granite boulders" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="sauna-outside" aria-label="Open the photo of the sauna from outside">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/sauna-outside-800.webp"><img src="assets/img/sauna-outside-800.webp" srcset="assets/img/sauna-outside-800.webp 800w, assets/img/sauna-outside-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The sauna from outside: a white trailer with a chimney by the road, the deck, the river pool and a concrete bridge" loading="lazy"></picture><span class="photo-label">The sauna from outside</span>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/sauna-outside-800.avif"><source media="(max-width: 600px)" srcset="assets/img/sauna-outside-800.webp"><source type="image/avif" srcset="assets/img/sauna-outside-800.avif 800w, assets/img/sauna-outside-1440.avif 1440w" sizes="(max-width: 600px) 84vw, 34vw"><img src="assets/img/sauna-outside-800.webp" srcset="assets/img/sauna-outside-800.webp 800w, assets/img/sauna-outside-1440.webp 1440w" sizes="(max-width: 600px) 84vw, 34vw" width="1440" height="1080" alt="The sauna from outside: a white trailer with a chimney by the road, the deck, the river pool and a concrete bridge" loading="lazy"></picture><span class="photo-label">The sauna from outside</span>
     </button>
   </div>
 </section>
@@ -175,19 +177,19 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="house-photos strip">
     <button class="photo" data-photo="greatroom" aria-label="Open the photo of the living room">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/greatroom-800.webp"><img src="assets/img/greatroom-800.webp" srcset="assets/img/greatroom-800.webp 800w, assets/img/greatroom-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="1440" height="1080" alt="Living room: a big sectional sofa, a foosball table, the wood-stove pipe and windows to the forest" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/greatroom-800.avif"><source media="(max-width: 600px)" srcset="assets/img/greatroom-800.webp"><source type="image/avif" srcset="assets/img/greatroom-800.avif 800w, assets/img/greatroom-1440.avif 1440w" sizes="(max-width: 900px) 100vw, 50vw"><img src="assets/img/greatroom-800.webp" srcset="assets/img/greatroom-800.webp 800w, assets/img/greatroom-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 50vw" width="1440" height="1080" alt="Living room: a big sectional sofa, a foosball table, the wood-stove pipe and windows to the forest" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="cabin" aria-label="Open the photo of the cabin from outside">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/cabin-800.webp"><img src="assets/img/cabin-800.webp" srcset="assets/img/cabin-800.webp 800w, assets/img/cabin-1400.webp 1400w" sizes="(max-width: 900px) 50vw, 25vw" width="1400" height="1050" alt="The cabin from outside: a wooden cabin with a green roof, a deck with railings and grills, solar panels" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/cabin-800.avif"><source media="(max-width: 600px)" srcset="assets/img/cabin-800.webp"><source type="image/avif" srcset="assets/img/cabin-800.avif 800w, assets/img/cabin-1400.avif 1400w" sizes="(max-width: 900px) 50vw, 25vw"><img src="assets/img/cabin-800.webp" srcset="assets/img/cabin-800.webp 800w, assets/img/cabin-1400.webp 1400w" sizes="(max-width: 900px) 50vw, 25vw" width="1400" height="1050" alt="The cabin from outside: a wooden cabin with a green roof, a deck with railings and grills, solar panels" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="dining" aria-label="Open the photo of the cabin dining room">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/dining-800.webp"><img src="assets/img/dining-800.webp" srcset="assets/img/dining-800.webp 800w, assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Cabin dining room with a carved wooden table, a chandelier and a window to the forest" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/dining-800.avif"><source media="(max-width: 600px)" srcset="assets/img/dining-800.webp"><source type="image/avif" srcset="assets/img/dining-800.avif 800w, assets/img/dining-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="assets/img/dining-800.webp" srcset="assets/img/dining-800.webp 800w, assets/img/dining-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="Cabin dining room with a carved wooden table, a chandelier and a window to the forest" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="bunkroom" aria-label="Open the photo of the room with the triple bunk">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/bunkroom-800.webp"><img src="assets/img/bunkroom-800.webp" srcset="assets/img/bunkroom-800.webp 800w, assets/img/bunkroom-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="A room with a hand-built triple bunk, a window and a door to the deck" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/bunkroom-800.avif"><source media="(max-width: 600px)" srcset="assets/img/bunkroom-800.webp"><source type="image/avif" srcset="assets/img/bunkroom-800.avif 800w, assets/img/bunkroom-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="assets/img/bunkroom-800.webp" srcset="assets/img/bunkroom-800.webp 800w, assets/img/bunkroom-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="A room with a hand-built triple bunk, a window and a door to the deck" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="loft" aria-label="Open the photo of the bed in the loft">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/loft-800.webp"><img src="assets/img/loft-800.webp" srcset="assets/img/loft-800.webp 800w, assets/img/loft-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="The loft: a wide bed under the windows, wood-panelled walls" loading="lazy"></picture><span class="photo-label" data-all-photos hidden></span>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/loft-800.avif"><source media="(max-width: 600px)" srcset="assets/img/loft-800.webp"><source type="image/avif" srcset="assets/img/loft-800.avif 800w, assets/img/loft-1440.avif 1440w" sizes="(max-width: 900px) 50vw, 25vw"><img src="assets/img/loft-800.webp" srcset="assets/img/loft-800.webp 800w, assets/img/loft-1440.webp 1440w" sizes="(max-width: 900px) 50vw, 25vw" width="1440" height="1080" alt="The loft: a wide bed under the windows, wood-panelled walls" loading="lazy"></picture><span class="photo-label" data-all-photos hidden></span>
     </button>
   </div>
   <ul class="house-facts">
@@ -229,7 +231,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="route-body">
     <button class="photo route-photo" data-photo="gate" aria-label="Open the photo of the property gate">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/gate-800.webp"><img src="assets/img/gate-800.webp" srcset="assets/img/gate-800.webp 800w, assets/img/gate-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 42vw" width="1440" height="1080" alt="The property gate: iron gates across a paved road, pine forest behind" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/gate-800.avif"><source media="(max-width: 600px)" srcset="assets/img/gate-800.webp"><source type="image/avif" srcset="assets/img/gate-800.avif 800w, assets/img/gate-1440.avif 1440w" sizes="(max-width: 900px) 100vw, 42vw"><img src="assets/img/gate-800.webp" srcset="assets/img/gate-800.webp 800w, assets/img/gate-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 42vw" width="1440" height="1080" alt="The property gate: iron gates across a paved road, pine forest behind" loading="lazy"></picture>
     </button>
     <ol class="route-steps">
       <li><h3>Arrival</h3><p>In summer and fall you drive right up to the cabin. In winter you leave the car by the road at the gate and walk the last two-thirds of a&nbsp;mile on snowshoes: nobody plows the snow here.</p></li>
@@ -255,21 +257,21 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
   </header>
   <div class="winter-grid">
     <button class="photo" data-photo="winter-night" aria-label="Open the photo of the cabin under snow at night">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-night-800.webp"><img src="assets/img/winter-night-800.webp" srcset="assets/img/winter-night-800.webp 800w, assets/img/winter-night-1350.webp 1350w" sizes="(max-width: 600px) 100vw, 42vw" width="800" height="1067" alt="The cabin buried in snow to the roof at night, lit pines and stars above" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/winter-night-800.avif"><source media="(max-width: 600px)" srcset="assets/img/winter-night-800.webp"><source type="image/avif" srcset="assets/img/winter-night-800.avif 800w, assets/img/winter-night-1350.avif 1350w" sizes="(max-width: 600px) 100vw, 42vw"><img src="assets/img/winter-night-800.webp" srcset="assets/img/winter-night-800.webp 800w, assets/img/winter-night-1350.webp 1350w" sizes="(max-width: 600px) 100vw, 42vw" width="800" height="1067" alt="The cabin buried in snow to the roof at night, lit pines and stars above" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="winter-river" aria-label="Open the photo of the river between the snowdrifts">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-river-800.webp"><img src="assets/img/winter-river-800.webp" srcset="assets/img/winter-river-800.webp 800w, assets/img/winter-river-1500.webp 1500w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="The South Yuba running dark between snow-capped boulders under a blue sky" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/winter-river-800.avif"><source media="(max-width: 600px)" srcset="assets/img/winter-river-800.webp"><source type="image/avif" srcset="assets/img/winter-river-800.avif 800w, assets/img/winter-river-1500.avif 1500w" sizes="(max-width: 600px) 50vw, 58vw"><img src="assets/img/winter-river-800.webp" srcset="assets/img/winter-river-800.webp 800w, assets/img/winter-river-1500.webp 1500w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="The South Yuba running dark between snow-capped boulders under a blue sky" loading="lazy"></picture>
     </button>
     <button class="photo" data-photo="winter-cabin" aria-label="Open the photo of the cabin in winter with the snowmobile track">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-cabin-800.webp"><img src="assets/img/winter-cabin-800.webp" srcset="assets/img/winter-cabin-800.webp 800w, assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="The green-roofed cabin almost buried in snow, with a snowmobile track leading to it" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/winter-cabin-800.avif"><source media="(max-width: 600px)" srcset="assets/img/winter-cabin-800.webp"><source type="image/avif" srcset="assets/img/winter-cabin-800.avif 800w, assets/img/winter-cabin-1600.avif 1600w" sizes="(max-width: 600px) 50vw, 58vw"><img src="assets/img/winter-cabin-800.webp" srcset="assets/img/winter-cabin-800.webp 800w, assets/img/winter-cabin-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="600" alt="The green-roofed cabin almost buried in snow, with a snowmobile track leading to it" loading="lazy"></picture>
       <span class="photo-label">Snowmobile track</span>
     </button>
     <button class="photo" data-photo="winter-trench" aria-label="Open the photo of the path dug through the snow to the cabin door">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-trench-800.webp"><img src="assets/img/winter-trench-800.webp" srcset="assets/img/winter-trench-800.webp 800w, assets/img/winter-trench-941.webp 941w" sizes="(max-width: 600px) 50vw, 42vw" width="800" height="1422" alt="A path dug through snow above head height to the cabin door, blue sky and pines above" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/winter-trench-800.avif"><source media="(max-width: 600px)" srcset="assets/img/winter-trench-800.webp"><source type="image/avif" srcset="assets/img/winter-trench-800.avif 800w, assets/img/winter-trench-941.avif 941w" sizes="(max-width: 600px) 50vw, 42vw"><img src="assets/img/winter-trench-800.webp" srcset="assets/img/winter-trench-800.webp 800w, assets/img/winter-trench-941.webp 941w" sizes="(max-width: 600px) 50vw, 42vw" width="800" height="1422" alt="A path dug through snow above head height to the cabin door, blue sky and pines above" loading="lazy"></picture>
       <span class="photo-label">The path to the door</span>
     </button>
     <button class="photo" data-photo="winter-mountain" aria-label="Open the photo of the river below the snowy ridge">
-      <picture><source media="(max-width: 600px)" srcset="assets/img/winter-mountain-800.webp"><img src="assets/img/winter-mountain-800.webp" srcset="assets/img/winter-mountain-800.webp 800w, assets/img/winter-mountain-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="The South Yuba between snow-capped boulders, pines and a snowy ridge under a blue sky" loading="lazy"></picture>
+      <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/winter-mountain-800.avif"><source media="(max-width: 600px)" srcset="assets/img/winter-mountain-800.webp"><source type="image/avif" srcset="assets/img/winter-mountain-800.avif 800w, assets/img/winter-mountain-1600.avif 1600w" sizes="(max-width: 600px) 50vw, 58vw"><img src="assets/img/winter-mountain-800.webp" srcset="assets/img/winter-mountain-800.webp 800w, assets/img/winter-mountain-1600.webp 1600w" sizes="(max-width: 600px) 50vw, 58vw" width="800" height="450" alt="The South Yuba between snow-capped boulders, pines and a snowy ridge under a blue sky" loading="lazy"></picture>
     </button>
   </div>
 </section>
@@ -356,14 +358,14 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     </article>
   </div>
   <div class="arrival-photo">
-    <picture><source media="(max-width: 600px)" srcset="assets/img/exit-sign-800.webp"><img src="assets/img/exit-sign-800.webp" srcset="assets/img/exit-sign-800.webp 800w, assets/img/exit-sign-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Interstate 80 sign reading Exit 168 Rainbow Road, three quarters of a mile" loading="lazy"></picture>
+    <picture><source media="(max-width: 600px)" type="image/avif" srcset="assets/img/exit-sign-800.avif"><source media="(max-width: 600px)" srcset="assets/img/exit-sign-800.webp"><source type="image/avif" srcset="assets/img/exit-sign-800.avif 800w, assets/img/exit-sign-1600.avif 1600w" sizes="100vw"><img src="assets/img/exit-sign-800.webp" srcset="assets/img/exit-sign-800.webp 800w, assets/img/exit-sign-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Interstate 80 sign reading Exit 168 Rainbow Road, three quarters of a mile" loading="lazy"></picture>
     <div class="arrival-label">Exit&nbsp;168 · Rainbow Road<p>From the exit to the gate is a couple of minutes. The drive times on the map are for a dry road with no traffic.</p></div>
   </div>
 </section>
 
 <section id="land" class="nature">
   <div class="nature-photo">
-    <img src="assets/img/deck-morning-800.webp" srcset="assets/img/deck-morning-800.webp 800w, assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Morning on the deck above the river: mist over the water, a woman sits on a yoga mat by the railing with her back to us, granite boulders and pines across" loading="lazy">
+    <picture><source type="image/avif" srcset="assets/img/deck-morning-800.avif 800w, assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/deck-morning-800.webp" srcset="assets/img/deck-morning-800.webp 800w, assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Morning on the deck above the river: mist over the water, a woman sits on a yoga mat by the railing with her back to us, granite boulders and pines across" loading="lazy"></picture>
     <div class="nature-copy">
       <h2>A place to be alone <br>with nature</h2>
       <ul class="nature-tabs" aria-label="Things to do here">
@@ -537,7 +539,7 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
     <p id="photo-count"></p>
     <button class="lightbox-close" aria-label="Close photographs"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
   </div>
-  <img id="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+  <picture><source id="lightbox-avif" type="image/avif"><img id="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></picture>
   <div class="lightbox-bottom">
     <button id="photo-prev" aria-label="Previous photograph"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7"/></svg></button>
     <p id="photo-caption"></p>

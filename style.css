@@ -1,4 +1,5 @@
-@font-face{font-family:Forum;src:url('assets/forum.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:Forum;src:url('assets/forum-cyrillic.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:Forum;src:url('assets/forum-latin.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:Satoshi;src:url('assets/satoshi-light.woff2') format('woff2');font-weight:300 400;font-display:swap}
 @font-face{font-family:Satoshi;src:url('assets/satoshi-medium.woff2') format('woff2');font-weight:500 700;font-display:swap}
 /* Satoshi has no Cyrillic: the Russian edition sets its prose in Manrope (OFL, Google Fonts, variable 200–800). */
@@ -267,7 +268,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
    the names switch them, and on a phone a swipe does too */
 .nature{margin-top:var(--section-top)}
 .nature-photo{position:relative;display:grid;align-items:center;min-height:max(520px,min(78svh,720px));overflow:hidden}
-.nature-photo>img{position:absolute;inset:0;object-position:60% 72%}
+.nature-photo img{position:absolute;inset:0;object-position:60% 72%}
 .nature-photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.88) 38%,rgba(8,27,24,.4) 56%,rgba(8,27,24,0) 70%)}
 .nature-copy{position:relative;z-index:1;width:min(700px,50vw);margin-left:6.5vw;padding:72px 0}
 .nature-tabs{display:flex;flex-wrap:wrap;gap:0 28px;max-width:min(520px,46vw);margin-top:32px}
@@ -470,7 +471,7 @@ dialog::backdrop{background:#000d}
   .house-facts{grid-template-columns:1fr;margin-top:40px}
   .house-facts li:nth-last-child(2){border-bottom:0}
   .nature-photo{display:block;min-height:0;overflow:visible}
-  .nature-photo>img{position:static;height:min(62svh,560px);object-position:78% 70%}
+  .nature-photo img{position:static;height:min(62svh,560px);object-position:78% 70%}
   .nature-photo::after{display:none}
   .nature-copy{width:auto;margin:0;padding:48px 24px 0}
   .nature-copy h2{font-size:var(--headline)}
@@ -537,7 +538,7 @@ dialog::backdrop{background:#000d}
   .arrival-card{padding:28px 20px}
   .arrival-card h3{margin-bottom:16px}
   .arrival-photo{height:380px}
-  .nature-photo>img{height:auto;aspect-ratio:4/5;object-position:82% 70%}
+  .nature-photo img{height:auto;aspect-ratio:4/5;object-position:82% 70%}
   .nature-copy{padding:36px 20px 0}
   .nature-copy h2 br{display:none}
   .nature-tabs{gap:0 22px;margin-top:20px}
