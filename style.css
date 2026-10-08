@@ -103,24 +103,17 @@ h3{font-size:var(--title);line-height:1.4}
 
 /* ---------- scroll scenes share one placement rule: a 3:2 picture covers its stage,
    with the picture point (--ax,--ay) held at the stage point (--sx,--sy) as far as the edges allow ---------- */
-.estate-wide,.estate-close,.estate-pins,.ritual-scene{
+.estate-close,.estate-pins,.ritual-scene{
   position:absolute;--w:max(calc(var(--zw,100) * 1cqw),150cqh);width:var(--w);height:calc(var(--w) / 1.5);transform-origin:0 0;
   left:clamp(calc(100cqw - var(--w)),calc(var(--sx,.5) * 100cqw - var(--ax,.5) * var(--w)),0px);
   top:clamp(calc(100cqh - var(--w) / 1.5),calc(var(--sy,.5) * 100cqh - var(--ay,.5) * var(--w) / 1.5),0px)}
 
-/* ---------- the place from above: the wide aerial zooms into the clearing, then the pins come up ---------- */
+/* ---------- the place from above: the clearing, then the pins come up, then the same view under snow ---------- */
 .estate-stage{position:relative;height:min(100svh,66.67vw);min-height:520px;overflow:hidden;container-type:size;background:var(--night)}
-.estate-wide{--ax:.47;--ay:.585;display:none}
 .estate-close,.estate-pins{--ax:.51;--ay:.53}
-.estate-wide img,.estate-close img{position:absolute;inset:0}
-/* the same view in winter: only the scroll scene shows it (the winter photographs further down carry it otherwise);
-   a snowfall and a pale veil cover the change */
-.estate-winter,.estate-snow,.estate-veil{display:none}
-.estate-snow,.estate-veil{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.estate-veil{background:#dfe5e8;opacity:0}
-/* while the close view grows over the wide one its edges melt in, so no seam shows */
-.estate-close.is-growing{--f:var(--feather,0%);-webkit-mask-image:linear-gradient(90deg,#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000),linear-gradient(#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000),linear-gradient(#0000,#000 var(--f),#000 calc(100% - var(--f)),#0000);mask-composite:intersect}
-.estate-shield{position:absolute;left:71%;top:15.5%;padding:3px 9px;background:var(--night);border:1px solid #6f8582;border-radius:4px;font:500 12px/1.4 var(--sans);letter-spacing:.08em;color:var(--soft)}
+.estate-close img{position:absolute;inset:0}
+/* the same view in winter: only the scroll scene shows it (the winter photographs further down carry it otherwise) */
+.estate-winter{display:none}
 .pin{position:absolute;left:var(--x);top:var(--y);display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-100%);color:var(--ivory);font:400 18px/1 Forum,Georgia,serif;letter-spacing:.06em;text-transform:uppercase}
 .pin>span{display:block;padding:11px 16px 9px;background:var(--night);border:1px solid #efe7d240;transition:background .18s ease-out,color .18s ease-out}
 .pin::before{content:'';order:2;width:1px;height:28px;background:var(--ivory)}
@@ -152,20 +145,15 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .ritual-steps{margin:44px 0 0;padding:0;list-style:none}
 .ritual-steps li{padding:15px 0;border-top:1px solid #efe7d22e;font:400 20px/1.35 Forum,Georgia,serif;letter-spacing:.005em;text-transform:uppercase;transition:opacity .4s ease-out}
 .ritual-steps li:last-child{border-bottom:1px solid #efe7d22e}
-.ritual-river-note{margin-top:22px;max-width:46ch;color:var(--soft);line-height:1.7}
-.ritual-foot{position:absolute;left:0;right:0;bottom:40px}
-.ritual-progress{height:1px;margin-top:18px;background:#efe7d22e}
+.ritual-river-note{margin-top:22px;max-width:46ch;color:var(--soft);font:300 var(--body)/1.7 var(--sans);letter-spacing:0;text-transform:none}
+.ritual-progress{display:none;height:1px;background:#efe7d22e}
 .ritual-progress span{display:block;width:calc(var(--p,1) * 100%);height:100%;background:var(--ivory)}
 
 /* With script and motion allowed, both scenes pin to the screen and play out over the scroll. */
 @media(prefers-reduced-motion:no-preference){
-  .js .estate-track{height:360svh}
+  .js .estate-track{height:260svh}
   .js .estate-stage{position:sticky;top:0;height:100svh}
-  .js .estate-wide,.js .estate-snow,.js .estate-veil{display:block}
   .js .estate-winter{display:block;opacity:0}
-  .js .estate-close{opacity:0}
-  /* the close view starts loading once the wide one has arrived: on a slow link the first frame comes first */
-  .js .estate-close:not(.is-ready) img{display:none}
   .js .pin{opacity:0;translate:0 10px;pointer-events:none;transition:opacity .5s ease-out,translate .6s cubic-bezier(.16,1,.3,1)}
   .js .pin.is-on,.js .pin:focus-visible{opacity:1;translate:0 0;pointer-events:auto}
   /* the hint about the labels waits for the labels */
@@ -178,20 +166,31 @@ button.pin:hover>span{background:var(--ivory);color:#000}
   .js .ritual-flame{display:block;opacity:var(--fire,0)}
   .js .ritual-river{display:block}
   .js .still-only{display:none}
-  .js .ritual-river,.js .ritual-river-note{opacity:var(--river,0)}
-  .js .ritual-river-note{transition:opacity .3s ease-out}
-  .js .ritual-steps li{opacity:.5}
-  .js .ritual-steps li.is-done{opacity:.72}
-  .js .ritual-steps li.is-now{opacity:1}
+  .js .ritual-river{opacity:var(--river,0)}
+  /* one step on screen at a time, hung from a hairline cut in five that fills with the scroll:
+     the step that is over drops away, the next comes down from under the line */
+  .js .ritual-progress{display:block;margin-top:44px;-webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(20% - 8px),#0000 0 20%);mask:repeating-linear-gradient(90deg,#000 0 calc(20% - 8px),#0000 0 20%)}
+  .js .ritual-steps{display:grid;margin:0;clip-path:inset(0 -24px -100vh)}
+  .js .ritual-steps li{grid-area:1/1;align-self:start;padding:28px 0 0;border:0;font-size:40px;line-height:1.1;text-wrap:balance;opacity:0;translate:0 -48px;transition:opacity .25s ease-out,translate .5s cubic-bezier(.16,1,.3,1)}
+  .js .ritual-steps li.is-done{translate:0 48px}
+  .js .ritual-steps li.is-now{opacity:1;translate:0 0;transition:opacity .5s ease-out .15s,translate .7s cubic-bezier(.16,1,.3,1) .15s}
 }
 /* On phones the same two scenes play out over about half the scroll: they took a third of the page (audit, 5 October 2026). */
 @media(prefers-reduced-motion:no-preference) and (max-width:600px){
-  .js .estate-track{height:240svh}
+  .js .estate-track{height:200svh}
   .js .ritual-track{height:280svh}
 }
 /* The booking bar stays on screen over the scenes, so the place-scene caption sits above it. */
 @media(prefers-reduced-motion:no-preference) and (max-width:900px){
   .js .estate-note{padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+  .js .ritual-progress{margin-top:28px}
+}
+@media(prefers-reduced-motion:no-preference) and (max-width:600px){
+  .js .ritual-steps li{padding-top:22px;font-size:30px;line-height:1.15}
+}
+@media(prefers-reduced-motion:no-preference) and (orientation:landscape) and (max-height:500px){
+  .js .ritual-progress{margin-top:14px}
+  .js .ritual-steps li{padding-top:14px;font-size:22px;line-height:1.15}
 }
 
 /* ---------- how it works: the gate photo beside four large steps, then what to bring ---------- */
@@ -441,7 +440,6 @@ dialog::backdrop{background:#000d}
 @media(max-width:900px){
   :root{--headline:42px;--display:50px;--section-top:100px;--section-bottom:60px}
   .navigation nav:not(.mobile-nav),.nav-action{display:none}
-  .estate-shield{display:none}
   .lang{margin-left:auto}
   .menu-toggle{display:flex;width:44px;height:44px;background:transparent;flex-direction:column;justify-content:center;gap:7px;padding:10px}
   .menu-toggle span{height:1px;background:var(--ivory);width:24px}
@@ -460,7 +458,6 @@ dialog::backdrop{background:#000d}
   .ritual-stage::after{background:linear-gradient(180deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.84) 36%,rgba(8,27,24,.3) 56%,rgba(8,27,24,0) 68%)}
   .ritual-copy{left:0;right:0;top:0;bottom:auto;width:auto;padding:96px 6vw 0;justify-content:flex-start}
   .ritual-steps{margin-top:28px}
-  .ritual-foot{display:none}
   .route-body{grid-template-columns:1fr;gap:48px;max-width:720px}
   .route-photo{position:relative;top:0;aspect-ratio:4/3}
   .pack{margin:96px 24px 0;padding:44px 40px 48px}
@@ -643,7 +640,6 @@ dialog::backdrop{background:#000d}
   .ritual-steps{margin-top:12px}
   .ritual-steps li{font-size:13px;padding:5px 0}
   .ritual-river-note{display:none}
-  .ritual-foot{position:static;margin-top:10px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

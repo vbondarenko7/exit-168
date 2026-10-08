@@ -129,7 +129,6 @@ if (natureSlides) {
 // the stylesheet shows their end state: the clearing with its pins (in summer), the stove alight with every step.
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp01 = v => Math.min(1, Math.max(0, v));
-const easeInOut = v => v < .5 ? 4 * v * v * v : 1 - (-2 * v + 2) ** 3 / 2;
 const progress = track => { const r = track.getBoundingClientRect(); return clamp01(-r.top / (r.height - innerHeight)); };
 // Each scene follows the scroll with a short lag, so a mouse wheel's 100-pixel jumps play as one smooth move.
 const scenes = [];
@@ -168,112 +167,25 @@ const glQuad = (canvas, frag, attrs) => {
   return { gl, u: name => gl.getUniformLocation(prog, name) };
 };
 
-// Winter: a snowfall thickens over the summer view, the snowed-in view comes up under it, and the fall eases to a few flakes.
-// Flakes sit at depths: far ones small, slow and faint, near ones large, quicker and out of focus; all drift in a slow wind.
-// Returns the setter for the season, 0 summer … 1 winter.
-const snowfall = (stage, img, canvas, veil) => {
-  const ctx = canvas.getContext('2d');
-  // a round flake 64 px across; soft is the share of the radius that fades out
-  const sprite = soft => {
-    const c = document.createElement('canvas'); c.width = c.height = 64;
-    const g = c.getContext('2d'), r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    r.addColorStop(0, '#fff'); r.addColorStop(1 - soft, '#ffffffeb'); r.addColorStop(1, '#fff0');
-    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
-    return c;
-  };
-  const sprites = [sprite(.45), sprite(.75), sprite(1)];
-  let flakes = [], w = 0, h = 0, density = 0, last = 0, running = false, onScreen = false;
-  const size = () => {
-    const d = Math.min(devicePixelRatio, 2);
-    w = stage.clientWidth; h = stage.clientHeight;
-    canvas.width = Math.round(w * d); canvas.height = Math.round(h * d);
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    flakes = Array.from({ length: Math.min(2400, Math.round(w * h / 600)) }, () => {
-      const z = Math.random() ** 1.7; // most flakes are far away
-      return {
-        z, x: Math.random() * w, y: Math.random() * h, at: Math.random() * .9, // at: the density at which this flake joins
-        r: .8 + z * z * 11, vy: 26 + z * 130 + Math.random() * 14, sway: 3 + z * 16, f: .5 + Math.random() * 1.1, ph: Math.random() * 7,
-        img: sprites[z < .45 ? 0 : z < .8 ? 1 : 2], a: z < .8 ? .5 + z * .45 : .5, tall: 1 + z * z * .7, // near flakes smear a little as they fall
-      };
-    });
-  };
-  const fall = ms => {
-    const t = ms / 1000, dt = last ? Math.min(.05, t - last) : 0;
-    last = t;
-    const wind = 12 + 9 * Math.sin(t * .21) + 5 * Math.sin(t * .57 + 1.3);
-    ctx.clearRect(0, 0, w, h);
-    for (const k of flakes) {
-      k.y += k.vy * dt; k.x += wind * (.3 + .7 * k.z) * dt;
-      if (k.y > h + k.r) { k.y = -k.r; k.x = Math.random() * w; }
-      if (k.x > w + k.r) k.x -= w + 2 * k.r;
-      const a = k.a * clamp01((density - k.at) / .1);
-      if (a <= 0) continue;
-      ctx.globalAlpha = a;
-      ctx.drawImage(k.img, k.x + Math.sin(t * k.f + k.ph) * k.sway - k.r, k.y - k.r * k.tall, k.r * 2, k.r * 2 * k.tall);
-    }
-    running = onScreen && density > 0;
-    if (running) requestAnimationFrame(fall); else { ctx.clearRect(0, 0, w, h); last = 0; }
-  };
-  const start = () => { if (!running && onScreen && density > 0) { running = true; requestAnimationFrame(fall); } };
-  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; start(); }).observe(stage);
-  addEventListener('resize', size);
-  size();
-  return s => {
-    img.style.opacity = img.complete && img.naturalWidth > 1 ? clamp01((s - .3) / .45) : 0; // 1px is the placeholder the page ships with
-    veil.style.opacity = (.3 * Math.sin(Math.PI * s) ** 1.5).toFixed(3); // the fall is thickest while the seasons swap
-    density = s < .5 ? clamp01(s / .4) : 1 - .8 * clamp01((s - .5) / .5);
-    start();
-  };
-};
-
-// The wide aerial zooms into the clearing; the close view fades in exactly where it sits in the wide one.
-// Then the two pins come up, and last the same view goes under snow.
+// The clearing from above: the two pins come up, and as the scroll goes on the same view passes from summer into deep snow.
 const estate = document.querySelector('.estate-track');
 if (estate && !still) {
-  const wide = estate.querySelector('.estate-wide');
-  const close = estate.querySelector('.estate-close');
-  const shield = estate.querySelector('.estate-shield');
-  const pins = [...estate.querySelectorAll('.pin')];
   const stage = estate.querySelector('.estate-stage');
-  const winterImg = close.querySelector('.estate-winter');
-  const winter = snowfall(stage, winterImg, stage.querySelector('.estate-snow'), stage.querySelector('.estate-veil'));
-  // The winter view is the last thing the scene needs, so it loads after the summer views instead of alongside them.
+  const pins = [...estate.querySelectorAll('.pin')];
+  const winterImg = estate.querySelector('.estate-winter');
+  // The winter view is the last thing the scene needs, so it loads after the summer view instead of alongside it.
   const loadWinter = () => { if (!winterImg.dataset.srcset) return; winterImg.srcset = winterImg.dataset.srcset; winterImg.src = winterImg.dataset.src; delete winterImg.dataset.srcset; };
   // If the visitor is already standing on the winter step when the file arrives, draw the scene again.
   winterImg.addEventListener('load', () => { scenes.forEach(sc => { sc.drawn = NaN; }); queue(); });
-  // The wide view is the first frame; the close one starts loading when it has arrived (see the stylesheet).
-  const wideImg = wide.querySelector('img');
-  const closeReady = () => close.classList.add('is-ready');
-  if (wideImg.complete) closeReady(); else ['load', 'error'].forEach(e => wideImg.addEventListener(e, closeReady, { once: true }));
-  const summerImg = close.querySelector('img:not(.estate-winter)');
+  const summerImg = estate.querySelector('.estate-close img:not(.estate-winter)');
   if (summerImg.complete && summerImg.naturalWidth) loadWinter(); else summerImg.addEventListener('load', loadWinter, { once: true });
-  // The close view's frame inside the wide one, as fractions of the wide picture (fitted on the cabin, the sauna and the bridge).
-  const inWide = { x: .2669, y: .3770, w: .4082 };
-  let g;
-  const measure = () => {
-    const w = wide.offsetWidth, h = wide.offsetHeight;
-    const ow = [wide.offsetLeft, wide.offsetTop], oc = [close.offsetLeft, close.offsetTop];
-    const a1 = 1 / inWide.w; // the zoom that makes the frame fill the screen
-    g = { ow, oc, a1, b1: [oc[0] - a1 * (ow[0] + inWide.x * w), oc[1] - a1 * (ow[1] + inWide.y * h)] };
-  };
   const draw = p => {
-    const e = easeInOut(clamp01((p - .03) / .35));
-    const { ow, oc, a1, b1 } = g;
-    // Zoom about the frame's fixed point: scale grows geometrically, so the speed feels even.
-    const a = a1 ** e, k = (a - 1) / (a1 - 1), b = [b1[0] * k, b1[1] * k], ac = a / a1;
-    wide.style.transform = `translate(${a * ow[0] + b[0] - ow[0]}px,${a * ow[1] + b[1] - ow[1]}px) scale(${a})`;
-    close.style.transform = `translate(${ac * (oc[0] - b1[0]) + b[0] - oc[0]}px,${ac * (oc[1] - b1[1]) + b[1] - oc[1]}px) scale(${ac})`;
-    close.style.opacity = clamp01((e - .45) / .4);
-    close.classList.toggle('is-growing', e < .995);
-    close.style.setProperty('--feather', `${(14 * clamp01((1 - e) / .55)).toFixed(2)}%`);
-    shield.style.opacity = 1 - clamp01(e / .25);
-    pins.forEach((pin, i) => pin.classList.toggle('is-on', p > .41 + i * .04));
-    stage.classList.toggle('pins-on', p > .41);
-    if (p > .3) loadWinter();
-    winter(clamp01((p - .58) / .3));
+    pins.forEach((pin, i) => pin.classList.toggle('is-on', p > .08 + i * .06));
+    stage.classList.toggle('pins-on', p > .08);
+    if (p > .2) loadWinter();
+    winterImg.style.opacity = winterImg.complete && winterImg.naturalWidth > 1 ? clamp01((p - .35) / .5) : 0; // 1px is the placeholder the page ships with
   };
-  measure();
-  scene(estate, draw, measure);
+  scene(estate, draw);
 }
 
 // The banya: five steps over the scroll; the fire takes on "light the stove", the river comes on the last step.
