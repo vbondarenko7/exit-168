@@ -11,6 +11,8 @@
   --gutter:8px;--inset:24px;--section-top:150px;--section-bottom:80px;
   --display:64px;--headline:54px;--title:20px;--body:15px;
   --sans:Satoshi,Arial,sans-serif;
+  /* Roman's photographs share one quiet tone, so they sit together and beside the illustrations (V, 9 October 2026) */
+  --tone:brightness(.84) contrast(1.05) saturate(.8);--tone-lit:brightness(.96) contrast(1.05) saturate(.84);
   color-scheme:dark;
 }
 :root:lang(ru){--sans:Manrope,Arial,sans-serif}
@@ -94,8 +96,12 @@ h3{font-size:var(--title);line-height:1.4}
 
 /* ---------- photos ---------- */
 .photo{position:relative;padding:0;background:var(--night);display:block;overflow:hidden;width:100%;min-width:0}
-.photo img{transition:filter .25s ease-out;filter:brightness(.9)}
-.photo:hover img{filter:brightness(1)}
+.photo img{transition:filter .25s ease-out;filter:var(--tone)}
+.photo:hover img{filter:var(--tone-lit)}
+/* three frames were half asphalt: they are held closer to their subject, the lightbox still shows them whole */
+.photo[data-photo=gate] img{scale:1.3;transform-origin:50% 16%}
+.photo[data-photo=cabin] img{scale:1.25;transform-origin:50% 8%}
+.photo[data-photo=sauna-outside] img{scale:1.4;transform-origin:42% 21%}
 .photo:focus-visible{outline-offset:-5px}
 .photo-label{position:absolute;bottom:0;right:0;background:var(--night);min-height:44px;display:flex;align-items:center;padding:8px 20px;border-top-left-radius:24px;font:500 11px/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--ivory)}
 .photo-label::before,.photo-label::after{content:'';position:absolute;width:24px;height:24px;border-radius:50%;box-shadow:12px 12px 0 var(--night);pointer-events:none}
@@ -140,7 +146,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .ritual-dark{filter:brightness(.42) saturate(.6)}
 .ritual-glow{position:absolute;inset:0;background:radial-gradient(ellipse 34% 30% at 43% 81%,#ff8a2e8c,#ff6a1e26 55%,#ff6a1e00 100%);mix-blend-mode:screen;opacity:.6;pointer-events:none}
 .ritual-flame{position:absolute;left:41.5%;top:73.2%;width:3.6%;height:12.3%;mix-blend-mode:screen;clip-path:polygon(5% 2%,96% 10%,93% 98%,9% 90%);display:none}
-.ritual-river{position:absolute;inset:0;object-position:50% 62%;opacity:0;display:none}
+.ritual-river{position:absolute;inset:0;object-position:50% 62%;opacity:0;display:none;filter:var(--tone)}
 .ritual-stage::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,27,24,.9) 0%,rgba(8,27,24,.72) 30%,rgba(8,27,24,.2) 50%,rgba(8,27,24,0) 62%)}
 .ritual-copy{position:absolute;z-index:2;left:6.5vw;top:0;bottom:0;width:min(560px,38vw);display:flex;flex-direction:column;justify-content:center}
 .ritual-steps{margin:44px 0 0;padding:0;list-style:none}
@@ -202,7 +208,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .route-steps li:first-child{padding-top:0;border-top:0}
 .route-steps h3{font-size:40px;line-height:1.1}
 .route-steps p{margin-top:16px;max-width:46ch;font-size:17px;line-height:1.7;color:var(--soft)}
-.pack{max-width:1240px;margin:120px auto 0;padding:56px 60px 60px;background:var(--card);border:1px solid #384a49}
+.pack{margin:120px max(24px,calc(50% - 596px)) 0;padding:56px 60px 60px;background:var(--card);border:1px solid #384a49}
 .pack h3{font-size:var(--headline);line-height:1.111}
 .pack dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 48px;margin-top:44px}
 /* the three items share rows, so the notes start on one line however the words wrap */
@@ -221,7 +227,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .banya-photos .photo{aspect-ratio:4/3}
 
 /* ---------- where: map ---------- */
-.map{margin:0 var(--gutter);background:var(--panel);border:1px solid #2a3c3b}
+.map{background:var(--panel);border:1px solid #2a3c3b}
 .map svg{display:block;width:100%;height:auto;font-family:var(--sans)}
 .map-road path{fill:none;stroke:var(--ivory);stroke-width:2.5;stroke-linecap:round}
 .map-road .map-road-minor{stroke:#6f8582;stroke-width:1.5;stroke-dasharray:6 6}
@@ -254,7 +260,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .arrival-card dt{font:400 17px/24px Forum,Georgia,serif;color:#b6c0bd}
 .arrival-card dd{text-align:right;font-size:13px;color:#f4f6ea;white-space:nowrap}
 .arrival-photo{position:relative;height:460px;margin-top:var(--gutter)}
-.arrival-photo img{object-position:50% 45%;filter:brightness(.85)}
+.arrival-photo img{object-position:50% 45%;filter:var(--tone)}
 .arrival-label{position:absolute;left:50%;bottom:32px;transform:translateX(-50%);background:var(--night);padding:20px 32px;text-align:center;max-width:min(560px,calc(100% - 32px));width:max-content;font:400 20px/1.4 Forum,Georgia,serif;text-transform:uppercase;letter-spacing:.005em}
 .arrival-label p{font:300 13px/1.7 var(--sans);text-transform:none;margin-top:8px;letter-spacing:0}
 
@@ -340,7 +346,8 @@ legend span,form label span{color:var(--muted)}
 .rate-options label:has(input:checked)>span{border-color:var(--ivory);color:var(--ivory)}
 .rate-options strong{font-weight:500}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:30px}
-form>label{display:block;color:var(--muted)}
+form>label{display:block}
+form>label,.form-row label{color:var(--muted)}
 /* text fields only: Safari grows radios and checkboxes to any min-height and padding they are given */
 input:not([type=radio],[type=checkbox]),textarea{-webkit-appearance:none;appearance:none;width:100%;display:block;background:var(--night);border:1px solid #3a4b47;border-radius:0;padding:14px 18px;color:var(--soft);margin-top:14px;caret-color:var(--ivory);min-width:0}
 input:not([type=radio],[type=checkbox]){min-height:52px}
@@ -408,7 +415,7 @@ dialog::backdrop{background:#000d}
 .lightbox-top{margin-bottom:16px}
 .lightbox-top p{font-size:11px;letter-spacing:.15em;text-transform:uppercase}
 .lightbox-top button,.lightbox-bottom button{background:transparent;width:44px;height:44px;display:grid;place-items:center;flex:none}
-#lightbox-image{height:auto;max-height:70dvh;object-fit:contain;transition:opacity .2s ease-out}
+#lightbox-image{height:auto;max-height:70dvh;object-fit:contain;filter:var(--tone-lit);transition:opacity .2s ease-out}
 .lightbox-bottom{margin-top:16px}
 .lightbox-bottom p{text-align:center;font-size:13px}
 
@@ -529,7 +536,7 @@ dialog::backdrop{background:#000d}
   .route-steps li{padding:32px 0 34px}
   .route-steps h3{font-size:32px}
   .route-steps p{margin-top:12px;font-size:16px}
-  .pack{margin:72px var(--gutter) 0;padding:32px 20px 36px}
+  .pack{margin:72px 0 0;padding:32px 20px 36px}
   .pack h3{font-size:32px}
   .pack dl{gap:28px;margin-top:28px}
   .pack dl>div{padding-top:22px}
