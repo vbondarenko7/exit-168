@@ -403,9 +403,15 @@ function showResult(title, text, withCopy) {
 }
 
 // The lead Google Ads imports from Analytics as its conversion; value = the rate asked for.
-const countLead = () => { if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() }); };
+const countLead = () => {
+  if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() });
+  if (window.fbq) fbq('track', 'Lead', { currency: 'USD', value: stayPrice() });
+};
 // A call leaves no other trace on the site: count the taps on the phone number.
-document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => { if (window.gtag) gtag('event', 'phone_click'); }));
+document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => {
+  if (window.gtag) gtag('event', 'phone_click');
+  if (window.fbq) fbq('track', 'Contact');
+}));
 
 // Returns true when the booking service took the request (or said the dates are taken).
 async function holdDates() {
