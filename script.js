@@ -341,6 +341,9 @@ async function loadBusy() {
   const res = await fetch(`${API}/busy`, { cache: 'no-store' });
   if (!res.ok) throw new Error(res.status);
   ({ days: busy, today, longWeekends = [], minNights = 2 } = await res.json());
+  // The calendar counts days by California; a visitor a timezone ahead had today's date offered in the calendar but
+  // refused by the hidden field, and the button then did nothing.
+  dateInput.min = today;
   if (month < today.slice(0, 7)) month = today.slice(0, 7);
 }
 
@@ -407,6 +410,20 @@ const countLead = () => {
   if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() });
   if (window.fbq) fbq('track', 'Lead', { currency: 'USD', value: stayPrice() });
 };
+// How far guests get in the form: each step is its own event, sent once per visit. Google's form_start fires on
+// any first touch (even «Сутки» to see the price), so it says nothing about who typed a name or a phone.
+const stepsSent = new Set();
+const formStep = name => {
+  if (!name || stepsSent.has(name) || !window.gtag) return;
+  stepsSent.add(name);
+  gtag('event', name);
+};
+const fieldSteps = { date: 'form_date', guests: 'form_guests', name: 'form_name', contact: 'form_phone' };
+form.addEventListener('change', e => formStep(fieldSteps[e.target.name]));
+// The tap itself, and which field the browser refused: an invalid field stops the form before its submit handler.
+form.querySelector('.submit').addEventListener('click', () => formStep('form_send_tap'));
+form.addEventListener('invalid', e => formStep(`form_invalid_${e.target.name}`), true);
+calGrid.addEventListener('click', e => { if (e.target.closest('[data-day]:not(:disabled)')) formStep('form_date'); });
 // A call leaves no other trace on the site: count the taps on the phone number.
 document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => {
   if (window.gtag) gtag('event', 'phone_click');
