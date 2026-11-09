@@ -293,7 +293,7 @@ fbq('track', 'PageView');
     </ul>
     <div class="actions">
       <a class="button primary" href="#request">Забронировать</a>
-      <a class="button black" href="https://m.me/clubexit168">Написать в&nbsp;Messenger</a>
+      <a class="button black" href="https://wa.me/19169144407" target="_blank" rel="noopener">Написать в&nbsp;WhatsApp</a>
     </div>
   </div>
 </section>
@@ -491,7 +491,7 @@ fbq('track', 'PageView');
     </details>
     <details>
       <summary>Можно снять на&nbsp;месяц?<span aria-hidden="true">+</span></summary>
-      <p>Да, всю территорию целиком&nbsp;— на&nbsp;месяц и&nbsp;дольше. Цену и&nbsp;условия обсуждаем отдельно: напишите нам в&nbsp;<a href="https://m.me/clubexit168">Messenger</a>.</p>
+      <p>Да, всю территорию целиком&nbsp;— на&nbsp;месяц и&nbsp;дольше. Цену и&nbsp;условия обсуждаем отдельно: напишите нам в&nbsp;<a href="https://wa.me/19169144407" target="_blank" rel="noopener">WhatsApp</a>.</p>
     </details>
     <details>
       <summary>Нужен полный привод или цепи?<span aria-hidden="true">+</span></summary>
@@ -549,22 +549,17 @@ fbq('track', 'PageView');
         <label id="nights-field" hidden>Сколько суток<select name="nights"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option></select></label>
         <label>Сколько вас, с&nbsp;детьми<input type="number" name="guests" min="1" max="15" step="1" inputmode="numeric" placeholder="В&nbsp;цену входит до&nbsp;10" required></label>
       </div>
-      <div class="form-row">
-        <label>Ваше имя<input type="text" name="name" autocomplete="name" required></label>
-        <label>Телефон с&nbsp;WhatsApp<span class="tel-field"><span aria-hidden="true">+1</span><input type="tel" name="contact" autocomplete="tel-national" inputmode="tel" pattern="(?:\D*\d){10,}\D*" maxlength="100" title="Номер телефона, 10&nbsp;цифр" placeholder="Ваш номер" required></span></label>
-      </div>
       <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
       <label>Что-то ещё <span>(необязательно)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="Ретрит, рыбалка, эндуро, кемпинг, собака, дети, день рождения, вопрос"></textarea></label>
       <div class="estimate"><span>Всё место · <span id="stay-duration">до&nbsp;10, день</span></span><strong id="rate-total">$500</strong></div>
-      <button class="button primary submit" type="submit">Отправить через Messenger</button>
-      <p class="note">Заявка скопируется&nbsp;— останется вставить её в&nbsp;чат с&nbsp;нашей страницей. На&nbsp;сайте ничего не&nbsp;списывается.</p>
+      <button class="button primary submit" type="submit">Забронировать даты</button>
+      <p class="note">Откроется WhatsApp с&nbsp;готовой заявкой, останется нажать «Отправить». На&nbsp;сайте ничего не&nbsp;списывается.</p>
       <div id="request-result" hidden tabindex="-1" aria-live="polite">
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
-        <pre id="request-text" hidden></pre>
         <div class="actions">
-          <a class="button primary" href="https://m.me/clubexit168">Написать в&nbsp;Messenger</a>
-          <button class="button black" id="request-copy" type="button">Скопировать текст</button>
+          <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Открыть WhatsApp</a>
+          <a class="button black" id="sms-link" href="sms:+19169144407">Нет WhatsApp? Отправить SMS</a>
         </div>
       </div>
     </form>
@@ -572,8 +567,8 @@ fbq('track', 'PageView');
       <div class="contact-info booking-steps">
         <h3>Как проходит бронь</h3>
         <dl>
-          <div><dt>Сейчас</dt><dd>Выбираете даты и&nbsp;отправляете заявку.</dd></div>
-          <div><dt>В&nbsp;течение суток</dt><dd>Мы держим даты 24&nbsp;часа и&nbsp;пишем вам в&nbsp;WhatsApp, куда перевести залог. Он&nbsp;равен цене аренды, перевод через Zelle. После залога даты ваши.</dd></div>
+          <div><dt>Сейчас</dt><dd>Выбираете даты, открывается WhatsApp с&nbsp;заявкой, вы&nbsp;её&nbsp;отправляете.</dd></div>
+          <div><dt>В&nbsp;течение суток</dt><dd>Мы держим даты 24&nbsp;часа и&nbsp;отвечаем вам в&nbsp;том&nbsp;же чате, куда перевести залог. Он&nbsp;равен цене аренды, перевод через Zelle. После залога даты ваши.</dd></div>
           <div><dt>За&nbsp;три дня до&nbsp;приезда</dt><dd>Оплачиваете аренду, тоже через Zelle.</dd></div>
           <div><dt>После выезда</dt><dd>Возвращаем залог.</dd></div>
           <div><dt>Если передумали</dt><dd>Бронируете больше чем за&nbsp;14&nbsp;дней до&nbsp;даты&nbsp;— есть 7&nbsp;дней, чтобы отказаться, и&nbsp;залог вернётся. Позже, или если до&nbsp;даты 14&nbsp;дней и&nbsp;меньше, залог не&nbsp;возвращается.</dd></div>
@@ -581,10 +576,10 @@ fbq('track', 'PageView');
       </div>
       <div class="contact-info">
         <h3>Позвонить или написать</h3>
-        <p>Звоните или пишите на&nbsp;<a class="nowrap" href="tel:+19169144407">916-914-4407</a>. В&nbsp;Facebook пишите странице «Бизнес-клуб EXIT&nbsp;168» в&nbsp;Messenger. Отвечаем про даты и&nbsp;на&nbsp;любые вопросы, можно по&#8209;русски.</p>
+        <p>Звоните или пишите в&nbsp;WhatsApp на&nbsp;<a class="nowrap" href="tel:+19169144407">916-914-4407</a>. Отвечаем про даты и&nbsp;на&nbsp;любые вопросы, можно по&#8209;русски.</p>
         <div class="actions">
           <a class="button black" href="tel:+19169144407">Позвонить</a>
-          <a class="button black" href="https://m.me/clubexit168">Написать в&nbsp;Messenger</a>
+          <a class="button black" href="https://wa.me/19169144407" target="_blank" rel="noopener">Написать в&nbsp;WhatsApp</a>
         </div>
       </div>
     </div>
@@ -597,7 +592,7 @@ fbq('track', 'PageView');
   <div class="footer-main">
     <a class="wordmark" href="#top">EXIT 168</a>
     <p>Exit&nbsp;168 · Rainbow Road · Округ Плейсер, Калифорния</p>
-    <p><a href="tel:+19169144407">916-914-4407</a> <a href="https://m.me/clubexit168">Messenger</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
+    <p><a href="tel:+19169144407">916-914-4407</a> <a href="https://wa.me/19169144407" target="_blank" rel="noopener">WhatsApp</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
   </div>
   <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Иллюстрации по&nbsp;мотивам этого участка: <span class="wide-only">первый кадр, </span>вид сверху (летом и&nbsp;зимой), печь с&nbsp;огнём и&nbsp;утро на&nbsp;террасе. Все остальные фотографии сняты на&nbsp;Exit&nbsp;168. Посещения сайта считают Яндекс Метрика и&nbsp;Google Аналитика.</div>
 </footer>

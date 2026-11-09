@@ -9,13 +9,6 @@ document.querySelectorAll('.lang a').forEach(a => a.addEventListener('click', ()
   a.hash = location.hash;
 }));
 
-// ---- Messenger ----
-// On a computer m.me opens messenger.com, which asks for a separate login; the chat inside facebook.com
-// uses the session people already have (V, 2026-10-02). Phones keep m.me: it opens the Messenger app.
-if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.querySelectorAll('a[href="https://m.me/clubexit168"]').forEach(a => { a.href = 'https://www.facebook.com/messages/t/clubexit168'; });
-}
-
 // ---- navigation ----
 const menuButton = document.querySelector('.menu-toggle');
 const menu = document.querySelector('#mobile-nav');
@@ -253,12 +246,15 @@ if (scenes.length) {
 
 // ---- date request ----
 // With the booking service (form data-api, the Cloudflare Worker in календарь/) the form shows live
-// free days and holds the dates for 24 hours. Without it, or when it does not answer, the form writes
-// the request, copies it, and the visitor sends it to the club's page in Messenger (V, 2026-09-26).
+// free days and holds the dates for 24 hours. The request itself the guest sends from their own WhatsApp:
+// in the US a call from an unknown number reads as spam, so we answer in their chat (Roman via V, 2026-11-09).
+const WA = '19169144407';
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
 const dateInput = form.elements.date;
-const API = form.dataset.api;
+// The live site is https. A local copy (http, on this Mac or a phone on its Wi-Fi) talks to the test service
+// (launch.json «booking-local»), so trying the form never holds real dates.
+const API = location.protocol === 'https:' ? form.dataset.api : `http://${location.hostname}:8787`;
 const now = new Date();
 dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 const nights = () => form.elements.stay.value === 'overnight' ? Number(form.elements.nights.value) : 0;
@@ -269,13 +265,6 @@ const bigGroup = () => Number(form.elements.guests.value) > 10;
 const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 * nights() : 500) * (bigGroup() ? 1.5 : 1);
 const usd = n => '$' + String(n).replace(/\B(?=(\d{3})+$)/g, t(',', ' '));
 const stayRate = () => usd(stayPrice());
-// The form shows +1 in front of the phone field, so a guest types the number alone (V, 2026-10-08).
-// A number typed with its own country code stays as typed; a leading 1 before ten digits is the same code twice.
-const phone = () => {
-  const v = form.elements.contact.value.trim();
-  if (v.startsWith('+')) return v;
-  return `+1 ${v.replace(/\D/g, '').length === 11 ? v.replace(/^\D*1\D*/, '') : v}`;
-};
 
 // ---- calendar ----
 const cal = document.querySelector('#calendar');
@@ -323,15 +312,26 @@ function renderCalendar() {
   const days = stayDays();
   calStatus.textContent = loading ? t('Checking which dates are free…', 'Смотрим, какие даты свободны…')
     : !days.length ? ''
+    : leaving ? t(`Arrival ${nice(days[0])} — now tap the day you leave, up to 7 days later.`, `Приезд ${nice(days[0])} — теперь выберите день отъезда, до 7 суток.`)
     : bad.length ? t(`${nice(bad[0])} is taken. Pick another arrival day or fewer nights.`, `${nice(bad[0])} занято. Выберите другой день приезда или меньше суток.`)
     : short ? t(`These are holiday dates: the shortest stay is ${minNights} × 24 hours.`, `Это праздничные дни: бронь от ${minNights} суток.`)
     : days.length === 1 ? nice(days[0]) : `${nice(days[0])} – ${nice(days.at(-1))}`;
 }
 
+// «Сутки»: the first tap is the arrival day, the next later tap the day you leave (V, 2026-11-09: the
+// «how many» list under the calendar went unseen and then confused: it shows only when the calendar does not).
+let leaving = false;
 calGrid.addEventListener('click', e => {
   const b = e.target.closest('[data-day]');
   if (!b || b.disabled) return;
-  dateInput.value = b.dataset.day;
+  const n = dateInput.value ? Math.round((utc(b.dataset.day) - utc(dateInput.value)) / 864e5) : 0;
+  if (leaving && n >= 1 && n <= form.elements.nights.options.length) {
+    form.elements.nights.value = n;
+    leaving = false;
+  } else {
+    dateInput.value = b.dataset.day;
+    leaving = form.elements.stay.value === 'overnight';
+  }
   form.dispatchEvent(new Event('input'));
 });
 cal.querySelector('.cal-prev').addEventListener('click', () => { month = addDays(`${month}-01`, -1).slice(0, 7); renderCalendar(); });
@@ -350,57 +350,52 @@ async function loadBusy() {
 if (API) {
   // The calendar takes its place at once, so the form does not jump under the visitor when the service answers.
   const dateField = document.querySelector('#date-field');
-  const showCalendar = on => { cal.hidden = !on; dateField.hidden = on; dateInput.required = !on; }; // the calendar checks the date itself on submit
+  // the calendar checks the date itself on submit; the input event shows the «how many» list again without it
+  const showCalendar = on => { cal.hidden = !on; dateField.hidden = on; dateInput.required = !on; form.dispatchEvent(new Event('input')); };
   loading = true; busy = {};
   showCalendar(true);
   renderCalendar();
   loadBusy().then(() => {
     loading = false;
-    form.querySelector('.submit').textContent = t('Hold these dates', 'Забронировать даты');
-    form.querySelector('.submit + .note').textContent = t('Nothing is charged on this site.', 'На сайте ничего не списывается.');
     renderCalendar();
-  }).catch(() => { loading = false; busy = null; showCalendar(false); }); // no answer: the plain date field and Messenger keep working
+  }).catch(() => { loading = false; busy = null; showCalendar(false); }); // no answer: the plain date field and WhatsApp keep working
 }
 
 form.addEventListener('input', () => {
   result.hidden = true;
-  document.querySelector('#nights-field').hidden = form.elements.stay.value !== 'overnight';
+  const overnight = form.elements.stay.value === 'overnight';
+  if (!overnight) leaving = false;
+  cal.querySelector('.cal-label').textContent = overnight ? t('Arrival and departure', 'Приезд и отъезд') : t('Arrival date', 'Дата приезда');
+  document.querySelector('#nights-field').hidden = !overnight || !cal.hidden; // with the calendar, the stay is picked in it
   document.querySelector('#rate-total').textContent = stayRate();
   document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t('up to 10', 'до 10')}, ${stayLabel().toLowerCase()}`;
   if (busy) renderCalendar();
 });
 
+// The guest's first message in WhatsApp. Their name and number come with it, so the form asks for neither.
 function requestText() {
-  const date = new Date(`${dateInput.value}T12:00:00`).toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  const days = stayDays().map(nice);
   const notes = form.elements.notes.value.trim();
   return [
-    t('Exit 168 booking request', 'Заявка на Exit 168'),
-    `${t('Stay', 'Формат')}: ${stayLabel()} (${stayRate()})`,
-    `${t('Arrival', 'Дата приезда')}: ${date}`,
+    t('Hi! I would like to book Exit 168.', 'Здравствуйте! Хочу забронировать Exit 168.'),
+    `${stayLabel()}: ${days.length > 1 ? `${days[0]} – ${days.at(-1)}` : days[0]}`,
     `${t('Group', 'Гостей')}: ${form.elements.guests.value}`,
-    `${t('Name', 'Имя')}: ${form.elements.name.value.trim()}`,
-    `WhatsApp: ${phone()}`,
+    `${t('Price', 'Цена')}: ${stayRate()}`,
     notes && `${t('Notes', 'Комментарий')}: ${notes}`,
   ].filter(Boolean).join('\n');
 }
 
-const requestPre = document.querySelector('#request-text');
-const copyButton = document.querySelector('#request-copy');
-// Copying must start inside the tap itself: mobile browsers refuse the clipboard once it has passed.
-async function copyRequest() {
-  try {
-    await navigator.clipboard.writeText(requestPre.textContent);
-    return true;
-  } catch {
-    return false;
-  }
-}
+const sentText = until => [
+  t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
+    'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
+  until && t(`We hold your dates until ${until} and reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
+  t("If WhatsApp didn't open, use the button below.", 'Если WhatsApp не открылся, нажмите кнопку ниже.'),
+].filter(Boolean).join(' ');
 
-function showResult(title, text, withCopy) {
+function showResult(title, text, withLinks) {
   document.querySelector('#result-title').textContent = title;
   document.querySelector('#result-text').textContent = text;
-  // A hold needs nothing more from the guest: Messenger and copy show only for the Messenger request.
-  requestPre.hidden = result.querySelector('.actions').hidden = !withCopy;
+  result.querySelector('.actions').hidden = !withLinks;
   result.hidden = false;
   result.focus();
 }
@@ -418,71 +413,60 @@ const formStep = name => {
   stepsSent.add(name);
   gtag('event', name);
 };
-const fieldSteps = { date: 'form_date', guests: 'form_guests', name: 'form_name', contact: 'form_phone' };
+const fieldSteps = { date: 'form_date', guests: 'form_guests' };
 form.addEventListener('change', e => formStep(fieldSteps[e.target.name]));
 // The tap itself, and which field the browser refused: an invalid field stops the form before its submit handler.
 form.querySelector('.submit').addEventListener('click', () => formStep('form_send_tap'));
 form.addEventListener('invalid', e => formStep(`form_invalid_${e.target.name}`), true);
 calGrid.addEventListener('click', e => { if (e.target.closest('[data-day]:not(:disabled)')) formStep('form_date'); });
-// A call leaves no other trace on the site: count the taps on the phone number.
-document.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => {
-  if (window.gtag) gtag('event', 'phone_click');
+// A call or a WhatsApp chat leaves no other trace on the site: count the taps on the number and on WhatsApp.
+document.querySelectorAll('a[href^="tel:"], a[href^="https://wa.me/"]').forEach(a => a.addEventListener('click', () => {
+  if (window.gtag) gtag('event', a.protocol === 'tel:' ? 'phone_click' : 'whatsapp_click');
   if (window.fbq) fbq('track', 'Contact');
 }));
 
-// Returns true when the booking service took the request (or said the dates are taken).
+// Holds the dates while the guest sends the message. If the service fails, WhatsApp does the job alone.
+// keepalive and a plain-text body (no CORS preflight): on a phone the page goes to the background as WhatsApp opens.
 async function holdDates() {
-  const fields = { ...Object.fromEntries(new FormData(form)), contact: phone() };
+  const fields = Object.fromEntries(new FormData(form));
   let res;
   try {
-    res = await fetch(`${API}/request`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...fields, lang: ru ? 'ru' : 'en' }) });
+    res = await fetch(`${API}/request`, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ ...fields, lang: ru ? 'ru' : 'en' }) });
   } catch {
-    return false;
+    return;
   }
   const data = await res.json().catch(() => ({}));
+  // ponytail: WhatsApp is already open with these dates by now; rare enough that we sort it out in the chat.
   if (res.status === 409) {
     busy = data.days || busy;
     renderCalendar();
-    showResult(t('Someone just took these dates', 'Эти даты только что заняли'), t('The calendar is updated. Pick other dates and send again.', 'Календарь обновлён. Выберите другие даты и отправьте ещё раз.'), false);
-    return true;
+    showResult(t('Someone just took these dates', 'Эти даты только что заняли'), t('The calendar is updated. Pick other dates and tell us in the chat which ones.', 'Календарь обновлён. Выберите другие даты и напишите нам в чате, какие.'), false);
+    return;
   }
-  if (!res.ok || !data.ok) return false;
+  if (!res.ok || !data.ok) return;
   stayDays().forEach(d => { busy[d] = 'hold'; });
   const until = new Date(data.holdUntil).toLocaleString(locale, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-  showResult(t('Your dates are held', 'Держим ваши даты'), t(
-    `We hold them until ${until}. Within that time we will message you on WhatsApp at ${fields.contact} with where to send the deposit, ${stayRate()}.`,
-    `Держим до ${until}. За это время напишем вам в WhatsApp на ${fields.contact}, куда перевести залог — ${stayRate()}.`), false);
+  document.querySelector('#result-text').textContent = sentText(until);
   dateInput.value = '';
   renderCalendar();
-  countLead();
-  return true;
 }
 
-form.addEventListener('submit', async e => {
+form.addEventListener('submit', e => {
   e.preventDefault();
   if (!form.reportValidity()) return;
   if (busy) {
     if (!dateInput.value) { calStatus.textContent = t('Pick your arrival day in the calendar.', 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
-    if (clashes().length || tooShort()) { renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
-    const button = form.querySelector('.submit');
-    button.disabled = true;
-    const done = await holdDates();
-    button.disabled = false;
-    if (done) return;
+    if (clashes().length || tooShort()) { leaving = false; renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
   }
-  // Messenger: the request is copied and pasted into the chat with the club's page.
-  requestPre.textContent = requestText();
-  const copied = copyRequest();
-  showResult(t('Your request is ready', 'Заявка готова'), '', true);
-  document.querySelector('#result-text').textContent = await copied
-    ? t('We copied it for you. Open Messenger, paste it into the chat with our page and send it: until you do, the request has not reached us.', 'Мы её уже скопировали. Откройте Messenger, вставьте в чат с нашей страницей и отправьте: без этого заявка до нас не дойдёт.')
-    : t('Copy the text below, open Messenger, paste it into the chat with our page and send it: until you do, the request has not reached us.', 'Скопируйте текст ниже, откройте Messenger, вставьте в чат с нашей страницей и отправьте: без этого заявка до нас не дойдёт.');
+  const text = encodeURIComponent(requestText());
+  const wa = `https://wa.me/${WA}?text=${text}`;
+  document.querySelector('#wa-link').href = wa;
+  document.querySelector('#sms-link').href = `sms:+${WA}?&body=${text}`;
+  showResult(t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
+  if (busy) holdDates();
+  // Inside the tap itself: browsers block a new window once the tap has passed.
+  window.open(wa, '_blank', 'noopener');
   countLead();
-});
-
-copyButton.addEventListener('click', async () => {
-  copyButton.textContent = await copyRequest() ? t('Copied', 'Скопировано') : t('Select and copy the text above', 'Выделите и скопируйте текст выше');
-  setTimeout(() => { copyButton.textContent = t('Copy the text', 'Скопировать текст'); }, 2500);
 });
 
 // ---- sticky action on small screens: after the hero, hidden while another booking button or the form is on screen ----
