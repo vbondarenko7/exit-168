@@ -379,7 +379,8 @@ form.addEventListener('input', () => {
   cal.querySelector('.cal-label').textContent = overnight ? t('Arrival and departure', 'Приезд и отъезд') : t('Arrival date', 'Дата приезда');
   document.querySelector('#nights-field').hidden = !overnight || !cal.hidden; // with the calendar, the stay is picked in it
   document.querySelector('#rate-total').textContent = stayRate();
-  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t('up to 10', 'до 10')}, ${stayLabel().toLowerCase()}`;
+  // the stay wraps as a whole: on a phone «2 × 24 hours» left «hours» alone on the second line
+  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t('up to 10', 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
   if (busy) renderCalendar();
 });
 

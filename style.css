@@ -50,6 +50,8 @@ h3{font-size:var(--title);line-height:1.4}
 .wordmark{font:400 30px/1 Forum,Georgia,serif;letter-spacing:.04em;white-space:nowrap}
 .navigation .wordmark{padding-block:8px}
 .navigation nav:not(.mobile-nav){display:flex;gap:34px;margin-inline:auto}
+/* every link in the bar is 44px tall to the pointer, inside the bar's own height */
+.navigation nav a,.nav-action,.nav-phone{display:flex;align-items:center;min-height:44px}
 .navigation nav a{font-size:13px}
 .navigation a:hover{color:#fff}
 .nav-action{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.18em}
@@ -304,9 +306,11 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .offer-rates span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;color:var(--muted)}
 .offer-per{max-width:40ch;margin:0 auto 26px;font-size:14px;color:var(--soft)}
 .offer-terms{max-width:40ch;margin:0 auto}
-.offer-terms li{padding:12px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6}
+/* centred lines share the words evenly, no single word left on a line of its own */
+.offer-terms li{padding:12px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6;text-wrap:balance}
 .offer-terms li:last-child{border-bottom:1px solid #364947}
-.offer-card .actions{margin:30px 0 0;justify-content:center}
+/* the two buttons under the rates are as wide as each other, the wider one sets both */
+.offer-card .actions{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;margin:30px 0 0}
 .offer-card .button{padding:15px 20px;font-size:11px}
 .note{font-size:13px;line-height:1.7}
 
@@ -347,6 +351,9 @@ legend span,form label span{color:var(--muted)}
 .rate-options label:has(input:checked)>span{border-color:var(--ivory);color:var(--ivory)}
 .rate-options strong{font-weight:500}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:30px}
+/* the group size takes the whole row when it would stand in it alone: beside the calendar,
+   and under the date and the 24-hour stays when the calendar does not answer */
+.form-row:has(#date-field[hidden]) label:last-child,.form-row:has(#nights-field:not([hidden])) label:last-child{grid-column:1/-1}
 form>label{display:block}
 form>label,.form-row label{color:var(--muted)}
 /* text fields only: Safari grows radios and checkboxes to any min-height and padding they are given */
@@ -361,13 +368,17 @@ textarea{resize:vertical}
 /* three ways to book: WhatsApp, a text, a call; each with its icon (V, 2026-11-09) */
 .book-ways{display:grid;gap:12px;margin-bottom:18px}
 .book-ways .button{gap:10px}
+/* where «book by phone» and its number do not fit one line, the number goes under it, centred, and the handset
+   stays beside the words (RU phones: the handset stood alone at the edge of a two-line label) */
+.book-ways a.button{flex-wrap:wrap;gap:0 .35em}
+.book-ways a.button>span{display:contents}
+.book-ways a.button svg{margin-right:calc(10px - .35em)}
 .book-ways svg{width:18px;height:18px}
 .book-ways .icon{stroke-width:1.8}
 .glyph{fill:currentColor;flex:none}
 select{-webkit-appearance:none;appearance:none;width:100%;display:block;background:var(--night) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%23c8d0c6' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center;border:1px solid #3a4b47;border-radius:0;padding:14px 44px 14px 18px;color:var(--soft);margin-top:14px;min-height:52px;cursor:pointer}
 select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-/* the phone field shows +1 in front of the number, so a guest types the number alone (V, 8 October 2026) */
 /* booking calendar: shown only when the booking service answers; otherwise the plain date field stays */
 .calendar{margin-bottom:30px}
 .cal-label{color:var(--muted);margin-bottom:14px}
@@ -396,7 +407,8 @@ select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 #request-result{margin-top:24px;padding:26px 28px 28px;background:var(--night);border:1px solid var(--ivory);outline:0}
 #request-result h3{font-size:24px;line-height:1.3}
 #request-result p{margin:12px 0 0;color:var(--soft)}
-#request-result .actions{margin-top:22px}
+/* the ways to send stand one under another at every width: three in a row did not fit the form on a computer (V, 2026-11-09) */
+#request-result .actions{margin-top:22px;flex-direction:column;align-items:stretch}
 #request-result .button{font-size:11px;padding:15px 20px}
 /* the other ways after a request: black buttons right after WhatsApp, the QR code under them on its button (V, 2026-11-09) */
 #qr-panel p{margin-top:22px}
@@ -407,7 +419,7 @@ select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 /* ---------- footer ---------- */
 footer{background:#000;text-align:center}
 .footer-main{padding:64px 24px 40px}
-.footer-main .wordmark{display:inline-block}
+.footer-main .wordmark{display:inline-block;padding-block:7px;margin-block:-7px}
 .footer-main p{font-size:13px;color:#a6afad;margin-top:16px}
 .footer-main p a{display:inline-block;padding:12px 10px;color:var(--ivory);text-decoration:underline}
 .copyright{border-top:1px solid #1c1c1c;padding:26px 20px;font-size:11px;color:#a6afad;letter-spacing:.06em;max-width:80ch;margin:auto;line-height:1.7}
@@ -572,7 +584,7 @@ dialog::backdrop{background:#000d}
   .offer-card h2{font-size:30px;margin:24px 0 28px}
   .offer-rates{gap:30px}
   .offer-rates strong{font-size:44px}
-  .offer-card .actions{flex-direction:column;gap:12px}
+  .offer-card .actions{display:grid;grid-auto-flow:row;gap:12px}
   .offer-card .button{width:100%;font-size:11px}
   .contact-panels{margin-bottom:var(--section-bottom)}
   .contact-info,form{padding:36px 22px}
@@ -585,7 +597,6 @@ dialog::backdrop{background:#000d}
   .form-row{grid-template-columns:1fr;gap:24px}
   input,textarea{font-size:16px}
   .submit{font-size:11px}
-  #request-result .actions{flex-direction:column;align-items:stretch}
   .faq{padding-bottom:40px}
   .faq-list{padding:0 20px}
   .faq-list summary{font-size:19px}
