@@ -525,12 +525,12 @@ fbq('track', 'PageView');
       <fieldset>
         <legend>How long</legend>
         <div class="rate-options">
-          <label><input type="radio" name="stay" value="day" checked><span>Day visit <strong>$500</strong></span></label>
-          <label><input type="radio" name="stay" value="overnight"><span>24&nbsp;hours <strong>$1,000</strong></span></label>
+          <label><input type="radio" name="stay" value="overnight" checked><span>24&nbsp;hours <strong>$1,000</strong></span></label>
+          <label><input type="radio" name="stay" value="day"><span>Day visit <strong>$500</strong></span></label>
         </div>
       </fieldset>
       <div class="calendar" id="calendar" hidden>
-        <p class="cal-label">Arrival date</p>
+        <p class="cal-label">Arrival and departure</p>
         <div class="cal-head">
           <button type="button" class="cal-prev" aria-label="Previous month"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
           <p class="cal-title" aria-live="polite"></p>
@@ -547,15 +547,21 @@ fbq('track', 'PageView');
       </div>
       <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
       <label>Anything else <span>(optional)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="A retreat, fishing, dirt bikes, camping, a dog, kids, a birthday, a question"></textarea></label>
-      <div class="estimate"><span>Whole place · <span id="stay-duration">up to 10, day visit</span></span><strong id="rate-total">$500</strong></div>
+      <div class="estimate"><span>Whole place · <span id="stay-duration">up to 10, 24 hours</span></span><strong id="rate-total">$1,000</strong></div>
       <button class="button primary submit" type="submit">Hold these dates</button>
-      <p class="note">WhatsApp opens with your request written out: just press Send. Nothing is charged on this site.</p>
+      <p class="note">You send the request to us on WhatsApp, already written out. Nothing is charged on this site.</p>
       <div id="request-result" hidden tabindex="-1" aria-live="polite">
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
-        <div class="actions">
-          <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Open WhatsApp</a>
-          <a class="button black" id="sms-link" href="sms:+19169144407">No WhatsApp? Send a text</a>
+        <div class="ways">
+          <div class="wa-qr desk-only" id="wa-qr"></div>
+          <div class="actions">
+            <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Open WhatsApp</a>
+            <a class="button black phone-only" id="sms-link" href="sms:+19169144407">No WhatsApp? Send a text</a>
+            <a class="button black phone-only" href="tel:+19169144407">Call us</a>
+            <button class="button black desk-only" id="request-copy" type="button">Copy the request</button>
+          </div>
+          <p class="desk-only">No WhatsApp? Call or text <span class="nowrap">916-914-4407</span>; you can paste the copied request into the message.</p>
         </div>
       </div>
     </form>

@@ -529,12 +529,12 @@ fbq('track', 'PageView');
       <fieldset>
         <legend>На&nbsp;сколько</legend>
         <div class="rate-options">
-          <label><input type="radio" name="stay" value="day" checked><span>День <strong>$500</strong></span></label>
-          <label><input type="radio" name="stay" value="overnight"><span>Сутки <strong>$1&nbsp;000</strong></span></label>
+          <label><input type="radio" name="stay" value="overnight" checked><span>Сутки <strong>$1&nbsp;000</strong></span></label>
+          <label><input type="radio" name="stay" value="day"><span>День <strong>$500</strong></span></label>
         </div>
       </fieldset>
       <div class="calendar" id="calendar" hidden>
-        <p class="cal-label">Дата приезда</p>
+        <p class="cal-label">Приезд и отъезд</p>
         <div class="cal-head">
           <button type="button" class="cal-prev" aria-label="Предыдущий месяц"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
           <p class="cal-title" aria-live="polite"></p>
@@ -551,15 +551,21 @@ fbq('track', 'PageView');
       </div>
       <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
       <label>Что-то ещё <span>(необязательно)</span><textarea name="notes" maxlength="1000" rows="3" placeholder="Ретрит, рыбалка, эндуро, кемпинг, собака, дети, день рождения, вопрос"></textarea></label>
-      <div class="estimate"><span>Всё место · <span id="stay-duration">до&nbsp;10, день</span></span><strong id="rate-total">$500</strong></div>
+      <div class="estimate"><span>Всё место · <span id="stay-duration">до&nbsp;10, сутки</span></span><strong id="rate-total">$1&nbsp;000</strong></div>
       <button class="button primary submit" type="submit">Забронировать даты</button>
-      <p class="note">Откроется WhatsApp с&nbsp;готовой заявкой, останется нажать «Отправить». На&nbsp;сайте ничего не&nbsp;списывается.</p>
+      <p class="note">Заявку вы&nbsp;отправите нам в&nbsp;WhatsApp, она будет уже написана. На&nbsp;сайте ничего не&nbsp;списывается.</p>
       <div id="request-result" hidden tabindex="-1" aria-live="polite">
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
-        <div class="actions">
-          <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Открыть WhatsApp</a>
-          <a class="button black" id="sms-link" href="sms:+19169144407">Нет WhatsApp? Отправить SMS</a>
+        <div class="ways">
+          <div class="wa-qr desk-only" id="wa-qr"></div>
+          <div class="actions">
+            <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Открыть WhatsApp</a>
+            <a class="button black phone-only" id="sms-link" href="sms:+19169144407">Нет WhatsApp? Отправить SMS</a>
+            <a class="button black phone-only" href="tel:+19169144407">Позвонить</a>
+            <button class="button black desk-only" id="request-copy" type="button">Скопировать заявку</button>
+          </div>
+          <p class="desk-only">Нет WhatsApp? Позвоните или пришлите SMS на&nbsp;<span class="nowrap">916-914-4407</span>, скопированную заявку можно вставить в&nbsp;сообщение.</p>
         </div>
       </div>
     </form>

@@ -392,6 +392,9 @@ select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 #request-result p{margin:12px 0 0;color:var(--soft)}
 #request-result .actions{margin-top:22px}
 #request-result .button{font-size:11px;padding:15px 20px}
+#request-result .wa-qr{margin-top:22px;width:232px;max-width:100%;padding:12px;background:#fff}
+#request-result .wa-qr svg{display:block;width:100%;height:auto}
+#request-result:not(.desk) .desk-only,#request-result.desk .phone-only{display:none}
 
 /* ---------- footer ---------- */
 footer{background:#000;text-align:center}

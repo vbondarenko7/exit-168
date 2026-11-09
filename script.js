@@ -251,6 +251,12 @@ if (scenes.length) {
 const WA = '19169144407';
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
+// On a computer wa.me in a new tab only offers to install WhatsApp, and many guests have it on the phone alone:
+// there the panel shows a QR code for the phone camera, the request to copy and the number (V, 2026-11-09).
+const desktop = matchMedia('(hover: hover) and (pointer: fine)').matches;
+result.classList.toggle('desk', desktop);
+if (desktop) document.querySelector('#wa-link').textContent = t('WhatsApp on this computer', 'WhatsApp на этом компьютере');
+const qrLib = asset('assets/qrcode.js'); // here, while document.currentScript is still this script
 const dateInput = form.elements.date;
 // The live site is https. A local copy (http, on this Mac or a phone on its Wi-Fi) talks to the test service
 // (launch.json «booking-local»), so trying the form never holds real dates.
@@ -373,9 +379,10 @@ form.addEventListener('input', () => {
 });
 
 // The guest's first message in WhatsApp. Their name and number come with it, so the form asks for neither.
-function requestText() {
+// The QR code leaves the notes out: a long text makes it too dense to scan, and the notes reach us with the hold.
+function requestText(withNotes = true) {
   const days = stayDays().map(nice);
-  const notes = form.elements.notes.value.trim();
+  const notes = withNotes && form.elements.notes.value.trim();
   return [
     t('Hi! I would like to book Exit 168.', 'Здравствуйте! Хочу забронировать Exit 168.'),
     `${stayLabel()}: ${days.length > 1 ? `${days[0]} – ${days.at(-1)}` : days[0]}`,
@@ -386,16 +393,18 @@ function requestText() {
 }
 
 const sentText = until => [
-  t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
+  desktop ? t('Point your phone camera at the code: WhatsApp opens on your phone with the request to 916-914-4407, and you press Send. Until you do, it has not reached us.',
+    'Наведите камеру телефона на код: на телефоне откроется WhatsApp с заявкой на номер 916-914-4407, останется нажать «Отправить». Без этого заявка до нас не дойдёт.')
+  : t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
     'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
   until && t(`We hold your dates until ${until} and reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
-  t("If WhatsApp didn't open, use the button below.", 'Если WhatsApp не открылся, нажмите кнопку ниже.'),
+  !desktop && t("If WhatsApp didn't open, use the button below.", 'Если WhatsApp не открылся, нажмите кнопку ниже.'),
 ].filter(Boolean).join(' ');
 
 function showResult(title, text, withLinks) {
   document.querySelector('#result-title').textContent = title;
   document.querySelector('#result-text').textContent = text;
-  result.querySelector('.actions').hidden = !withLinks;
+  result.querySelector('.ways').hidden = !withLinks;
   result.hidden = false;
   result.focus();
 }
@@ -406,7 +415,7 @@ const countLead = () => {
   if (window.fbq) fbq('track', 'Lead', { currency: 'USD', value: stayPrice() });
 };
 // How far guests get in the form: each step is its own event, sent once per visit. Google's form_start fires on
-// any first touch (even «Сутки» to see the price), so it says nothing about who typed a name or a phone.
+// any first touch (even «День» to see the price), so it says nothing about who typed a name or a phone.
 const stepsSent = new Set();
 const formStep = name => {
   if (!name || stepsSent.has(name) || !window.gtag) return;
@@ -458,15 +467,52 @@ form.addEventListener('submit', e => {
     if (!dateInput.value) { calStatus.textContent = t('Pick your arrival day in the calendar.', 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
     if (clashes().length || tooShort()) { leaving = false; renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
   }
-  const text = encodeURIComponent(requestText());
+  sentRequest = requestText();
+  const text = encodeURIComponent(sentRequest);
   const wa = `https://wa.me/${WA}?text=${text}`;
   document.querySelector('#wa-link').href = wa;
   document.querySelector('#sms-link').href = `sms:+${WA}?&body=${text}`;
-  showResult(t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
+  showResult(desktop ? t('Send your request on WhatsApp', 'Отправьте заявку в WhatsApp') : t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
   if (busy) holdDates();
+  if (desktop) showQr(`https://wa.me/${WA}?text=${encodeURIComponent(requestText(false))}`);
   // Inside the tap itself: browsers block a new window once the tap has passed.
-  window.open(wa, '_blank', 'noopener');
+  else window.open(wa, '_blank', 'noopener');
   countLead();
+});
+
+// The QR code library loads only when a visitor on a computer has sent the form.
+let qrLoad = null;
+const loadQr = () => qrLoad ||= new Promise((ok, fail) => {
+  const s = document.createElement('script');
+  s.src = qrLib;
+  s.onload = ok;
+  s.onerror = () => { qrLoad = null; fail(); };
+  document.head.append(s);
+});
+const qrBox = document.querySelector('#wa-qr');
+function showQr(url) {
+  qrBox.hidden = true; // no empty white box while it loads, or if it never does
+  loadQr().then(() => {
+    const qr = qrcode(0, 'L');
+    qr.addData(url);
+    qr.make();
+    qrBox.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: t('QR code: WhatsApp with your request', 'QR-код: WhatsApp с вашей заявкой') });
+    qrBox.hidden = false;
+  }, () => {});
+}
+
+// The text as it was sent: the hold clears the date once it succeeds, so it can't be written out again later.
+let sentRequest = '';
+const copyButton = document.querySelector('#request-copy');
+const copyLabel = copyButton.textContent;
+copyButton.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(sentRequest);
+    copyButton.textContent = t('Copied', 'Скопировано');
+  } catch {
+    copyButton.textContent = t("Couldn't copy", 'Не получилось скопировать');
+  }
+  setTimeout(() => { copyButton.textContent = copyLabel; }, 2500);
 });
 
 // ---- sticky action on small screens: after the hero, hidden while another booking button or the form is on screen ----
