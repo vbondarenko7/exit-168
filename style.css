@@ -358,7 +358,12 @@ textarea{resize:vertical}
 ::placeholder{color:var(--muted);opacity:1}
 .estimate{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0;color:var(--muted)}
 .estimate strong{font:400 32px/1.4 Forum,Georgia,serif;color:var(--ivory)}
-.submit{width:100%;margin-bottom:18px}
+/* three ways to book: WhatsApp, a text, a call; each with its icon (V, 2026-11-09) */
+.book-ways{display:grid;gap:12px;margin-bottom:18px}
+.book-ways .button{gap:10px}
+.book-ways svg{width:18px;height:18px}
+.book-ways .icon{stroke-width:1.8}
+.glyph{fill:currentColor;flex:none}
 select{-webkit-appearance:none;appearance:none;width:100%;display:block;background:var(--night) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='%23c8d0c6' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center;border:1px solid #3a4b47;border-radius:0;padding:14px 44px 14px 18px;color:var(--soft);margin-top:14px;min-height:52px;cursor:pointer}
 select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -393,12 +398,11 @@ select:focus-visible{outline:1px solid var(--ivory);outline-offset:0}
 #request-result p{margin:12px 0 0;color:var(--soft)}
 #request-result .actions{margin-top:22px}
 #request-result .button{font-size:11px;padding:15px 20px}
-/* the other ways after a request: a quiet link under the WhatsApp button, folded (V, 2026-11-09) */
-#request-result summary{width:fit-content;margin-top:10px;padding:12px 0;color:var(--soft);text-decoration:underline;text-underline-offset:5px}
-#request-result summary:hover{color:var(--ivory)}
-#request-result .wa-qr{margin-top:22px;width:232px;max-width:100%;padding:12px;background:#fff}
+/* the other ways after a request: black buttons right after WhatsApp, the QR code under them on its button (V, 2026-11-09) */
+#qr-panel p{margin-top:22px}
+#request-result .wa-qr{margin-top:14px;width:232px;max-width:100%;padding:12px;background:#fff}
 #request-result .wa-qr svg{display:block;width:100%;height:auto}
-#request-result:not(.desk) .desk-only,#request-result.desk .phone-only{display:none}
+#request-form:not(.desk) .desk-only,#request-form.desk .phone-only{display:none}
 
 /* ---------- footer ---------- */
 footer{background:#000;text-align:center}

@@ -251,11 +251,12 @@ if (scenes.length) {
 const WA = '19169144407';
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
-// WhatsApp opens at once on every device; the other ways wait in a closed fold for those it fails (V, 2026-11-09).
-// The fold holds SMS and a call on a phone; on a computer a QR code for the phone camera, the request to copy and the number.
+// Three ways to book under the form: WhatsApp, a text message (phones only: from a computer it rarely works) and a call.
+// The chosen app opens at once; the other ways are buttons right under it in the panel, no fold (V, 2026-11-09).
+// A phone gets SMS and a call there; a computer a QR code for the phone camera, the request to copy and the number.
 const desktop = matchMedia('(hover: hover) and (pointer: fine)').matches;
-result.classList.toggle('desk', desktop);
-const fold = document.querySelector('#other-ways');
+form.classList.toggle('desk', desktop);
+let viaSms = false;
 const qrLib = asset('assets/qrcode.js'); // here, while document.currentScript is still this script
 const dateInput = form.elements.date;
 // The live site is https. A local copy (http, on this Mac or a phone on its Wi-Fi) talks to the test service
@@ -267,7 +268,10 @@ const nights = () => form.elements.stay.value === 'overnight' ? Number(form.elem
 const stayLabel = () => form.elements.stay.value === 'day' ? t('Day visit', 'День')
   : nights() === 1 ? t('24 hours', 'Сутки') : t(`${nights()} × 24 hours`, `Сутки × ${nights()}`);
 // Up to 10 people is the base rate; 11–15 adds half (Roman, 2026-09-30): $750 a day, $1,500 for 24 hours.
-const bigGroup = () => Number(form.elements.guests.value) > 10;
+// The group size never stops a booking: empty counts as 10, anything else is kept within 1–15 (V, 2026-11-09).
+const guestsGiven = () => form.elements.guests.value !== '';
+const guestCount = () => guestsGiven() ? Math.min(15, Math.max(1, Math.round(Number(form.elements.guests.value)))) : 10;
+const bigGroup = () => guestCount() > 10;
 const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 * nights() : 500) * (bigGroup() ? 1.5 : 1);
 const usd = n => '$' + String(n).replace(/\B(?=(\d{3})+$)/g, t(',', ' '));
 const stayRate = () => usd(stayPrice());
@@ -344,7 +348,8 @@ cal.querySelector('.cal-prev').addEventListener('click', () => { month = addDays
 cal.querySelector('.cal-next').addEventListener('click', () => { month = addDays(`${month}-28`, 7).slice(0, 7); renderCalendar(); });
 
 async function loadBusy() {
-  const res = await fetch(`${API}/busy`, { cache: 'no-store' });
+  // a service that hangs must not leave the calendar closed for good: the plain date field takes over
+  const res = await fetch(`${API}/busy`, { cache: 'no-store', signal: AbortSignal.timeout?.(8000) });
   if (!res.ok) throw new Error(res.status);
   ({ days: busy, today, longWeekends = [], minNights = 2 } = await res.json());
   // The calendar counts days by California; a visitor a timezone ahead had today's date offered in the calendar but
@@ -386,14 +391,16 @@ function requestText(withNotes = true) {
   return [
     t('Hi! I would like to book Exit 168.', 'Здравствуйте! Хочу забронировать Exit 168.'),
     `${stayLabel()}: ${days.length > 1 ? `${days[0]} – ${days.at(-1)}` : days[0]}`,
-    `${t('Group', 'Гостей')}: ${form.elements.guests.value}`,
+    `${t('Group', 'Гостей')}: ${guestsGiven() ? guestCount() : t('up to 10', 'до 10')}`,
     `${t('Price', 'Цена')}: ${stayRate()}`,
     notes && `${t('Notes', 'Комментарий')}: ${notes}`,
   ].filter(Boolean).join('\n');
 }
 
 const sentText = until => [
-  t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
+  viaSms ? t('Your request is written out in a text message to 916-914-4407. Press Send there: until you do, it has not reached us.',
+    'Заявка уже написана в сообщении на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.')
+  : t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
     'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
   until && t(`We hold your dates until ${until} and reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
 ].filter(Boolean).join(' ');
@@ -421,8 +428,8 @@ const formStep = name => {
 };
 const fieldSteps = { date: 'form_date', guests: 'form_guests' };
 form.addEventListener('change', e => formStep(fieldSteps[e.target.name]));
-// The tap itself, and which field the browser refused: an invalid field stops the form before its submit handler.
-form.querySelector('.submit').addEventListener('click', () => formStep('form_send_tap'));
+// The tap itself, and which field reportValidity refused in the submit handler (the form is novalidate).
+form.querySelectorAll('.submit').forEach(b => b.addEventListener('click', () => formStep('form_send_tap')));
 form.addEventListener('invalid', e => formStep(`form_invalid_${e.target.name}`), true);
 calGrid.addEventListener('click', e => { if (e.target.closest('[data-day]:not(:disabled)')) formStep('form_date'); });
 // A call or a WhatsApp chat leaves no other trace on the site: count the taps on the number and on WhatsApp.
@@ -437,7 +444,7 @@ async function holdDates() {
   const fields = Object.fromEntries(new FormData(form));
   let res;
   try {
-    res = await fetch(`${API}/request`, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ ...fields, lang: ru ? 'ru' : 'en' }) });
+    res = await fetch(`${API}/request`, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ ...fields, guests: String(guestCount()), lang: ru ? 'ru' : 'en' }) });
   } catch {
     return;
   }
@@ -457,31 +464,40 @@ async function holdDates() {
   renderCalendar();
 }
 
+// What can still stop a request: no arrival date, dates taken, a holiday stay too short (V, 2026-11-09).
+// The form is novalidate, so a wrong group size reaches this handler and is corrected here instead of refused.
 form.addEventListener('submit', e => {
   e.preventDefault();
+  form.elements.guests.value = guestsGiven() ? guestCount() : ''; // a group of 0 or 40 is corrected rather than refused
   if (!form.reportValidity()) return;
   if (busy) {
     if (!dateInput.value) { calStatus.textContent = t('Pick your arrival day in the calendar.', 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
     if (clashes().length || tooShort()) { leaving = false; renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
   }
+  viaSms = e.submitter?.dataset.via === 'sms';
   sentRequest = requestText();
   qrUrl = `https://wa.me/${WA}?text=${encodeURIComponent(requestText(false))}`;
   const text = encodeURIComponent(sentRequest);
   const wa = `https://wa.me/${WA}?text=${text}`;
+  const sms = `sms:+${WA}?&body=${text}`;
   document.querySelector('#wa-link').href = wa;
-  document.querySelector('#sms-link').href = `sms:+${WA}?&body=${text}`;
-  fold.open = false;
-  showResult(t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
+  document.querySelector('#sms-link').href = sms;
+  setQr(false);
+  showResult(viaSms ? t('Now press Send in your messages', 'Осталось нажать «Отправить» в сообщении') : t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
   if (busy) holdDates();
   // Inside the tap itself: browsers block a new window once the tap has passed. On a computer wa.me opens
   // the WhatsApp app or WhatsApp Web (V, 2026-11-09).
-  window.open(wa, '_blank', 'noopener');
+  if (viaSms) {
+    if (window.gtag) gtag('event', 'sms_request');
+    location.href = sms;
+  } else {
+    window.open(wa, '_blank', 'noopener');
+  }
   countLead();
 });
 
-// The QR code library loads only when a visitor on a computer opens the fold.
+// The QR code library loads only on the first press of its button (V, 2026-11-09).
 let qrUrl = '';
-fold.addEventListener('toggle', () => { if (desktop && fold.open) showQr(qrUrl); });
 let qrLoad = null;
 const loadQr = () => qrLoad ||= new Promise((ok, fail) => {
   const s = document.createElement('script');
@@ -490,17 +506,25 @@ const loadQr = () => qrLoad ||= new Promise((ok, fail) => {
   s.onerror = () => { qrLoad = null; fail(); };
   document.head.append(s);
 });
-const qrBox = document.querySelector('#wa-qr');
-function showQr(url) {
-  qrBox.hidden = true; // no empty white box while it loads, or if it never does
+const qrButton = document.querySelector('#qr-button');
+const qrPanel = document.querySelector('#qr-panel');
+const qrLabel = qrButton.textContent;
+function setQr(shown) {
+  qrPanel.hidden = !shown;
+  qrButton.setAttribute('aria-expanded', shown);
+  qrButton.textContent = shown ? t('Hide the QR code', 'Скрыть QR-код') : qrLabel;
+}
+qrButton.addEventListener('click', () => {
+  if (!qrPanel.hidden) return setQr(false);
+  // shown only once drawn: no empty white box while it loads, or if it never does
   loadQr().then(() => {
     const qr = qrcode(0, 'L');
-    qr.addData(url);
+    qr.addData(qrUrl);
     qr.make();
-    qrBox.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: t('QR code: WhatsApp with your request', 'QR-код: WhatsApp с вашей заявкой') });
-    qrBox.hidden = false;
+    document.querySelector('#wa-qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: t('QR code: WhatsApp with your request', 'QR-код: WhatsApp с вашей заявкой') });
+    setQr(true);
   }, () => {});
-}
+});
 
 // The text as it was sent: the hold clears the date once it succeeds, so it can't be written out again later.
 let sentRequest = '';
