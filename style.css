@@ -340,6 +340,8 @@ details[open] summary span{transform:rotate(45deg)}
 .booking-steps dd{color:var(--soft);line-height:1.7}
 .contact-info .actions{margin-top:32px}
 .contact-info .actions .button{flex:1 1 auto}
+/* beside the form the block keeps only the number: its two buttons repeated the form's ways to book (V, 2026-11-09) */
+@media(min-width:901px){.contact-info .actions{display:none}}
 .contact-info>p{margin-top:18px;max-width:60ch}
 fieldset{padding:0;margin:0 0 30px;border:0;min-width:0}
 legend{color:var(--muted);padding:0;margin-bottom:14px}
