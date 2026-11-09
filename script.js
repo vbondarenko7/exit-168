@@ -251,11 +251,11 @@ if (scenes.length) {
 const WA = '19169144407';
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
-// On a computer wa.me in a new tab only offers to install WhatsApp, and many guests have it on the phone alone:
-// there the panel shows a QR code for the phone camera, the request to copy and the number (V, 2026-11-09).
+// WhatsApp opens at once on every device; the other ways wait in a closed fold for those it fails (V, 2026-11-09).
+// The fold holds SMS and a call on a phone; on a computer a QR code for the phone camera, the request to copy and the number.
 const desktop = matchMedia('(hover: hover) and (pointer: fine)').matches;
 result.classList.toggle('desk', desktop);
-if (desktop) document.querySelector('#wa-link').textContent = t('WhatsApp on this computer', 'WhatsApp на этом компьютере');
+const fold = document.querySelector('#other-ways');
 const qrLib = asset('assets/qrcode.js'); // here, while document.currentScript is still this script
 const dateInput = form.elements.date;
 // The live site is https. A local copy (http, on this Mac or a phone on its Wi-Fi) talks to the test service
@@ -393,12 +393,9 @@ function requestText(withNotes = true) {
 }
 
 const sentText = until => [
-  desktop ? t('Point your phone camera at the code: WhatsApp opens on your phone with the request to 916-914-4407, and you press Send. Until you do, it has not reached us.',
-    'Наведите камеру телефона на код: на телефоне откроется WhatsApp с заявкой на номер 916-914-4407, останется нажать «Отправить». Без этого заявка до нас не дойдёт.')
-  : t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
+  t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
     'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
   until && t(`We hold your dates until ${until} and reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
-  !desktop && t("If WhatsApp didn't open, use the button below.", 'Если WhatsApp не открылся, нажмите кнопку ниже.'),
 ].filter(Boolean).join(' ');
 
 function showResult(title, text, withLinks) {
@@ -468,19 +465,23 @@ form.addEventListener('submit', e => {
     if (clashes().length || tooShort()) { leaving = false; renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
   }
   sentRequest = requestText();
+  qrUrl = `https://wa.me/${WA}?text=${encodeURIComponent(requestText(false))}`;
   const text = encodeURIComponent(sentRequest);
   const wa = `https://wa.me/${WA}?text=${text}`;
   document.querySelector('#wa-link').href = wa;
   document.querySelector('#sms-link').href = `sms:+${WA}?&body=${text}`;
-  showResult(desktop ? t('Send your request on WhatsApp', 'Отправьте заявку в WhatsApp') : t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
+  fold.open = false;
+  showResult(t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
   if (busy) holdDates();
-  if (desktop) showQr(`https://wa.me/${WA}?text=${encodeURIComponent(requestText(false))}`);
-  // Inside the tap itself: browsers block a new window once the tap has passed.
-  else window.open(wa, '_blank', 'noopener');
+  // Inside the tap itself: browsers block a new window once the tap has passed. On a computer wa.me opens
+  // the WhatsApp app or WhatsApp Web (V, 2026-11-09).
+  window.open(wa, '_blank', 'noopener');
   countLead();
 });
 
-// The QR code library loads only when a visitor on a computer has sent the form.
+// The QR code library loads only when a visitor on a computer opens the fold.
+let qrUrl = '';
+fold.addEventListener('toggle', () => { if (desktop && fold.open) showQr(qrUrl); });
 let qrLoad = null;
 const loadQr = () => qrLoad ||= new Promise((ok, fail) => {
   const s = document.createElement('script');

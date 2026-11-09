@@ -558,14 +558,22 @@ fbq('track', 'PageView');
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
         <div class="ways">
-          <div class="wa-qr desk-only" id="wa-qr"></div>
           <div class="actions">
             <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Открыть WhatsApp</a>
-            <a class="button black phone-only" id="sms-link" href="sms:+19169144407">Нет WhatsApp? Отправить SMS</a>
-            <a class="button black phone-only" href="tel:+19169144407">Позвонить</a>
-            <button class="button black desk-only" id="request-copy" type="button">Скопировать заявку</button>
           </div>
-          <p class="desk-only">Нет WhatsApp? Позвоните или пришлите SMS на&nbsp;<span class="nowrap">916-914-4407</span>, скопированную заявку можно вставить в&nbsp;сообщение.</p>
+          <details id="other-ways">
+            <summary>WhatsApp не открылся или его нет?</summary>
+            <div class="actions phone-only">
+              <a class="button black" id="sms-link" href="sms:+19169144407">Отправить SMS</a>
+              <a class="button black" href="tel:+19169144407">Позвонить</a>
+            </div>
+            <p class="desk-only">WhatsApp только на&nbsp;телефоне? Наведите камеру телефона на&nbsp;код&nbsp;— откроется WhatsApp с&nbsp;заявкой.</p>
+            <div class="wa-qr desk-only" id="wa-qr" hidden></div>
+            <div class="actions desk-only">
+              <button class="button black" id="request-copy" type="button">Скопировать заявку</button>
+            </div>
+            <p class="desk-only">Нет WhatsApp? Позвоните или пришлите SMS на&nbsp;<span class="nowrap">916-914-4407</span>, скопированную заявку можно вставить в&nbsp;сообщение.</p>
+          </details>
         </div>
       </div>
     </form>

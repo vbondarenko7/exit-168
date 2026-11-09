@@ -554,14 +554,22 @@ fbq('track', 'PageView');
         <h3 id="result-title"></h3>
         <p id="result-text"></p>
         <div class="ways">
-          <div class="wa-qr desk-only" id="wa-qr"></div>
           <div class="actions">
             <a class="button primary" id="wa-link" href="https://wa.me/19169144407" target="_blank" rel="noopener">Open WhatsApp</a>
-            <a class="button black phone-only" id="sms-link" href="sms:+19169144407">No WhatsApp? Send a text</a>
-            <a class="button black phone-only" href="tel:+19169144407">Call us</a>
-            <button class="button black desk-only" id="request-copy" type="button">Copy the request</button>
           </div>
-          <p class="desk-only">No WhatsApp? Call or text <span class="nowrap">916-914-4407</span>; you can paste the copied request into the message.</p>
+          <details id="other-ways">
+            <summary>WhatsApp didn't open, or you don't have it?</summary>
+            <div class="actions phone-only">
+              <a class="button black" id="sms-link" href="sms:+19169144407">Send a text</a>
+              <a class="button black" href="tel:+19169144407">Call us</a>
+            </div>
+            <p class="desk-only">WhatsApp only on your phone? Point the phone's camera at the code, and WhatsApp opens with your request.</p>
+            <div class="wa-qr desk-only" id="wa-qr" hidden></div>
+            <div class="actions desk-only">
+              <button class="button black" id="request-copy" type="button">Copy the request</button>
+            </div>
+            <p class="desk-only">No WhatsApp? Call or text <span class="nowrap">916-914-4407</span>; you can paste the copied request into the message.</p>
+          </details>
         </div>
       </div>
     </form>
