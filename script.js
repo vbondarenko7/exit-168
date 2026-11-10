@@ -267,13 +267,13 @@ dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '
 const nights = () => form.elements.stay.value === 'overnight' ? Number(form.elements.nights.value) : 0;
 const stayLabel = () => form.elements.stay.value === 'day' ? t("Day use", 'День')
   : nights() === 1 ? t("Overnight", 'С ночёвкой') : t(`${nights()} nights`, `${nights()} ${nights() < 5 ? 'ночи' : 'ночей'}`); // 2–7 nights
-// Up to 10 people is the base rate; 11–15 adds half (Roman, 2026-09-30): $750 a day, $1,500 overnight.
+// The site prices a group of up to 10 only; for more than 10 it shows no rent, «we'll work it out» (V, 2026-11-11).
 // Check-in at noon, check-out at 10 a.m., so never «24 hours» (Roman, 2026-11-10 evening).
 // The group size never stops a booking: empty counts as 10, anything else is kept within 1–15 (V, 2026-11-09).
 const guestsGiven = () => form.elements.guests.value !== '';
 const guestCount = () => guestsGiven() ? Math.min(15, Math.max(1, Math.round(Number(form.elements.guests.value)))) : 10;
 const bigGroup = () => guestCount() > 10;
-const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 * nights() : 500) * (bigGroup() ? 1.5 : 1);
+const stayPrice = () => form.elements.stay.value === 'overnight' ? 1000 * nights() : 500;
 const usd = n => '$' + String(n).replace(/\B(?=(\d{3})+$)/g, t(',', ' '));
 // Cleaning is $250 once per booking, whatever its length (Roman via V, 2026-11-10). V shows rent and cleaning side by
 // side and no total, knowing California's honest-pricing law asks for the total (DECISIONS, 10.11).
@@ -382,10 +382,12 @@ form.addEventListener('input', () => {
   cal.querySelector('.cal-label').textContent = overnight ? t("Check-in and check-out", 'Приезд и отъезд') : t("Pick a date", 'Дата приезда');
   document.querySelector('#nights-field').hidden = !overnight || !cal.hidden; // with the calendar, the stay is picked in it
   document.querySelector('#rate-rent').textContent = usd(stayPrice());
+  document.querySelector('#rent-row').hidden = bigGroup();
+  document.querySelector('#rate-big').hidden = !bigGroup();
   // three nights or more bring all 168 acres, your own vehicles and hunting (Roman and V, 2026-11-10)
   document.querySelector('#rate-bonus').hidden = nights() < 3;
   // the stay wraps as a whole, so a phone never leaves «nights» alone on the second line
-  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t("up to 10", 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
+  document.querySelector('#stay-duration').textContent = `${t("up to 10", 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
   if (busy) renderCalendar();
 });
 
@@ -398,7 +400,7 @@ function requestText(withNotes = true) {
     t("Hi, I'd like to book Exit 168.", 'Здравствуйте! Хочу забронировать Exit 168.'),
     `${stayLabel()}: ${days.length > 1 ? `${days[0]} – ${days.at(-1)}` : days[0]}`,
     `${t("Group", 'Гостей')}: ${guestsGiven() ? guestCount() : t("up to 10", 'до 10')}`,
-    `${t("Rental", 'Аренда')}: ${usd(stayPrice())}`,
+    !bigGroup() && `${t("Rental", 'Аренда')}: ${usd(stayPrice())}`,
     `${t("Cleaning fee", 'Уборка')}: ${usd(CLEANING)}`,
     notes && `${t("Notes", 'Комментарий')}: ${notes}`,
   ].filter(Boolean).join('\n');
