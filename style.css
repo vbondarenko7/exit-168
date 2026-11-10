@@ -301,7 +301,7 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 .offer{padding:150px 24px 80px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center}
 .offer-card{background:var(--card);border:1px solid #384a49;padding:24px 24px 45px;text-align:center;width:602px;max-width:100%}
 .offer-card h2{font-size:40px;line-height:1.1;margin:24px 0 36px}
-.offer-rates{display:flex;justify-content:center;gap:50px;margin:24px 0}
+.offer-rates{display:flex;flex-wrap:wrap;justify-content:center;gap:50px;margin:24px 0}
 .offer-rates strong{display:block;font:400 54px/1.1 Forum,Georgia,serif}
 .offer-rates span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;color:var(--muted)}
 .offer-per{max-width:40ch;margin:0 auto 26px;font-size:14px;color:var(--soft)}
@@ -349,7 +349,7 @@ legend span,form label span{color:var(--muted)}
 .rate-options{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rate-options label{position:relative;cursor:pointer;display:flex;color:var(--soft)}
 .rate-options input{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:14px;height:14px;margin:0;accent-color:var(--ivory)}
-.rate-options label>span{flex:1;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:12px 14px 12px 38px;border:1px solid #3a4b47;background:var(--night);font-size:13px}
+.rate-options label>span{flex:1;display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:52px;padding:12px 14px 12px 38px;border:1px solid #3a4b47;background:var(--night);font-size:13px}
 .rate-options label:has(input:checked)>span{border-color:var(--ivory);color:var(--ivory)}
 .rate-options strong{font-weight:500}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:30px}
@@ -365,8 +365,10 @@ input[type=date]{color-scheme:dark;text-align:left}
 input::-webkit-date-and-time-value{text-align:left;margin:0}
 textarea{resize:vertical}
 ::placeholder{color:var(--muted);opacity:1}
-.estimate{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0;color:var(--muted)}
-.estimate strong{font:400 32px/1.4 Forum,Georgia,serif;color:var(--ivory)}
+.estimate{margin:24px 0;color:var(--muted)}
+.estimate div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.estimate dd{font:400 32px/1.4 Forum,Georgia,serif;color:var(--ivory)}
+.estimate-note{margin:-16px 0 24px;color:var(--muted)}
 /* three ways to book: WhatsApp, a text, a call; each with its icon (V, 2026-11-09) */
 .book-ways{display:grid;gap:12px;margin-bottom:18px}
 .book-ways .button{gap:10px}
@@ -454,7 +456,6 @@ dialog::backdrop{background:#000d}
   .nature-copy h2{font-size:44px}
   .nature-photo::after{background:linear-gradient(90deg,rgba(8,27,24,.93) 0%,rgba(8,27,24,.9) 46%,rgba(8,27,24,.45) 62%,rgba(8,27,24,0) 76%)}
   .contact-info,form{padding:44px 32px}
-  .rate-options label>span{flex-wrap:wrap;gap:2px 12px}
   .map-wide .map-pin text{font-size:24px}
   .map-wide :is(.map-town text,.map-time,.map-note,.map-water text,.map-shield text){font-size:17px}
 }
@@ -584,8 +585,8 @@ dialog::backdrop{background:#000d}
   .offer{padding:100px 18px 50px}
   .offer-card{padding:16px 16px 30px}
   .offer-card h2{font-size:30px;margin:24px 0 28px}
-  .offer-rates{gap:30px}
-  .offer-rates strong{font-size:44px}
+  .offer-rates{gap:18px}
+  .offer-rates strong{font-size:38px}
   .offer-card .actions{display:grid;grid-auto-flow:row;gap:12px}
   .offer-card .button{width:100%;font-size:11px}
   .contact-panels{margin-bottom:var(--section-bottom)}

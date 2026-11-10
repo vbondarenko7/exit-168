@@ -15,7 +15,7 @@ const menu = document.querySelector('#mobile-nav');
 function setMenu(open) {
   menuButton.setAttribute('aria-expanded', String(open));
   menu.hidden = !open;
-  menuButton.setAttribute('aria-label', open ? t('Close navigation', 'Закрыть меню') : t('Open navigation', 'Открыть меню'));
+  menuButton.setAttribute('aria-label', open ? t("Close menu", 'Закрыть меню') : t("Open menu", 'Открыть меню'));
 }
 menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
 menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
@@ -26,26 +26,26 @@ menu.addEventListener('keydown', e => { if (e.key === 'Escape') { setMenu(false)
 const clip = document.querySelector('video[data-poster]');
 if (clip) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { clip.poster = clip.dataset.poster; io.disconnect(); } }, { rootMargin: '1500px' }).observe(clip);
 const photos = [
-  ['stove', 'assets/img/stove-1600.webp', 'The wood-fired stove in the sauna', 'Дровяная печь в бане'],
-  ['sauna', 'assets/img/sauna-1600.webp', 'The sauna benches', 'Полок в бане'],
-  ['deck', 'assets/img/deck-1440.webp', 'The deck by the sauna, above the river pool', 'Терраса у бани, над заводью'],
-  ['sauna-outside', 'assets/img/sauna-outside-1440.webp', 'The sauna from the road: a white trailer by the river and the bridge', 'Баня с дороги: белый вагончик у реки и моста'],
-  ['river', 'assets/img/river-1440.webp', 'The pool below the deck, with the steps down to the water', 'Заводь под террасой и ступеньки к воде'],
-  ['cabin', 'assets/img/cabin-1400.webp', 'The cabin from the road', 'Дом со стороны дороги'],
-  ['greatroom', 'assets/img/greatroom-1440.webp', 'The living room: sofa, foosball and the wood stove', 'Гостиная: диван, настольный футбол и дровяная печь'],
-  ['living', 'assets/img/living-1440.webp', 'The living room from the other side', 'Гостиная с другой стороны'],
-  ['dining', 'assets/img/dining-1440.webp', 'The dining table in the cabin', 'Обеденный стол в доме'],
-  ['kitchen', 'assets/img/kitchen-1440.webp', 'The kitchen', 'Кухня'],
-  ['bunkroom', 'assets/img/bunkroom-1440.webp', 'The room with the triple bunk', 'Комната с трёхъярусной кроватью'],
-  ['bedroom', 'assets/img/bedroom-1440.webp', 'The bedroom: a bunk bed and one more bed', 'Спальня: двухъярусная кровать и ещё одна'],
-  ['loft', 'assets/img/loft-1440.webp', 'The bed in the loft', 'Кровать в мансарде'],
-  ['bathroom', 'assets/img/bathroom-1440.webp', 'The bathroom in the cabin', 'Санузел в доме'],
-  ['gate', 'assets/img/gate-1440.webp', 'The gate of the property', 'Ворота участка'],
-  ['winter-night', 'assets/img/winter-night-1350.webp', 'The cabin under snow at night', 'Дом под снегом ночью'],
-  ['winter-river', 'assets/img/winter-river-1500.webp', 'The river between the snowdrifts', 'Река между сугробами'],
-  ['winter-cabin', 'assets/img/winter-cabin-1600.webp', 'The cabin in winter, with the snowmobile track to the door', 'Дом зимой, к двери ведёт след снегохода'],
-  ['winter-trench', 'assets/img/winter-trench-941.webp', 'The way to the cabin door, dug through the snow', 'Тропа к двери дома, прокопанная в снегу'],
-  ['winter-mountain', 'assets/img/winter-mountain-1600.webp', 'The river below the snowy ridge', 'Река под заснеженным хребтом'],
+  ['stove', 'assets/img/stove-1600.webp', "The sauna stove", 'Дровяная печь в бане'],
+  ['sauna', 'assets/img/sauna-1600.webp', "Inside the sauna, two tiers of benches", 'Полок в бане'],
+  ['deck', 'assets/img/deck-1440.webp', "The deck above the swimming hole", 'Терраса у бани, над заводью'],
+  ['sauna-outside', 'assets/img/sauna-outside-1440.webp', "The sauna from outside, by the road and the bridge", 'Баня с дороги: белый вагончик у реки и моста'],
+  ['river', 'assets/img/river-1440.webp', "Steps into the swimming hole", 'Заводь под террасой и ступеньки к воде'],
+  ['cabin', 'assets/img/cabin-1400.webp', "The cabin from the road", 'Дом со стороны дороги'],
+  ['greatroom', 'assets/img/greatroom-1440.webp', "The living room", 'Гостиная: диван, настольный футбол и дровяная печь'],
+  ['living', 'assets/img/living-1440.webp', "The living room from the other side", 'Гостиная с другой стороны'],
+  ['dining', 'assets/img/dining-1440.webp', "The carved dining table", 'Обеденный стол в доме'],
+  ['kitchen', 'assets/img/kitchen-1440.webp', "The kitchen", 'Кухня'],
+  ['bunkroom', 'assets/img/bunkroom-1440.webp', "Bunk room with the hand-built triple bunk", 'Комната с трёхъярусной кроватью'],
+  ['bedroom', 'assets/img/bedroom-1440.webp', "Bedroom with a bunk bed and one more bed", 'Спальня: двухъярусная кровать и ещё одна'],
+  ['loft', 'assets/img/loft-1440.webp', "The sleeping loft", 'Кровать в мансарде'],
+  ['bathroom', 'assets/img/bathroom-1440.webp', "The bathroom", 'Санузел в доме'],
+  ['gate', 'assets/img/gate-1440.webp', "The gate", 'Ворота участка'],
+  ['winter-night', 'assets/img/winter-night-1350.webp', "Winter night at the cabin", 'Дом под снегом ночью'],
+  ['winter-river', 'assets/img/winter-river-1500.webp', "The South Yuba in winter", 'Река между сугробами'],
+  ['winter-cabin', 'assets/img/winter-cabin-1600.webp', "Snowmobile track to the cabin", 'Дом зимой, к двери ведёт след снегохода'],
+  ['winter-trench', 'assets/img/winter-trench-941.webp', "The path dug to the door", 'Тропа к двери дома, прокопанная в снегу'],
+  ['winter-mountain', 'assets/img/winter-mountain-1600.webp', "The river below a snowy ridge", 'Река под заснеженным хребтом'],
 ].map(([name, src, en, russian]) => [name, asset(src), t(en, russian)]);
 const photoDialog = document.querySelector('#photo-dialog');
 const lightboxImage = document.querySelector('#lightbox-image');
@@ -59,7 +59,7 @@ function showPhoto(index) {
   if (lightboxImage.src !== src) { lightboxImage.style.opacity = 0; lightboxAvif.srcset = src.replace('.webp', '.avif'); lightboxImage.src = src; }
   lightboxImage.alt = caption;
   document.querySelector('#photo-caption').textContent = caption;
-  document.querySelector('#photo-count').textContent = `Exit 168 · ${String(photoIndex + 1).padStart(2, '0')} ${t('of', 'из')} ${photos.length}`;
+  document.querySelector('#photo-count').textContent = `Exit 168 · ${String(photoIndex + 1).padStart(2, '0')} ${t("of", 'из')} ${photos.length}`;
 }
 function openPhoto(name) {
   showPhoto(Math.max(0, photos.findIndex(p => p[0] === name)));
@@ -91,7 +91,7 @@ photoDialog.addEventListener('touchend', e => {
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
 document.querySelectorAll('[data-all-photos]').forEach(el => { el.textContent = t(`All ${photos.length} photos`, `Все ${photos.length} фото`); el.hidden = false; });
 
-// ---- time alone with nature: six things to do, one text at a time ----
+// ---- time alone with nature: eight things to do, one text at a time ----
 // The texts lie in a row that snaps; a name jumps to its text, and on a phone a finger can drag the row.
 const natureSlides = document.querySelector('.nature-slides');
 if (natureSlides) {
@@ -265,16 +265,19 @@ const API = location.protocol === 'https:' ? form.dataset.api : `http://${locati
 const now = new Date();
 dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 const nights = () => form.elements.stay.value === 'overnight' ? Number(form.elements.nights.value) : 0;
-const stayLabel = () => form.elements.stay.value === 'day' ? t('Day visit', 'День')
-  : nights() === 1 ? t('24 hours', 'Сутки') : t(`${nights()} × 24 hours`, `Сутки × ${nights()}`);
-// Up to 10 people is the base rate; 11–15 adds half (Roman, 2026-09-30): $750 a day, $1,500 for 24 hours.
+const stayLabel = () => form.elements.stay.value === 'day' ? t("Day use", 'День')
+  : nights() === 1 ? t("Overnight", 'С ночёвкой') : t(`${nights()} nights`, `${nights()} ${nights() < 5 ? 'ночи' : 'ночей'}`); // 2–7 nights
+// Up to 10 people is the base rate; 11–15 adds half (Roman, 2026-09-30): $750 a day, $1,500 overnight.
+// Check-in at noon, check-out at 10 a.m., so never «24 hours» (Roman, 2026-11-10 evening).
 // The group size never stops a booking: empty counts as 10, anything else is kept within 1–15 (V, 2026-11-09).
 const guestsGiven = () => form.elements.guests.value !== '';
 const guestCount = () => guestsGiven() ? Math.min(15, Math.max(1, Math.round(Number(form.elements.guests.value)))) : 10;
 const bigGroup = () => guestCount() > 10;
 const stayPrice = () => (form.elements.stay.value === 'overnight' ? 1000 * nights() : 500) * (bigGroup() ? 1.5 : 1);
 const usd = n => '$' + String(n).replace(/\B(?=(\d{3})+$)/g, t(',', ' '));
-const stayRate = () => usd(stayPrice());
+// Cleaning is $250 once per booking, whatever its length (Roman via V, 2026-11-10). V shows rent and cleaning side by
+// side and no total, knowing California's honest-pricing law asks for the total (DECISIONS, 10.11).
+const CLEANING = 250;
 
 // ---- calendar ----
 const cal = document.querySelector('#calendar');
@@ -290,7 +293,7 @@ const utc = iso => new Date(`${iso}T00:00:00Z`);
 const addDays = (iso, n) => new Date(utc(iso).getTime() + n * 864e5).toISOString().slice(0, 10);
 const lastDay = () => addDays(today, 365);
 const nice = iso => utc(iso).toLocaleDateString(locale, { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric' });
-// A day visit takes its date; N × 24 hours take the arrival date and the N dates after it.
+// A day visit takes its date; N nights take the arrival date and the N dates after it.
 const stayDays = () => dateInput.value ? Array.from({ length: nights() + 1 }, (_, i) => addDays(dateInput.value, i)) : [];
 const clashes = () => busy ? stayDays().filter(d => busy[d] || d > lastDay()) : [];
 const tooShort = () => nights() < minNights && stayDays().some(d => longWeekends.some(([a, b]) => d >= a && d <= b));
@@ -315,20 +318,20 @@ function renderCalendar() {
     const state = busy[iso];
     const off = loading || iso < today || iso > lastDay() || !!state;
     const cls = ['cal-day', state, range.includes(iso) && (short || bad.includes(iso) ? 'clash' : 'range')].filter(Boolean).join(' ');
-    const note = state === 'hold' ? t(', held', ', держим') : state ? t(', booked', ', занято') : '';
+    const note = state === 'hold' ? t(", on hold", ', держим') : state ? t(", booked", ', занято') : '';
     cells.push(`<button type="button" class="${cls}" data-day="${iso}" aria-pressed="${iso === dateInput.value}" aria-label="${nice(iso)}${note}"${off ? ' disabled' : ''}>${day}</button>`);
   }
   calGrid.innerHTML = cells.join('');
   const days = stayDays();
-  calStatus.textContent = loading ? t('Checking which dates are free…', 'Смотрим, какие даты свободны…')
+  calStatus.textContent = loading ? t("Checking open dates…", 'Смотрим, какие даты свободны…')
     : !days.length ? ''
-    : leaving ? t(`Arrival ${nice(days[0])} — now tap the day you leave, up to 7 days later.`, `Приезд ${nice(days[0])} — теперь выберите день отъезда, до 7 суток.`)
-    : bad.length ? t(`${nice(bad[0])} is taken. Pick another arrival day or fewer nights.`, `${nice(bad[0])} занято. Выберите другой день приезда или меньше суток.`)
-    : short ? t(`These are holiday dates: the shortest stay is ${minNights} × 24 hours.`, `Это праздничные дни: бронь от ${minNights} суток.`)
+    : leaving ? t(`Check-in ${nice(days[0])}. Now tap your check-out day, up to 7 nights later.`, `Приезд ${nice(days[0])} — теперь выберите день отъезда, до 7 ночей.`)
+    : bad.length ? t(`${nice(bad[0])} is already taken. Pick another check-in day or fewer nights.`, `${nice(bad[0])} занято. Выберите другой день приезда или меньше ночей.`)
+    : short ? t(`These are holiday dates, with a ${minNights}-night minimum stay.`, `Это праздничные дни: бронь от ${minNights} ночей.`)
     : days.length === 1 ? nice(days[0]) : `${nice(days[0])} – ${nice(days.at(-1))}`;
 }
 
-// «Сутки»: the first tap is the arrival day, the next later tap the day you leave (V, 2026-11-09: the
+// «С ночёвкой»: the first tap is the arrival day, the next later tap the day you leave (V, 2026-11-09: the
 // «how many» list under the calendar went unseen and then confused: it shows only when the calendar does not).
 let leaving = false;
 calGrid.addEventListener('click', e => {
@@ -376,11 +379,13 @@ form.addEventListener('input', () => {
   result.hidden = true;
   const overnight = form.elements.stay.value === 'overnight';
   if (!overnight) leaving = false;
-  cal.querySelector('.cal-label').textContent = overnight ? t('Arrival and departure', 'Приезд и отъезд') : t('Arrival date', 'Дата приезда');
+  cal.querySelector('.cal-label').textContent = overnight ? t("Check-in and check-out", 'Приезд и отъезд') : t("Pick a date", 'Дата приезда');
   document.querySelector('#nights-field').hidden = !overnight || !cal.hidden; // with the calendar, the stay is picked in it
-  document.querySelector('#rate-total').textContent = stayRate();
-  // the stay wraps as a whole: on a phone «2 × 24 hours» left «hours» alone on the second line
-  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t('up to 10', 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
+  document.querySelector('#rate-rent').textContent = usd(stayPrice());
+  // three nights or more bring all 168 acres, your own vehicles and hunting (Roman and V, 2026-11-10)
+  document.querySelector('#rate-bonus').hidden = nights() < 3;
+  // the stay wraps as a whole, so a phone never leaves «nights» alone on the second line
+  document.querySelector('#stay-duration').textContent = `${bigGroup() ? '11–15' : t("up to 10", 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
   if (busy) renderCalendar();
 });
 
@@ -390,20 +395,21 @@ function requestText(withNotes = true) {
   const days = stayDays().map(nice);
   const notes = withNotes && form.elements.notes.value.trim();
   return [
-    t('Hi! I would like to book Exit 168.', 'Здравствуйте! Хочу забронировать Exit 168.'),
+    t("Hi, I'd like to book Exit 168.", 'Здравствуйте! Хочу забронировать Exit 168.'),
     `${stayLabel()}: ${days.length > 1 ? `${days[0]} – ${days.at(-1)}` : days[0]}`,
-    `${t('Group', 'Гостей')}: ${guestsGiven() ? guestCount() : t('up to 10', 'до 10')}`,
-    `${t('Price', 'Цена')}: ${stayRate()}`,
-    notes && `${t('Notes', 'Комментарий')}: ${notes}`,
+    `${t("Group", 'Гостей')}: ${guestsGiven() ? guestCount() : t("up to 10", 'до 10')}`,
+    `${t("Rental", 'Аренда')}: ${usd(stayPrice())}`,
+    `${t("Cleaning fee", 'Уборка')}: ${usd(CLEANING)}`,
+    notes && `${t("Notes", 'Комментарий')}: ${notes}`,
   ].filter(Boolean).join('\n');
 }
 
 const sentText = until => [
-  viaSms ? t('Your request is written out in a text message to 916-914-4407. Press Send there: until you do, it has not reached us.',
+  viaSms ? t("Your request is written out in a text to 916-914-4407. It isn't sent yet, so hit Send there.",
     'Заявка уже написана в сообщении на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.')
-  : t('Your request is written out in WhatsApp, to 916-914-4407. Press Send there: until you do, it has not reached us.',
+  : t("Your request is written out in WhatsApp to 916-914-4407. It isn't sent yet, so hit Send there.",
     'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
-  until && t(`We hold your dates until ${until} and reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
+  until && t(`We're holding your dates until ${until} and will reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
 ].filter(Boolean).join(' ');
 
 function showResult(title, text, withLinks) {
@@ -416,8 +422,8 @@ function showResult(title, text, withLinks) {
 
 // The lead Google Ads imports from Analytics as its conversion; value = the rate asked for.
 const countLead = () => {
-  if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() });
-  if (window.fbq) fbq('track', 'Lead', { currency: 'USD', value: stayPrice() });
+  if (window.gtag) gtag('event', 'generate_lead', { currency: 'USD', value: stayPrice() + CLEANING });
+  if (window.fbq) fbq('track', 'Lead', { currency: 'USD', value: stayPrice() + CLEANING });
 };
 // How far guests get in the form: each step is its own event, sent once per visit. Google's form_start fires on
 // any first touch (even «День» to see the price), so it says nothing about who typed a name or a phone.
@@ -454,7 +460,7 @@ async function holdDates() {
   if (res.status === 409) {
     busy = data.days || busy;
     renderCalendar();
-    showResult(t('Someone just took these dates', 'Эти даты только что заняли'), t('The calendar is updated. Pick other dates and tell us in the chat which ones.', 'Календарь обновлён. Выберите другие даты и напишите нам в чате, какие.'), false);
+    showResult(t("Someone just booked those dates", 'Эти даты только что заняли'), t("The calendar is updated. Pick other dates, or tell us in the chat which ones work for you.", 'Календарь обновлён. Выберите другие даты и напишите нам в чате, какие.'), false);
     return;
   }
   if (!res.ok || !data.ok) return;
@@ -472,7 +478,7 @@ form.addEventListener('submit', e => {
   form.elements.guests.value = guestsGiven() ? guestCount() : ''; // a group of 0 or 40 is corrected rather than refused
   if (!form.reportValidity()) return;
   if (busy) {
-    if (!dateInput.value) { calStatus.textContent = t('Pick your arrival day in the calendar.', 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
+    if (!dateInput.value) { calStatus.textContent = t("Pick a check-in day on the calendar.", 'Выберите день приезда в календаре.'); cal.scrollIntoView({ block: 'center' }); return; }
     if (clashes().length || tooShort()) { leaving = false; renderCalendar(); cal.scrollIntoView({ block: 'center' }); return; }
   }
   viaSms = e.submitter?.dataset.via === 'sms';
@@ -484,7 +490,7 @@ form.addEventListener('submit', e => {
   document.querySelector('#wa-link').href = wa;
   document.querySelector('#sms-link').href = sms;
   setQr(false);
-  showResult(viaSms ? t('Now press Send in your messages', 'Осталось нажать «Отправить» в сообщении') : t('Now press Send in WhatsApp', 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
+  showResult(viaSms ? t("Now hit Send in Messages", 'Осталось нажать «Отправить» в сообщении') : t("Now hit Send in WhatsApp", 'Осталось нажать «Отправить» в WhatsApp'), sentText(), true);
   if (busy) holdDates();
   // Inside the tap itself: browsers block a new window once the tap has passed. On a computer wa.me opens
   // the WhatsApp app or WhatsApp Web (V, 2026-11-09).
@@ -513,7 +519,7 @@ const qrLabel = qrButton.textContent;
 function setQr(shown) {
   qrPanel.hidden = !shown;
   qrButton.setAttribute('aria-expanded', shown);
-  qrButton.textContent = shown ? t('Hide the QR code', 'Скрыть QR-код') : qrLabel;
+  qrButton.textContent = shown ? t("Hide QR code", 'Скрыть QR-код') : qrLabel;
 }
 qrButton.addEventListener('click', () => {
   if (!qrPanel.hidden) return setQr(false);
@@ -522,7 +528,7 @@ qrButton.addEventListener('click', () => {
     const qr = qrcode(0, 'L');
     qr.addData(qrUrl);
     qr.make();
-    document.querySelector('#wa-qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: t('QR code: WhatsApp with your request', 'QR-код: WhatsApp с вашей заявкой') });
+    document.querySelector('#wa-qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: t("QR code that opens WhatsApp with your request", 'QR-код: WhatsApp с вашей заявкой') });
     setQr(true);
   }, () => {});
 });
@@ -534,7 +540,7 @@ const copyLabel = copyButton.textContent;
 copyButton.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(sentRequest);
-    copyButton.textContent = t('Copied', 'Скопировано');
+    copyButton.textContent = t("Copied", 'Скопировано');
   } catch {
     copyButton.textContent = t("Couldn't copy", 'Не получилось скопировать');
   }
