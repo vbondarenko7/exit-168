@@ -25,19 +25,32 @@
 <link rel="preload" as="font" href="../assets/manrope-cyrillic.woff2" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../style.css">
 <script>document.documentElement.classList.add('js')</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EYQ6W511HE"></script>
 <script>
+// counters run on the live site only, and never in our own browsers: ?notrack switches them off
+// in this browser for good, ?track switches them back on
+var q = new URLSearchParams(location.search), counters = location.hostname === 'clubexit168.com' && !q.has('notrack');
+try {
+  if (q.has('notrack')) localStorage.setItem('notrack', '1');
+  if (q.has('track')) localStorage.removeItem('notrack');
+  if (localStorage.getItem('notrack')) counters = false;
+} catch (e) {}
+</script>
+<!-- Google tag (gtag.js) -->
+<script>
+if (counters) {
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EYQ6W511HE';
+  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  window.gtag = function(){dataLayer.push(arguments);};
   gtag('js', new Date());
-  // visits are counted on the live site only: a local preview or a check must not land in the statistics
-  window['ga-disable-G-EYQ6W511HE'] = location.hostname !== 'clubexit168.com';
   gtag('config', 'G-EYQ6W511HE');
+}
 </script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
-if (location.hostname === 'clubexit168.com') {
+if (counters) {
 (function(m,e,t,r,i,k,a){
 m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 m[i].l=1*new Date();
@@ -50,9 +63,9 @@ ym(112842688, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLa
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/112842688" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-<!-- Meta Pixel: the live site only, like the other counters -->
+<!-- Meta Pixel -->
 <script>
-if (location.hostname === 'clubexit168.com') {
+if (counters) {
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2155407151723608');
 fbq('track', 'PageView');
