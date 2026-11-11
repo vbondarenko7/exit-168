@@ -439,21 +439,34 @@ fbq('track', 'PageView');
 
 <section id="land" class="nature">
   <div class="nature-photo">
-    <picture><source type="image/avif" srcset="assets/img/deck-morning-800.avif 800w, assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/deck-morning-800.webp" srcset="assets/img/deck-morning-800.webp 800w, assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: morning mist over the river, a woman on a yoga mat on the deck with her back to us, boulders and pines across the water" loading="lazy"></picture>
+    <div class="nature-pics">
+      <picture data-for="nature-rentals" class="is-current"><source type="image/avif" srcset="assets/img/nature-rentals-800.avif 800w, assets/img/nature-rentals-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-rentals-800.webp" srcset="assets/img/nature-rentals-800.webp 800w, assets/img/nature-rentals-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: a snowmobile with a helmet on the seat, parked by the snowed-in cabin on a clear winter morning" loading="lazy"></picture>
+      <picture data-for="nature-retreat" hidden><source type="image/avif" srcset="assets/img/deck-morning-800.avif 800w, assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/deck-morning-800.webp" srcset="assets/img/deck-morning-800.webp 800w, assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: morning mist over the river, a woman on a yoga mat on the deck with her back to us, boulders and pines across the water" loading="lazy"></picture>
+      <picture data-for="nature-walks" hidden><source type="image/avif" srcset="assets/img/nature-walks-800.avif 800w, assets/img/nature-walks-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-walks-800.webp" srcset="assets/img/nature-walks-800.webp 800w, assets/img/nature-walks-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: two hikers with daypacks on a trail over granite and through the pines along the river" loading="lazy"></picture>
+      <picture data-for="nature-fishing" hidden><source type="image/avif" srcset="assets/img/nature-fishing-800.avif 800w, assets/img/nature-fishing-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-fishing-800.webp" srcset="assets/img/nature-fishing-800.webp 800w, assets/img/nature-fishing-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: an angler with a fly rod on a granite boulder at a misty river pool early in the morning" loading="lazy"></picture>
+      <picture data-for="nature-hunting" hidden><source type="image/avif" srcset="assets/img/nature-hunting-800.avif 800w, assets/img/nature-hunting-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-hunting-800.webp" srcset="assets/img/nature-hunting-800.webp 800w, assets/img/nature-hunting-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: a hunter in a blaze-orange vest glassing a meadow from the edge of the forest at dawn" loading="lazy"></picture>
+      <picture data-for="nature-riding" hidden><source type="image/avif" srcset="assets/img/nature-riding-800.avif 800w, assets/img/nature-riding-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-riding-800.webp" srcset="assets/img/nature-riding-800.webp 800w, assets/img/nature-riding-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: two ATVs parked on a forest dirt road by a granite outcrop, two riders in helmets beside them" loading="lazy"></picture>
+      <picture data-for="nature-enduro" hidden><source type="image/avif" srcset="assets/img/nature-enduro-800.avif 800w, assets/img/nature-enduro-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-enduro-800.webp" srcset="assets/img/nature-enduro-800.webp 800w, assets/img/nature-enduro-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: two riders on dirt bikes climbing granite slabs between the pines" loading="lazy"></picture>
+      <picture data-for="nature-camping" hidden><source type="image/avif" srcset="assets/img/nature-camping-800.avif 800w, assets/img/nature-camping-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="assets/img/nature-camping-800.webp" srcset="assets/img/nature-camping-800.webp 800w, assets/img/nature-camping-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Illustration: a camper van and a tent on the clearing by the cabin on a misty morning" loading="lazy"></picture>
+    </div>
     <div class="nature-copy">
       <h2>Things to do <br>here and nearby</h2>
       <ul class="nature-tabs" aria-label="Things to do">
-        <li><a href="#nature-retreat" aria-current="true">Yoga and retreats</a></li>
+        <li><a href="#nature-rentals" aria-current="true">Rentals</a></li>
+        <li><a href="#nature-retreat">Yoga and retreats</a></li>
         <li><a href="#nature-walks">Hiking</a></li>
         <li><a href="#nature-fishing">Fishing</a></li>
         <li><a href="#nature-hunting">Hunting</a></li>
         <li><a href="#nature-riding">Off-road</a></li>
-        <li><a href="#nature-rentals">Rentals</a></li>
-        <li><a href="#nature-touring">Motorcycle touring</a></li>
+        <li><a href="#nature-enduro">Dirt bikes</a></li>
         <li><a href="#nature-camping">Camping</a></li>
       </ul>
       <div class="nature-slides">
-        <div class="nature-slide is-current" id="nature-retreat">
+        <div class="nature-slide is-current" id="nature-rentals">
+          <h3>Rent a snowmobile or quad</h3>
+          <p>We rent snowmobiles and quads (ATVs) for $500 per machine per day, with any stay, even day use. You need insurance that covers riding, your own or through us (ask us about it). The rider signs a liability waiver, wears a helmet and rides where we show you. You pay for any damage or loss.</p>
+        </div>
+        <div class="nature-slide" id="nature-retreat">
           <h3>Yoga and retreats</h3>
           <p>We think of this as a place to be alone with nature, and it works well for yoga and retreats. A group of up to 10 can stay a few days at a time, and if you&#x27;re more, we&#x27;ll work it out with you separately. There&#x27;s no internet. You bring the teacher, the mats and the schedule. Practice on the deck, then go to the sauna and the river after.</p>
         </div>
@@ -473,13 +486,9 @@ fbq('track', 'PageView');
           <h3>Bring your own off-road vehicles</h3>
           <p>Stay 3 nights or more and you can bring your own dirt bikes, quads (ATVs), snowmobiles and 4x4s or Jeeps. Let us know ahead of time what you&#x27;re bringing. Stick to the routes we show you, and stay out of closed areas. Working mufflers, helmets for everyone on bikes, ATVs and snowmobiles, and spark arresters on dirt bikes and ATVs. Riders under 18 need a parent or guardian on site. No riding drunk or high. No driving in the river, along its banks or through streams. Cross on the bridge. Riders sign a waiver and need insurance.</p>
         </div>
-        <div class="nature-slide" id="nature-rentals">
-          <h3>Rent a snowmobile or quad</h3>
-          <p>We rent snowmobiles and quads (ATVs) for $500 per machine per day, with any stay, even day use. You need insurance that covers riding, your own or through us (ask us about it). The rider signs a liability waiver, wears a helmet and rides where we show you. You pay for any damage or loss.</p>
-        </div>
-        <div class="nature-slide" id="nature-touring">
-          <h3>Motorcycle trips</h3>
-          <p>I-80 over Donner Summit and Highway 49 through Gold Country are both close. Park your bikes by the cabin. After a cold ride over the pass, the sauna is right there.</p>
+        <div class="nature-slide" id="nature-enduro">
+          <h3>Dirt biking on 168 acres</h3>
+          <p>Want to ride hard off-road? Stay 3 nights or more and bring your dirt bikes: the whole 168 acres of granite and pine forest are yours to ride. Tell us ahead of time and we&#x27;ll agree on where. Keep out of the river and off its banks, and cross on the bridge. California requires a spark arrester on forest land, and everyone wears a helmet. Every rider signs a waiver and needs insurance, your own or ours. Want marked public trails as well? The Prosser Hill OHV area in Tahoe National Forest is just north of Truckee.</p>
         </div>
         <div class="nature-slide" id="nature-camping">
           <h3>Tents, vans and RVs</h3>
@@ -638,7 +647,7 @@ fbq('track', 'PageView');
     <p>Exit&nbsp;168 · Rainbow Road · Placer County, California</p>
     <p><a href="tel:+19169144407">916-914-4407</a> <a href="https://wa.me/19169144407" target="_blank" rel="noopener">WhatsApp</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
   </div>
-  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Illustrated from our own photos:  <span class="wide-only">the opening image, </span>the aerial views in summer and winter, the sauna stove and the morning on the deck. Every other photo was taken here at Exit 168. This site counts visits with web analytics.</div>
+  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Illustrated from our own photos:  <span class="wide-only">the opening image, </span>the aerial views in summer and winter, the sauna stove, and the pictures for each thing to do, from rentals to camping. Every other photo was taken here at Exit 168. This site counts visits with web analytics.</div>
 </footer>
 
 <div class="sticky-cta" id="sticky-cta" hidden>

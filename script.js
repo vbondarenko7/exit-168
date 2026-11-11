@@ -91,11 +91,19 @@ photoDialog.addEventListener('touchend', e => {
 photoDialog.addEventListener('close', () => { document.body.classList.remove('gallery-open'); lightboxImage.removeAttribute('src'); });
 document.querySelectorAll('[data-all-photos]').forEach(el => { el.textContent = t(`All ${photos.length} photos`, `Все ${photos.length} фото`); el.hidden = false; });
 
-// ---- time alone with nature: eight things to do, one text at a time ----
+// ---- time alone with nature: eight things to do, one text and one picture at a time ----
 // The texts lie in a row that snaps; a name jumps to its text, and on a phone a finger can drag the row.
 const natureSlides = document.querySelector('.nature-slides');
 if (natureSlides) {
   const names = [...document.querySelectorAll('.nature-tabs a')];
+  const pics = [...document.querySelectorAll('.nature-pics picture')];
+  // the other pictures stay [hidden] (so they don't load with the page) until the section is near the screen;
+  // then they load and decode in the background, so a fade never starts on a picture that isn't ready
+  new IntersectionObserver((seen, watch) => {
+    if (!seen.some(s => s.isIntersecting)) return;
+    pics.forEach(p => { p.hidden = false; p.querySelector('img').decode().catch(() => {}); });
+    watch.disconnect();
+  }, { rootMargin: '600px 0px' }).observe(natureSlides.closest('.nature'));
   let shown = 0;
   // under the photograph (narrow screens) the stylesheet gives the row the height of the text on show
   const fit = () => natureSlides.style.setProperty('--h', `${natureSlides.children[shown].offsetHeight}px`);
@@ -105,6 +113,7 @@ if (natureSlides) {
       if (n === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
       natureSlides.children[n].classList.toggle('is-current', n === i);
     });
+    pics.forEach(p => p.classList.toggle('is-current', p.dataset.for === natureSlides.children[i].id));
     fit();
   };
   names.forEach((a, i) => a.addEventListener('click', e => {

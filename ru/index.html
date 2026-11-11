@@ -443,21 +443,34 @@ fbq('track', 'PageView');
 
 <section id="land" class="nature">
   <div class="nature-photo">
-    <picture><source type="image/avif" srcset="../assets/img/deck-morning-800.avif 800w, ../assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/deck-morning-800.webp" srcset="../assets/img/deck-morning-800.webp 800w, ../assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Утро на террасе над рекой: над водой туман, на коврике у перил спиной к нам сидит женщина, напротив гранитные валуны и сосны" loading="lazy"></picture>
+    <div class="nature-pics">
+      <picture data-for="nature-rentals" class="is-current"><source type="image/avif" srcset="../assets/img/nature-rentals-800.avif 800w, ../assets/img/nature-rentals-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-rentals-800.webp" srcset="../assets/img/nature-rentals-800.webp 800w, ../assets/img/nature-rentals-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Снегоход со шлемом на сиденье у заснеженного дома, ясное зимнее утро" loading="lazy"></picture>
+      <picture data-for="nature-retreat" hidden><source type="image/avif" srcset="../assets/img/deck-morning-800.avif 800w, ../assets/img/deck-morning-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/deck-morning-800.webp" srcset="../assets/img/deck-morning-800.webp 800w, ../assets/img/deck-morning-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Утро на террасе над рекой: над водой туман, на коврике у перил спиной к нам сидит женщина, напротив гранитные валуны и сосны" loading="lazy"></picture>
+      <picture data-for="nature-walks" hidden><source type="image/avif" srcset="../assets/img/nature-walks-800.avif 800w, ../assets/img/nature-walks-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-walks-800.webp" srcset="../assets/img/nature-walks-800.webp 800w, ../assets/img/nature-walks-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Двое с рюкзаками идут по тропе через гранит и сосны вдоль реки" loading="lazy"></picture>
+      <picture data-for="nature-fishing" hidden><source type="image/avif" srcset="../assets/img/nature-fishing-800.avif 800w, ../assets/img/nature-fishing-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-fishing-800.webp" srcset="../assets/img/nature-fishing-800.webp 800w, ../assets/img/nature-fishing-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Рыбак с нахлыстовой удочкой на гранитном валуне у заводи, над водой утренний туман" loading="lazy"></picture>
+      <picture data-for="nature-hunting" hidden><source type="image/avif" srcset="../assets/img/nature-hunting-800.avif 800w, ../assets/img/nature-hunting-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-hunting-800.webp" srcset="../assets/img/nature-hunting-800.webp 800w, ../assets/img/nature-hunting-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Охотник в оранжевом жилете смотрит в бинокль на поляну с опушки леса, рассвет" loading="lazy"></picture>
+      <picture data-for="nature-riding" hidden><source type="image/avif" srcset="../assets/img/nature-riding-800.avif 800w, ../assets/img/nature-riding-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-riding-800.webp" srcset="../assets/img/nature-riding-800.webp 800w, ../assets/img/nature-riding-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Два квадроцикла на лесной дороге у гранитной скалы, рядом двое в шлемах" loading="lazy"></picture>
+      <picture data-for="nature-enduro" hidden><source type="image/avif" srcset="../assets/img/nature-enduro-800.avif 800w, ../assets/img/nature-enduro-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-enduro-800.webp" srcset="../assets/img/nature-enduro-800.webp 800w, ../assets/img/nature-enduro-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Двое на эндуро поднимаются по гранитным плитам между соснами" loading="lazy"></picture>
+      <picture data-for="nature-camping" hidden><source type="image/avif" srcset="../assets/img/nature-camping-800.avif 800w, ../assets/img/nature-camping-1672.avif 1672w" sizes="max(100vw, 120svh)"><img src="../assets/img/nature-camping-800.webp" srcset="../assets/img/nature-camping-800.webp 800w, ../assets/img/nature-camping-1672.webp 1672w" sizes="max(100vw, 120svh)" width="1672" height="941" alt="Фургон и палатка на поляне у дома, утро, между соснами туман" loading="lazy"></picture>
+    </div>
     <div class="nature-copy">
       <h2>Место, чтобы побыть <br>наедине с&nbsp;природой</h2>
       <ul class="nature-tabs" aria-label="Чем здесь заняться">
-        <li><a href="#nature-retreat" aria-current="true">Йога и&nbsp;ретриты</a></li>
+        <li><a href="#nature-rentals" aria-current="true">Прокат</a></li>
+        <li><a href="#nature-retreat">Йога и&nbsp;ретриты</a></li>
         <li><a href="#nature-walks">Пешие прогулки</a></li>
         <li><a href="#nature-fishing">Рыбалка</a></li>
         <li><a href="#nature-hunting">Охота</a></li>
         <li><a href="#nature-riding">Своя техника</a></li>
-        <li><a href="#nature-rentals">Прокат</a></li>
-        <li><a href="#nature-touring">Мотопутешествия</a></li>
+        <li><a href="#nature-enduro">Эндуро</a></li>
         <li><a href="#nature-camping">Кемпинг</a></li>
       </ul>
       <div class="nature-slides">
-        <div class="nature-slide is-current" id="nature-retreat">
+        <div class="nature-slide is-current" id="nature-rentals">
+          <h3>Прокат снегохода и&nbsp;квадроцикла</h3>
+          <p>У&nbsp;нас можно взять снегоход или квадроцикл, $500 в&nbsp;день. Нужна страховка, своя или наша, а&nbsp;кто катается, подписывает отказ от&nbsp;претензий.</p>
+        </div>
+        <div class="nature-slide" id="nature-retreat">
           <h3>Йога и&nbsp;ретриты</h3>
           <p>Сюда можно приехать на&nbsp;йогу, на&nbsp;ретрит или просто пожить в&nbsp;тишине у&nbsp;реки. Дом и&nbsp;баня на&nbsp;это время только ваши, так что расписание у&nbsp;вас своё. Ретрит можно устроить на&nbsp;несколько дней подряд, для группы до&nbsp;10&nbsp;человек, больше&nbsp;— обсуждаем отдельно. После занятий можно в&nbsp;баню на&nbsp;дровах и&nbsp;в&nbsp;реку. Интернета нет. Программу, ведущего и&nbsp;коврики привозите с&nbsp;собой.</p>
         </div>
@@ -477,13 +490,9 @@ fbq('track', 'PageView');
           <h3>Своя техника</h3>
           <p>При брони от&nbsp;трёх ночей можно кататься по&nbsp;всем 168&nbsp;акрам на&nbsp;своей технике: квадроциклах, снегоходах, эндуро и&nbsp;джипах. У&nbsp;дома асфальтированная площадка, чтобы разгрузиться. Где кататься, договоримся заранее, а&nbsp;в&nbsp;реку и&nbsp;через реку не&nbsp;заезжайте. На&nbsp;лесной земле в&nbsp;Калифорнии эндуро и&nbsp;квадроциклам нужен искрогаситель. Кто катается, подписывает отказ от&nbsp;претензий и&nbsp;должен иметь страховку, свою или нашу.</p>
         </div>
-        <div class="nature-slide" id="nature-rentals">
-          <h3>Прокат снегохода и&nbsp;квадроцикла</h3>
-          <p>У&nbsp;нас можно взять снегоход или квадроцикл, $500 в&nbsp;день. Нужна страховка, своя или наша, а&nbsp;кто катается, подписывает отказ от&nbsp;претензий.</p>
-        </div>
-        <div class="nature-slide" id="nature-touring">
-          <h3>Мотопутешествия</h3>
-          <p>Рядом <span class="nowrap">I-80</span> через перевал Доннер и&nbsp;шоссе&nbsp;49 по&nbsp;местам золотой лихорадки. Мотоциклы ставите прямо у&nbsp;дома, а&nbsp;после холодного перевала греетесь в&nbsp;бане.</p>
+        <div class="nature-slide" id="nature-enduro">
+          <h3>Эндуро по&nbsp;168&nbsp;акрам</h3>
+          <p>Хотите погонять по&nbsp;бездорожью на&nbsp;своих эндуро? При брони от&nbsp;трёх ночей можно ездить по&nbsp;всем 168&nbsp;акрам: тут гранит и&nbsp;сосновый лес. Напишите заранее, и&nbsp;договоримся, где кататься. В&nbsp;реку и&nbsp;по&nbsp;берегу не&nbsp;заезжайте, на&nbsp;другую сторону&nbsp;— только по&nbsp;мосту. По&nbsp;закону Калифорнии на&nbsp;лесной земле на&nbsp;мотоцикле должен стоять искрогаситель. Шлем&nbsp;— на&nbsp;каждом. Перед катанием каждый подписывает отказ от&nbsp;претензий, страховка нужна своя или наша. А&nbsp;если захочется размеченных трасс, к&nbsp;северу от&nbsp;Траки в&nbsp;национальном лесу Тахо есть зона Prosser Hill для мотоциклов и&nbsp;квадроциклов.</p>
         </div>
         <div class="nature-slide" id="nature-camping">
           <h3>Кемпинг</h3>
@@ -633,7 +642,7 @@ fbq('track', 'PageView');
     <p>Exit&nbsp;168 · Rainbow Road · Округ Плейсер, Калифорния</p>
     <p><a href="tel:+19169144407">916-914-4407</a> <a href="https://wa.me/19169144407" target="_blank" rel="noopener">WhatsApp</a> <a href="https://www.facebook.com/clubexit168">Facebook</a></p>
   </div>
-  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Иллюстрации по&nbsp;мотивам этого участка: <span class="wide-only">первый кадр, </span>вид сверху (летом и&nbsp;зимой), печь с&nbsp;огнём и&nbsp;утро на&nbsp;террасе. Все остальные фотографии сняты на&nbsp;Exit&nbsp;168. Посещения сайта считают Яндекс Метрика и&nbsp;Google Аналитика.</div>
+  <div class="copyright">© 2026&nbsp;Exit&nbsp;168 · Иллюстрации по&nbsp;мотивам этого участка: <span class="wide-only">первый кадр, </span>вид сверху (летом и&nbsp;зимой), печь с&nbsp;огнём и&nbsp;картинки к&nbsp;занятиям, от&nbsp;проката до&nbsp;кемпинга. Все остальные фотографии сняты на&nbsp;Exit&nbsp;168. Посещения сайта считают Яндекс Метрика и&nbsp;Google Аналитика.</div>
 </footer>
 
 <div class="sticky-cta" id="sticky-cta" hidden>
