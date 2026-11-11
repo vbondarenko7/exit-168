@@ -176,13 +176,89 @@ if (estate && !still) {
   winterImg.addEventListener('load', () => { scenes.forEach(sc => { sc.drawn = NaN; }); queue(); });
   const summerImg = estate.querySelector('.estate-close img:not(.estate-winter)');
   if (summerImg.complete && summerImg.naturalWidth) loadWinter(); else summerImg.addEventListener('load', loadWinter, { once: true });
+  let snow = 0; // how far the view has gone into winter
   const draw = p => {
     pins.forEach((pin, i) => pin.classList.toggle('is-on', p > .08 + i * .06));
     stage.classList.toggle('pins-on', p > .08);
     if (p > .2) loadWinter();
-    winterImg.style.opacity = winterImg.complete && winterImg.naturalWidth > 1 ? clamp01((p - .35) / .5) : 0; // 1px is the placeholder the page ships with
+    snow = winterImg.complete && winterImg.naturalWidth > 1 ? clamp01((p - .35) / .5) : 0; // 1px is the placeholder the page ships with
+    winterImg.style.opacity = snow;
   };
-  scene(estate, draw);
+
+  // The river runs. A canvas over both pictures redraws only their water: the picture is pulled a few pixels downstream
+  // and faded back in, two layers half a beat apart, quick in the rapids and slow in the pool and near the banks,
+  // so the water moves while every rock, drift, the bridge and the trees stay put. The map of where the water is and
+  // which way it runs is made by tools/river-flow-map.cjs. Without WebGL the pictures simply stay still.
+  const water = document.createElement('canvas');
+  const river = 'createImageBitmap' in self && glQuad(water, `precision highp float;uniform sampler2D S,W,F;uniform vec2 r;uniform float t,w;
+      float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+      void main(){vec2 u=vec2(gl_FragCoord.x/r.x,1.-gl_FragCoord.y/r.y);vec4 f=texture2D(F,u);
+        float ds=f.b,dw=f.a*2.-1.,ms=smoothstep(0.,.4,ds),mw=smoothstep(0.,.4,dw),as=(1.-w)*ms,aw=w*mw;
+        if(as+aw<.002){gl_FragColor=vec4(0.);return;}
+        vec2 d=f.rg*2.-1.,v=d*vec2(.007,.0105),x=vec2(-d.y,d.x)*vec2(.007,.0105);
+        float e=t+n(u*vec2(11.,7.3)),p=fract(e),q=fract(e+.5),k=abs(2.*p-1.),i=floor(e),j=floor(e+.5);
+        // every pass of a layer starts a little off the last, along and across the flow, so the foam never loops the same way
+        vec2 a=v*(p-.5+.4*(h(vec2(i,1.))-.5))+x*.5*(h(vec2(i,2.))-.5),b=v*(q-.5+.4*(h(vec2(j,3.))-.5))+x*.5*(h(vec2(j,4.))-.5);
+        vec3 s=mix(texture2D(S,u-a*ds).rgb,texture2D(S,u-b*ds).rgb,k);
+        vec3 c=mix(texture2D(W,u-a*dw).rgb,texture2D(W,u-b*dw).rgb,k);
+        // halfway between seasons the summer and winter water differ round the snowy boulders: correct for the page underneath,
+        // which is already showing both pictures half and half there
+        vec3 m=s*as+c*aw+w*(1.-w)*(ms-mw)*(texture2D(W,u).rgb-texture2D(S,u).rgb);
+        gl_FragColor=vec4(clamp(m,0.,as+aw),as+aw);}`, { antialias: false, depth: false });
+  let fit = () => {};
+  if (river) {
+    const { gl, u } = river, uT = u('t'), uW = u('w'), uR = u('r'), ready = [];
+    water.className = 'estate-water';
+    water.setAttribute('aria-hidden', 'true');
+    summerImg.closest('.estate-close').append(water);
+    // three pictures on three texture units: summer, winter, and the map of the water
+    [0, 1, 2].forEach(i => {
+      gl.activeTexture(gl.TEXTURE0 + i);
+      gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.uniform1i(u('SWF'[i]), i);
+    });
+    // each picture goes to the graphics card once, decoded off the main thread first, so the upload does not hold up the scroll
+    const upload = (i, img, map) => (map ? img.decode().then(() => img) : createImageBitmap(img)).then(pic => {
+      gl.activeTexture(gl.TEXTURE0 + i);
+      gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, map ? gl.NONE : gl.BROWSER_DEFAULT_WEBGL);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pic);
+      ready[i] = true;
+    }, () => {});
+    const map = new Image(), mapSrc = asset('assets/img/river-flow.png');
+    const summerIn = () => { upload(0, summerImg); if (!map.src) { map.src = mapSrc; upload(2, map, true); } };
+    if (summerImg.complete && summerImg.naturalWidth) summerIn();
+    summerImg.addEventListener('load', summerIn); // again if the browser swaps in a sharper file on resize
+    winterImg.addEventListener('load', () => { if (winterImg.naturalWidth > 1) upload(1, winterImg); });
+    // never sharper than the pictures themselves, whatever the screen
+    fit = () => {
+      water.width = Math.round(Math.min(water.clientWidth * devicePixelRatio, 1536));
+      water.height = Math.round(water.width / 1.5);
+      gl.viewport(0, 0, water.width, water.height);
+      gl.uniform2f(uR, water.width, water.height);
+    };
+    fit();
+    let flowing = false;
+    const flow = ms => {
+      if (!flowing) return;
+      // until the winter picture is on the card, a winter step shows the still pictures rather than summer water on snow
+      if (ready[0] && ready[2] && (ready[1] || !snow)) {
+        gl.uniform1f(uT, ms / 1400 % 64); // one beat is 1.4 s; the layers' starting points repeat only after 64 beats
+        gl.uniform1f(uW, snow);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      } else gl.clear(gl.COLOR_BUFFER_BIT);
+      requestAnimationFrame(flow);
+    };
+    // only while the view is on screen (and, as with any animation frame, only while the tab is open in front)
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !flowing) { flowing = true; requestAnimationFrame(flow); }
+      if (!e.isIntersecting) flowing = false;
+    }).observe(stage);
+  }
+  scene(estate, draw, () => fit());
 }
 
 // The banya: five steps over the scroll; the fire takes on "light the stove", the river comes on the last step.
