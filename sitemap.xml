@@ -10,4 +10,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://clubexit168.com/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://clubexit168.com/ru/"/>
   </url>
+  <url>
+    <loc>https://clubexit168.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clubexit168.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://clubexit168.com/ru/privacy/"/>
+  </url>
+  <url>
+    <loc>https://clubexit168.com/ru/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clubexit168.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://clubexit168.com/ru/privacy/"/>
+  </url>
 </urlset>

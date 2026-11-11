@@ -436,6 +436,23 @@ footer{background:#000;text-align:center}
 .footer-main p a{display:inline-block;padding:12px 10px;color:var(--ivory);text-decoration:underline}
 .copyright{border-top:1px solid #1c1c1c;padding:26px 20px;font-size:11px;color:#a6afad;letter-spacing:.06em;max-width:80ch;margin:auto;line-height:1.7}
 
+/* ---------- privacy policy (privacy/, ru/privacy/): the footer link to it, and its pages: the site's header and footer, one text column ---------- */
+.copyright a{color:var(--ivory);text-decoration:underline}
+.legal .lang{margin-left:auto}
+.legal .copyright{padding-bottom:26px}
+.policy{max-width:760px;margin:auto;padding:160px 24px 104px;font-size:16px}
+.policy h1{font-size:min(var(--headline),7.6vw);overflow-wrap:break-word}
+.policy h2{font-size:30px;margin-top:64px;overflow-wrap:break-word}
+.policy h3{margin-top:32px}
+.policy p,.policy li{margin-top:16px;color:var(--soft)}
+.policy .effective{margin-top:12px;font-size:14px;color:var(--muted)}
+.policy ul{padding-left:20px;list-style:disc}
+.policy li::marker{color:var(--muted)}
+.policy strong{font-weight:500;color:var(--ivory)}
+.policy a{color:var(--ivory);text-decoration:underline}
+@media(max-width:900px){.policy{padding-top:120px}}
+@media(max-width:600px){.policy{padding:112px 20px 72px}.policy h2{font-size:24px;margin-top:48px}}
+
 /* ---------- sticky action (mobile) ---------- */
 .sticky-cta{display:none}
 
