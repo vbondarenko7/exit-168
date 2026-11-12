@@ -527,9 +527,9 @@ form.addEventListener('change', e => formStep(fieldSteps[e.target.name]));
 form.querySelectorAll('.submit').forEach(b => b.addEventListener('click', () => formStep('form_send_tap')));
 form.addEventListener('invalid', e => formStep(`form_invalid_${e.target.name}`), true);
 calGrid.addEventListener('click', e => { if (e.target.closest('[data-day]:not(:disabled)')) formStep('form_date'); });
-// A call or a WhatsApp chat leaves no other trace on the site: count the taps on the number and on WhatsApp.
-document.querySelectorAll('a[href^="tel:"], a[href^="https://wa.me/"]').forEach(a => a.addEventListener('click', () => {
-  if (window.gtag) gtag('event', a.protocol === 'tel:' ? 'phone_click' : 'whatsapp_click');
+// A call, a WhatsApp chat or the shared-sauna Telegram chat leaves no other trace on the site: count the taps.
+document.querySelectorAll('a[href^="tel:"], a[href^="https://wa.me/"], a[href^="https://t.me/"]').forEach(a => a.addEventListener('click', () => {
+  if (window.gtag) gtag('event', a.protocol === 'tel:' ? 'phone_click' : a.hostname === 't.me' ? 'telegram_click' : 'whatsapp_click');
   if (window.fbq) fbq('track', 'Contact');
 }));
 
