@@ -333,7 +333,7 @@ if (scenes.length) {
 // With the booking service (form data-api, the Cloudflare Worker in календарь/) the form shows live
 // free days and holds the dates for 24 hours. The request itself the guest sends from their own WhatsApp:
 // in the US a call from an unknown number reads as spam, so we answer in their chat (Roman via V, 2026-11-09).
-const WA = '19169144407';
+const WA = '19169075365';
 const form = document.querySelector('#request-form');
 const result = document.querySelector('#request-result');
 // Three ways to book under the form: WhatsApp, a text message (phones only: from a computer it rarely works) and a call.
@@ -493,10 +493,10 @@ function requestText(withNotes = true) {
 }
 
 const sentText = until => [
-  viaSms ? t("Your request is written out in a text to 916-914-4407. It isn't sent yet, so hit Send there.",
-    'Заявка уже написана в сообщении на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.')
-  : t("Your request is written out in WhatsApp to 916-914-4407. It isn't sent yet, so hit Send there.",
-    'Заявка уже написана в WhatsApp, на номер 916-914-4407. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
+  viaSms ? t("Your request is written out in a text to 916-907-5365. It isn't sent yet, so hit Send there.",
+    'Заявка уже написана в сообщении на номер 916-907-5365. Нажмите там «Отправить»: без этого она до нас не дойдёт.')
+  : t("Your request is written out in WhatsApp to 916-907-5365. It isn't sent yet, so hit Send there.",
+    'Заявка уже написана в WhatsApp, на номер 916-907-5365. Нажмите там «Отправить»: без этого она до нас не дойдёт.'),
   until && t(`We're holding your dates until ${until} and will reply in that chat.`, `Даты держим до ${until}, ответим в этом же чате.`),
 ].filter(Boolean).join(' ');
 
