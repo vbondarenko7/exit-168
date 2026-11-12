@@ -42,6 +42,8 @@ h3{font-size:var(--title);line-height:1.4}
 .icon{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 [hidden]{display:none!important}
 .nowrap{white-space:nowrap}
+/* the Zelle address (V, 12 November 2026): it may break after the @ on a narrow phone, and one tap selects all of it for copying */
+.pay-to{color:var(--ivory);font-weight:500;user-select:all;-webkit-user-select:all}
 .skip{position:fixed;top:10px;left:10px;padding:12px 20px;background:var(--ivory);color:var(--night);z-index:20;transform:translateY(-160%)}
 .skip:focus{transform:none}
 
