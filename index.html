@@ -289,21 +289,31 @@ fbq('track', 'PageView');
 <section class="offer" id="rates">
   <div class="offer-card">
     <h2>Rental rates <br>for up to 10 people</h2>
-    <div class="offer-rates">
+    <div class="offer-calc">
       <div><strong>$500</strong><span>Day use</span></div>
       <div><strong>$1,000</strong><span>Per night</span></div>
       <div><strong>+$250</strong><span>Cleaning fee</span></div>
+      <div class="offer-who">
+        <span id="offer-who">How many of you</span>
+        <div class="offer-step" role="group" aria-labelledby="offer-who">
+          <button type="button" data-step="-1" aria-label="Fewer people"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+          <output aria-live="polite">10</output>
+          <button type="button" data-step="1" aria-label="More people"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
+        </div>
+      </div>
+      <div class="offer-per"><b data-sum="500">$50</b><span>Per person</span></div>
+      <div class="offer-per"><b data-sum="1000">$100</b><span>Per person</span></div>
+      <div class="offer-per"><b data-sum="250" data-plus>+$25</b><span>Per person</span></div>
+      <p class="offer-over" hidden>More than 10 people? We&#x27;ll work it out with you separately.</p>
     </div>
-    <p class="offer-per">Split 10 ways, that&#x27;s $50 each for day use or $100 each per night, plus $25 each toward cleaning.</p>
     <ul class="offer-terms">
-      <li>The $250 cleaning fee is charged once per booking, however long you stay.</li>
-      <li>The rental covers the cabin, the sauna, the grounds and the riverfront by them, for up to 10 people, kids included.</li>
-      <li>Check-in is at noon, check-out at 10 a.m. Day use runs noon to 9&nbsp;p.m. Early check-in is possible if nobody stayed the night before.</li>
-      <li>Stay 3 nights or more and the whole 168 acres opens up, and you can bring your own off-road vehicles and hunt, at no extra cost.</li>
-      <li>More than 10 people? We&#x27;ll work it out with you separately.</li>
-      <li>Holidays cost the same. Over New Year&#x27;s and the Fourth of July the minimum stay is 2 nights.</li>
-      <li>Staying a month or longer? Ask us, and we&#x27;ll work out a price with you.</li>
-      <li>To confirm, you send a security deposit by Zelle: $500 for day use or $1,000 for an overnight stay, however many nights. It comes back within 7 days after check-out, minus any damage.</li>
+      <li class="offer-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4.5l8 6.5"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5.5h4V20"/></svg><span>The rental covers the cabin, the sauna, the grounds and the riverfront by them, for <b>up to 10 people, kids included</b>.</span></li>
+      <li><details><summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span><b>Day use:</b> noon to 9&nbsp;p.m. <b>Overnight:</b> check-out by 10&nbsp;a.m.</span><svg class="icon offer-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></summary><p>Check-in is at noon, check-out at 10 a.m. Day use runs noon to 9&nbsp;p.m. Early check-in is possible if nobody stayed the night before.</p></details></li>
+      <li class="offer-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 13.5 10.5"/><path d="M10.5 9.5 14.5 13.5 9 20 4 15Z"/><path d="m6.5 17.5 2.5-2.5M5.5 14.5 7.5 12.5"/></svg><span><b>Cleaning fee</b> $250, charged once per booking, however long you stay.</span></li>
+      <li><details><summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5 6v5.5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg><span><b>Security deposit</b> $500 or $1,000</span><svg class="icon offer-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></summary><p>To confirm, you send a security deposit by Zelle: $500 for day use or $1,000 for an overnight stay, however many nights. It comes back within 7 days after check-out, minus any damage.</p></details></li>
+      <li><details><summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7 10h3l-4 6h5v4.5h2V16h5l-4-6h3Z"/></svg><span><b>3+ nights bonus:</b> off-road riding and hunting</span><svg class="icon offer-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></summary><p>Stay 3 nights or more and you can explore all 168 acres, ride your own off-road vehicles and hunt, at no extra cost. It&#x27;s shared land, and we use it too.</p></details></li>
+      <li><details><summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16V20H4Z"/><path d="M4 10h16"/><path d="M8.5 3.5v4M15.5 3.5v4"/></svg><span><b>Holidays</b> cost the same</span><svg class="icon offer-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></summary><p>Over New Year&#x27;s and the Fourth of July the minimum stay is 2 nights.</p></details></li>
+      <li class="offer-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5c0-3.2 2.5-5.5 5.5-5.5s5.5 2.3 5.5 5.5"/><path d="M15.5 5.8a3 3 0 0 1 0 5.6"/><path d="M17 14.3c2 .6 3.5 2.6 3.5 5.2"/></svg><span><b>More than 10 people, or a month or longer?</b> Ask us, and we&#x27;ll work it out with you.</span></li>
     </ul>
     <div class="actions">
       <a class="button primary" href="#request">Check dates</a>
@@ -510,7 +520,7 @@ fbq('track', 'PageView');
       </div>
     </div>
   </div>
-  <p class="subtitle nature-note">A normal booking includes the cabin, the sauna, the grounds around them and the riverfront by the clearing. Stay 3 nights or more and the whole 168 acres opens up. Tell us your plans in the notes when you book.</p>
+  <p class="subtitle nature-note">A normal booking includes the cabin, the sauna, the grounds around them and the riverfront by the clearing. Stay 3 nights or more and, as a bonus, you can use all 168 acres. It&#x27;s shared land, and we use it too. Tell us your plans in the notes when you book.</p>
 </section>
 
 <section class="faq" id="faq">
@@ -601,7 +611,7 @@ fbq('track', 'PageView');
         <div><dt>Cleaning fee</dt><dd>$250</dd></div>
       </dl>
       <p class="note estimate-note" id="rate-big" hidden>More than 10 people? We&#x27;ll work out the price with you separately.</p>
-      <p class="note estimate-note" id="rate-bonus" hidden>3+ nights: the whole 168 acres opens up, and you can bring your own off-road vehicles and hunt.</p>
+      <p class="note estimate-note" id="rate-bonus" hidden>3+ nights bonus: explore all 168 acres, ride your own off-road vehicles and hunt. It&#x27;s shared land, and we use it too.</p>
       <!-- three ways to book, each says how (V, 2026-11-09); WhatsApp glyph: Simple Icons, CC0 -->
       <div class="book-ways">
         <button class="button primary submit" type="submit"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Book on WhatsApp</button>

@@ -469,7 +469,8 @@ form.addEventListener('input', () => {
   document.querySelector('#rate-rent').textContent = usd(stayPrice());
   document.querySelector('#rent-row').hidden = bigGroup();
   document.querySelector('#rate-big').hidden = !bigGroup();
-  // three nights or more bring all 168 acres, your own vehicles and hunting (Roman and V, 2026-11-10)
+  // three nights or more: a bonus — your own vehicles, hunting and walks across the 168 acres, which stay shared with us
+  // (Roman and V, 2026-11-10; «бонус», «мы тоже имели доступ» — V, 2026-11-12)
   document.querySelector('#rate-bonus').hidden = nights() < 3;
   // the stay wraps as a whole, so a phone never leaves «nights» alone on the second line
   document.querySelector('#stay-duration').textContent = `${t("up to 10", 'до 10')}, ${stayLabel().toLowerCase().replaceAll(' ', '\u00a0')}`;
@@ -647,4 +648,27 @@ if ('IntersectionObserver' in window) {
     update();
   }, { threshold: 0.05 });
   document.querySelectorAll('.offer-card, #request, .section-cta').forEach(el => cover.observe(el));
+}
+
+// ---- rates card: the three prices split by the group size; past 10 people the price is agreed separately ----
+const calc = document.querySelector('.offer-calc');
+if (calc) {
+  let people = 10;
+  const money = x => {
+    const r = Math.round(x);
+    return (r === x ? '' : '≈') + '$' + String(r).replace(/\B(?=(\d{3})+$)/g, ru ? ' ' : ',');
+  };
+  const draw = () => {
+    const over = people > 10;
+    calc.querySelector('output').textContent = over ? '10+' : people;
+    calc.querySelector('[data-step="-1"]').disabled = people <= 1;
+    calc.querySelector('[data-step="1"]').disabled = over;
+    calc.querySelectorAll('.offer-per').forEach(el => { el.hidden = over; });
+    calc.querySelector('.offer-over').hidden = !over;
+    calc.querySelectorAll('[data-sum]').forEach(el => {
+      const m = money(el.dataset.sum / people);
+      el.textContent = el.hasAttribute('data-plus') ? m.replace('$', '+$') : m;
+    });
+  };
+  calc.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => { people += +b.dataset.step; draw(); }));
 }

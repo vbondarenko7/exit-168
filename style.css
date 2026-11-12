@@ -307,18 +307,35 @@ button.pin:hover>span{background:var(--ivory);color:#000}
 
 /* ---------- offer ---------- */
 .offer{padding:150px 24px 80px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center}
-.offer-card{background:var(--card);border:1px solid #384a49;padding:24px 24px 45px;text-align:center;width:602px;max-width:100%}
+.offer-card{background:var(--card);border:1px solid #384a49;padding:24px 56px 48px;text-align:center;width:720px;max-width:100%}
 .offer-card h2{font-size:40px;line-height:1.1;margin:24px 0 36px}
-.offer-rates{display:flex;flex-wrap:wrap;justify-content:center;gap:50px;margin:24px 0}
-.offer-rates strong{display:block;font:400 54px/1.1 Forum,Georgia,serif}
-.offer-rates span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;color:var(--muted)}
-.offer-per{max-width:40ch;margin:0 auto 26px;font-size:14px;color:var(--soft)}
-.offer-terms{max-width:40ch;margin:0 auto}
-/* centred lines share the words evenly, no single word left on a line of its own */
-.offer-terms li{padding:12px 0;border-top:1px solid #364947;color:var(--soft);line-height:1.6;text-wrap:balance}
-.offer-terms li:last-child{border-bottom:1px solid #364947}
+/* the three prices, and under them the same three split by the group size the visitor sets, 10 to start with (V, 12 November 2026) */
+.offer-calc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px}
+.offer-calc>*{min-width:0}
+.offer-calc strong,.offer-calc b{display:block;font:400 54px/1.1 Forum,Georgia,serif;color:var(--ivory);white-space:nowrap}
+.offer-calc b{font-size:36px}
+.offer-calc span{display:block;margin-top:10px;font-size:11px;font-weight:500;line-height:1.6;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-wrap:balance}
+.offer-who{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:20px;margin:26px 0 22px;padding-top:24px;border-top:1px solid #364947}
+.offer-calc .offer-who span{margin:0}
+.offer-step{display:inline-grid;grid-auto-flow:column;grid-template-columns:44px 56px 44px;align-items:center;border:1px solid #3a4b47}
+.offer-step button{height:44px;display:grid;place-items:center}
+.offer-step button:hover:not(:disabled){background:var(--night)}
+.offer-step output{font:400 28px/44px Forum,Georgia,serif;border-inline:1px solid #3a4b47}
+html:not(.js) .offer-step{grid-template-columns:56px}
+html:not(.js) .offer-step button{display:none}
+.offer-calc .offer-over{grid-column:1/-1;font-size:17px;color:var(--ivory)}
+/* the terms: one short line each behind a drawn icon; a line with more to say opens in place */
+.offer-terms{margin-top:36px;text-align:left;border-top:1px solid #364947}
+.offer-terms>li{border-bottom:1px solid #364947}
+.offer-terms summary,.offer-line{display:grid;grid-template-columns:24px minmax(0,1fr) 24px;gap:16px;padding:15px 0;font-size:16px;line-height:1.6;color:var(--soft)}
+.offer-terms .icon{margin-top:2px;color:var(--ivory)}
+.offer-terms b{font-weight:500;color:var(--ivory)}
+.offer-terms .offer-open{color:var(--muted);transition:transform .2s ease-out}
+.offer-terms summary:hover .offer-open{color:var(--ivory)}
+.offer-terms details[open] .offer-open{transform:rotate(45deg)}
+.offer-terms details p{padding:0 40px 16px;font-size:16px;line-height:1.65;color:var(--soft)}
 /* the two buttons under the rates are as wide as each other, the wider one sets both */
-.offer-card .actions{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;margin:30px 0 0}
+.offer-card .actions{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;margin:36px 0 0}
 .offer-card .button{padding:15px 20px;font-size:11px}
 .note{font-size:13px;line-height:1.7}
 
@@ -330,8 +347,8 @@ summary{list-style:none;cursor:pointer}
 .faq-list details:last-child{border-bottom:1px solid var(--line)}
 .faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 0;font:400 22px/1.4 Forum,Georgia,serif}
 summary::-webkit-details-marker{display:none}
-summary span{font:300 24px/1 var(--sans);transition:transform .2s ease-out}
-details[open] summary span{transform:rotate(45deg)}
+.faq-list summary span{font:300 24px/1 var(--sans);transition:transform .2s ease-out}
+.faq-list details[open] summary span{transform:rotate(45deg)}
 .faq-list p{max-width:72ch;padding:0 30px 26px 0}
 .faq-list a,.contact-info p a{text-decoration:underline}
 
@@ -613,9 +630,15 @@ dialog::backdrop{background:#000d}
   .offer{padding:100px 18px 50px}
   .offer-card{padding:16px 16px 30px}
   .offer-card h2{font-size:30px;margin:24px 0 28px}
-  .offer-rates{gap:18px}
-  .offer-rates strong{font-size:38px}
-  .offer-card .actions{display:grid;grid-auto-flow:row;gap:12px}
+  .offer-calc{gap:0 8px}
+  .offer-calc strong{font-size:32px}
+  .offer-calc b{font-size:28px}
+  .offer-calc span{letter-spacing:.14em;margin-top:6px}
+  .offer-who{justify-content:space-between;margin:20px 0 16px;padding-top:18px}
+  .offer-terms{margin-top:28px}
+  .offer-terms summary,.offer-line{gap:14px;padding:14px 0}
+  .offer-terms details p{padding:0 0 14px 38px}
+  .offer-card .actions{display:grid;grid-auto-flow:row;gap:12px;margin-top:30px}
   .offer-card .button{width:100%;font-size:11px}
   .contact-panels{margin-bottom:var(--section-bottom)}
   .contact-info,form{padding:36px 22px}
@@ -641,6 +664,7 @@ dialog::backdrop{background:#000d}
   .sticky-cta .button{padding:12px 14px;letter-spacing:.08em}
 }
 @media(max-width:350px){
+  .offer-calc span{letter-spacing:.06em}
   .nav-phone{display:none}
 }
 /* phones on their side: copy beside the guest, as on desktop, instead of below a 720px-tall scene */
